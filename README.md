@@ -45,6 +45,25 @@ adb device
 
 ### Open on wanted device:
 ```bash
-npx react-native run-android --deviceId=DEVICE_ID
+npx react-native run-android --deviceId=DEVICE_ID-RFCW40L8QBK
 ```
 
+# To generate apk
+
+```bash
+react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+```
+```bash
+cd android
+```
+```bash
+./gradlew assembleDebug
+```
+
+Then you can get apk in **app/build/outputs/apk/debug/app-debug.apk**
+
+### If you have problems check:
+1. [react-native : El término 'react-native' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable.](https://stackoverflow.com/questions/38889487/react-native-is-not-recognized-as-an-internal-or-external-command-operable-pr)
+
+2. [react-native : No se puede cargar el archivo C:\Users\\... porque la 
+ejecución de scripts está deshabilitada en este sistema.](https://es.stackoverflow.com/questions/321611/problema-con-scripts-en-visual-studio-code)
