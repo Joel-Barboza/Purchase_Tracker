@@ -1,0 +1,424 @@
+{
+  "blocks": [
+    {
+      "recognizedLanguages": [{ "languageCode": "und" }],
+      "frame": { "top": 40, "height": 105, "left": 184, "width": 695 },
+      "lines": [
+        {
+          "recognizedLanguages": [{ "languageCode": "en" }],
+          "elements": [
+            {
+              "frame": { "top": 44, "height": 48, "left": 214, "width": 134 },
+              "cornerPoints": [
+                { "y": 44, "x": 214 },
+                { "y": 44, "x": 348 },
+                { "y": 92, "x": 348 },
+                { "y": 92, "x": 214 }
+              ],
+              "text": "Memes"
+            },
+            {
+              "frame": { "top": 44, "height": 48, "left": 380, "width": 145 },
+              "cornerPoints": [
+                { "y": 44, "x": 380 },
+                { "y": 44, "x": 525 },
+                { "y": 92, "x": 525 },
+                { "y": 92, "x": 380 }
+              ],
+              "text": "Somos"
+            },
+            {
+              "frame": { "top": 44, "height": 48, "left": 534, "width": 133 },
+              "cornerPoints": [
+                { "y": 44, "x": 534 },
+                { "y": 44, "x": 667 },
+                { "y": 92, "x": 667 },
+                { "y": 92, "x": 534 }
+              ],
+              "text": "Fiesta"
+            },
+            {
+              "frame": { "top": 44, "height": 48, "left": 699, "width": 10 },
+              "cornerPoints": [
+                { "y": 44, "x": 699 },
+                { "y": 44, "x": 709 },
+                { "y": 92, "x": 709 },
+                { "y": 92, "x": 699 }
+              ],
+              "text": "•"
+            },
+            {
+              "frame": { "top": 44, "height": 48, "left": 742, "width": 138 },
+              "cornerPoints": [
+                { "y": 44, "x": 742 },
+                { "y": 44, "x": 880 },
+                { "y": 92, "x": 880 },
+                { "y": 92, "x": 742 }
+              ],
+              "text": "Seguir"
+            }
+          ],
+          "frame": { "top": 44, "height": 48, "left": 214, "width": 666 },
+          "cornerPoints": [
+            { "y": 44, "x": 214 },
+            { "y": 44, "x": 880 },
+            { "y": 92, "x": 880 },
+            { "y": 92, "x": 214 }
+          ],
+          "text": "Memes Somos Fiesta • Seguir"
+        },
+        {
+          "recognizedLanguages": [{ "languageCode": "und-Latn" }],
+          "elements": [
+            {
+              "frame": { "top": 108, "height": 37, "left": 184, "width": 150 },
+              "cornerPoints": [
+                { "y": 110, "x": 184 },
+                { "y": 108, "x": 334 },
+                { "y": 143, "x": 334 },
+                { "y": 145, "x": 184 }
+              ],
+              "text": "14h9"
+            }
+          ],
+          "frame": { "top": 108, "height": 37, "left": 184, "width": 150 },
+          "cornerPoints": [
+            { "y": 110, "x": 184 },
+            { "y": 108, "x": 334 },
+            { "y": 143, "x": 334 },
+            { "y": 145, "x": 184 }
+          ],
+          "text": "14h9"
+        }
+      ],
+      "cornerPoints": [
+        { "y": 44, "x": 184 },
+        { "y": 40, "x": 879 },
+        { "y": 141, "x": 879 },
+        { "y": 145, "x": 184 }
+      ],
+      "text": "Memes Somos Fiesta • Seguir\n14h9"
+    },
+    {
+      "recognizedLanguages": [{ "languageCode": "und" }],
+      "frame": { "top": 188, "height": 52, "left": 92, "width": 724 },
+      "lines": [
+        {
+          "recognizedLanguages": [{ "languageCode": "es" }],
+          "elements": [
+            {
+              "frame": { "top": 188, "height": 52, "left": 92, "width": 46 },
+              "cornerPoints": [
+                { "y": 188, "x": 92 },
+                { "y": 188, "x": 138 },
+                { "y": 240, "x": 138 },
+                { "y": 240, "x": 92 }
+              ],
+              "text": "Ni"
+            },
+            {
+              "frame": { "top": 188, "height": 52, "left": 136, "width": 68 },
+              "cornerPoints": [
+                { "y": 188, "x": 136 },
+                { "y": 188, "x": 204 },
+                { "y": 240, "x": 204 },
+                { "y": 240, "x": 136 }
+              ],
+              "text": "me"
+            },
+            {
+              "frame": { "top": 188, "height": 52, "left": 222, "width": 166 },
+              "cornerPoints": [
+                { "y": 188, "x": 222 },
+                { "y": 188, "x": 388 },
+                { "y": 240, "x": 388 },
+                { "y": 240, "x": 222 }
+              ],
+              "text": "pongan"
+            },
+            {
+              "frame": { "top": 188, "height": 52, "left": 408, "width": 152 },
+              "cornerPoints": [
+                { "y": 188, "x": 408 },
+                { "y": 188, "x": 560 },
+                { "y": 240, "x": 560 },
+                { "y": 240, "x": 408 }
+              ],
+              "text": "música"
+            },
+            {
+              "frame": { "top": 188, "height": 52, "left": 580, "width": 54 },
+              "cornerPoints": [
+                { "y": 188, "x": 580 },
+                { "y": 188, "x": 634 },
+                { "y": 240, "x": 634 },
+                { "y": 240, "x": 580 }
+              ],
+              "text": "de"
+            },
+            {
+              "frame": { "top": 188, "height": 52, "left": 659, "width": 157 },
+              "cornerPoints": [
+                { "y": 188, "x": 659 },
+                { "y": 188, "x": 816 },
+                { "y": 240, "x": 816 },
+                { "y": 240, "x": 659 }
+              ],
+              "text": "Shakira"
+            }
+          ],
+          "frame": { "top": 188, "height": 52, "left": 92, "width": 724 },
+          "cornerPoints": [
+            { "y": 188, "x": 92 },
+            { "y": 188, "x": 816 },
+            { "y": 240, "x": 816 },
+            { "y": 240, "x": 92 }
+          ],
+          "text": "Ni me pongan música de Shakira"
+        }
+      ],
+      "cornerPoints": [
+        { "y": 188, "x": 92 },
+        { "y": 188, "x": 816 },
+        { "y": 240, "x": 816 },
+        { "y": 240, "x": 92 }
+      ],
+      "text": "Ni me pongan música de Shakira"
+    },
+    {
+      "recognizedLanguages": [{ "languageCode": "und" }],
+      "frame": { "top": 599, "height": 25, "left": 74, "width": 30 },
+      "lines": [
+        {
+          "recognizedLanguages": [{ "languageCode": "und-Latn" }],
+          "elements": [
+            {
+              "frame": { "top": 599, "height": 25, "left": 74, "width": 30 },
+              "cornerPoints": [
+                { "y": 599, "x": 74 },
+                { "y": 599, "x": 104 },
+                { "y": 624, "x": 104 },
+                { "y": 624, "x": 74 }
+              ],
+              "text": "50"
+            }
+          ],
+          "frame": { "top": 599, "height": 25, "left": 74, "width": 30 },
+          "cornerPoints": [
+            { "y": 599, "x": 74 },
+            { "y": 599, "x": 104 },
+            { "y": 624, "x": 104 },
+            { "y": 624, "x": 74 }
+          ],
+          "text": "50"
+        }
+      ],
+      "cornerPoints": [
+        { "y": 599, "x": 74 },
+        { "y": 599, "x": 104 },
+        { "y": 624, "x": 104 },
+        { "y": 624, "x": 74 }
+      ],
+      "text": "50"
+    },
+    {
+      "recognizedLanguages": [{ "languageCode": "und" }],
+      "frame": { "top": 318, "height": 166, "left": 108, "width": 858 },
+      "lines": [
+        {
+          "recognizedLanguages": [{ "languageCode": "es" }],
+          "elements": [
+            {
+              "frame": { "top": 318, "height": 42, "left": 210, "width": 106 },
+              "cornerPoints": [
+                { "y": 318, "x": 210 },
+                { "y": 318, "x": 316 },
+                { "y": 360, "x": 316 },
+                { "y": 360, "x": 210 }
+              ],
+              "text": "TAL"
+            },
+            {
+              "frame": { "top": 318, "height": 42, "left": 334, "width": 110 },
+              "cornerPoints": [
+                { "y": 318, "x": 334 },
+                { "y": 318, "x": 444 },
+                { "y": 360, "x": 444 },
+                { "y": 360, "x": 334 }
+              ],
+              "text": "VEZ"
+            },
+            {
+              "frame": { "top": 318, "height": 42, "left": 466, "width": 400 },
+              "cornerPoints": [
+                { "y": 318, "x": 466 },
+                { "y": 318, "x": 866 },
+                { "y": 360, "x": 866 },
+                { "y": 360, "x": 466 }
+              ],
+              "text": "HUBIERAMOS"
+            }
+          ],
+          "frame": { "top": 318, "height": 42, "left": 210, "width": 656 },
+          "cornerPoints": [
+            { "y": 318, "x": 210 },
+            { "y": 318, "x": 866 },
+            { "y": 360, "x": 866 },
+            { "y": 360, "x": 210 }
+          ],
+          "text": "TAL VEZ HUBIERAMOS"
+        },
+        {
+          "recognizedLanguages": [{ "languageCode": "es" }],
+          "elements": [
+            {
+              "frame": { "top": 370, "height": 54, "left": 150, "width": 390 },
+              "cornerPoints": [
+                { "y": 370, "x": 150 },
+                { "y": 370, "x": 540 },
+                { "y": 424, "x": 540 },
+                { "y": 424, "x": 150 }
+              ],
+              "text": "CLASIFICADO"
+            },
+            {
+              "frame": { "top": 370, "height": 54, "left": 562, "width": 98 },
+              "cornerPoints": [
+                { "y": 370, "x": 562 },
+                { "y": 370, "x": 660 },
+                { "y": 424, "x": 660 },
+                { "y": 424, "x": 562 }
+              ],
+              "text": "\"\"SI"
+            },
+            {
+              "frame": { "top": 370, "height": 54, "left": 662, "width": 262 },
+              "cornerPoints": [
+                { "y": 370, "x": 662 },
+                { "y": 370, "x": 924 },
+                { "y": 424, "x": 924 },
+                { "y": 424, "x": 662 }
+              ],
+              "text": "ALGUIEN"
+            }
+          ],
+          "frame": { "top": 370, "height": 54, "left": 150, "width": 774 },
+          "cornerPoints": [
+            { "y": 370, "x": 150 },
+            { "y": 370, "x": 924 },
+            { "y": 424, "x": 924 },
+            { "y": 424, "x": 150 }
+          ],
+          "text": "CLASIFICADO \"\"SI ALGUIEN"
+        },
+        {
+          "recognizedLanguages": [{ "languageCode": "es" }],
+          "elements": [
+            {
+              "frame": { "top": 430, "height": 54, "left": 108, "width": 120 },
+              "cornerPoints": [
+                { "y": 430, "x": 108 },
+                { "y": 430, "x": 228 },
+                { "y": 484, "x": 228 },
+                { "y": 484, "x": 108 }
+              ],
+              "text": "POR"
+            },
+            {
+              "frame": { "top": 430, "height": 54, "left": 275, "width": 111 },
+              "cornerPoints": [
+                { "y": 430, "x": 275 },
+                { "y": 430, "x": 386 },
+                { "y": 484, "x": 386 },
+                { "y": 484, "x": 275 }
+              ],
+              "text": "AHÍ"
+            },
+            {
+              "frame": { "top": 430, "height": 54, "left": 372, "width": 283 },
+              "cornerPoints": [
+                { "y": 430, "x": 372 },
+                { "y": 430, "x": 655 },
+                { "y": 484, "x": 655 },
+                { "y": 484, "x": 372 }
+              ],
+              "text": "GOLEARA"
+            },
+            {
+              "frame": { "top": 430, "height": 54, "left": 670, "width": 42 },
+              "cornerPoints": [
+                { "y": 430, "x": 670 },
+                { "y": 430, "x": 712 },
+                { "y": 484, "x": 712 },
+                { "y": 484, "x": 670 }
+              ],
+              "text": "A"
+            },
+            {
+              "frame": { "top": 430, "height": 54, "left": 734, "width": 232 },
+              "cornerPoints": [
+                { "y": 430, "x": 734 },
+                { "y": 430, "x": 966 },
+                { "y": 484, "x": 966 },
+                { "y": 484, "x": 734 }
+              ],
+              "text": "BRASIL\""
+            }
+          ],
+          "frame": { "top": 430, "height": 54, "left": 108, "width": 858 },
+          "cornerPoints": [
+            { "y": 430, "x": 108 },
+            { "y": 430, "x": 966 },
+            { "y": 484, "x": 966 },
+            { "y": 484, "x": 108 }
+          ],
+          "text": "POR AHÍ GOLEARA A BRASIL\""
+        }
+      ],
+      "cornerPoints": [
+        { "y": 318, "x": 108 },
+        { "y": 318, "x": 966 },
+        { "y": 484, "x": 966 },
+        { "y": 484, "x": 108 }
+      ],
+      "text": "TAL VEZ HUBIERAMOS\nCLASIFICADO \"\"SI ALGUIEN\nPOR AHÍ GOLEARA A BRASIL\""
+    },
+    {
+      "recognizedLanguages": [{ "languageCode": "und" }],
+      "frame": { "top": 900, "height": 40, "left": 136, "width": 52 },
+      "lines": [
+        {
+          "recognizedLanguages": [{ "languageCode": "und-Latn" }],
+          "elements": [
+            {
+              "frame": { "top": 900, "height": 40, "left": 136, "width": 52 },
+              "cornerPoints": [
+                { "y": 900, "x": 136 },
+                { "y": 900, "x": 188 },
+                { "y": 940, "x": 188 },
+                { "y": 940, "x": 136 }
+              ],
+              "text": "00"
+            }
+          ],
+          "frame": { "top": 900, "height": 40, "left": 136, "width": 52 },
+          "cornerPoints": [
+            { "y": 900, "x": 136 },
+            { "y": 900, "x": 188 },
+            { "y": 940, "x": 188 },
+            { "y": 940, "x": 136 }
+          ],
+          "text": "00"
+        }
+      ],
+      "cornerPoints": [
+        { "y": 900, "x": 136 },
+        { "y": 900, "x": 188 },
+        { "y": 940, "x": 188 },
+        { "y": 940, "x": 136 }
+      ],
+      "text": "00"
+    }
+  ],
+  "text": "Memes Somos Fiesta • Seguir\n14h9\nNi me pongan música de Shakira\n50\nTAL VEZ HUBIERAMOS\nCLASIFICADO \"\"SI ALGUIEN\nPOR AHÍ GOLEARA A BRASIL\"\n00"
+}
