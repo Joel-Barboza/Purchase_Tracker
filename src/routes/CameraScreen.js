@@ -68,7 +68,6 @@ const CameraScreen = ({ navigation }) => {
   };
 
   if (device == null) {
-    console.log("gsdfgsdfg");
     return <Text>Camera not available</Text>;
   }
 
@@ -81,6 +80,8 @@ const CameraScreen = ({ navigation }) => {
           device={device}
           isActive={true}
           photo={true}
+          resizeMode="contain"
+          photoQualityBalance="speed"
         />
         <Text>{imageSource.toString()}</Text>
         {/* <Text>{text.textBlocks[0].text}</Text> */}
