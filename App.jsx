@@ -10,6 +10,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from './src/routes/HomeScreen';
 import CameraScreen from './src/routes/CameraScreen';
 import ResultScreen from './src/routes/ResultScreen';
+import PurchasesScreen from './src/routes/PurchasesScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ const App = () => {
           component={HomeScreen}
           options={{title: 'Welcome'}}
         />
+        <Stack.Screen name="PurchasesScreen" component={PurchasesScreen} />
         <Stack.Screen name="CameraScreen" component={CameraScreen} />
         <Stack.Screen name="ResultScreen" component={ResultScreen} />
       </Stack.Navigator>

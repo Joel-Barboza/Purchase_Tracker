@@ -98,8 +98,9 @@ cd android
 ./gradlew assembleDebug
 ```
 
+Done all at once (using "&&" to do the commands consecutively)
 ```bash
-react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug
 ```
 
 Then you can get apk in **app/build/outputs/apk/debug/app-debug.apk**

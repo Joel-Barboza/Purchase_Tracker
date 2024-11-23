@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   View,
@@ -8,8 +8,28 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { test, writeToFile, encryptData, generateKey, readFromFile, restartFile, readEncrypted } from "../utils/saveData";
+import Config from 'react-native-config';
 
+const yes = async () => {
+  const key = await generateKey(
+    Config.ENCRYPT_PSSWRD,
+    Config.ENCRYPT_SALT,
+    parseInt(Config.ENCRYPT_COST),
+    parseInt(Config.ENCRYPT_LENGTH)
+  );
+  const { cipher, iv } = await encryptData(JSON.stringify({ "purchases": [] , "products": []}), key);
+  console.log('Data encrypteds:', { cipher, iv });
+  await writeToFile(JSON.stringify({"cipher": cipher, "iv": iv}), key);
+  console.log();
+
+}
 const HomeScreen = ({ navigation }) => {
+  // useEffect(() => {
+  //   console.log("fsdf");
+  //   yes();
+  // }, [])
+  
   return (
     <View style={styles.container}>
       <ScrollView style={styles.main}>
@@ -21,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.footerBtn}
-          onPress={() => navigation.navigate("CameraScreen")}
+          onPress={() => navigation.navigate("PurchasesScreen")}
         >
           <Text>Purchases</Text>
         </TouchableOpacity>
@@ -33,9 +53,17 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.footerBtn}
-          onPress={() => navigation.navigate("CameraScreen")}
+          // onPress={async() => await restartFile()}
+          onPress={async() => {console.log(await readFromFile())}}
         >
-          <Text>Budget</Text>
+          <Text>Test</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.footerBtn}
+          // onPress={async() => await restartFile()}
+          onPress={async() => await readEncrypted()}
+        >
+          <Text>Encrypted</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -49,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   main: {
-    backgroundColor: "red",
+    backgroundColor: "lightblue",
     width: "100%",
   },
   footer: {

@@ -38,3 +38,6 @@ target 'Purchase_App' do
     )
   end
 end
+
+# for .env files
+pod 'react-native-config', :path => '../node_modules/react-native-config'
