@@ -8,8 +8,12 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  Pressable,
   useColorScheme,
   View,
+  Dimensions,
+  Modal,
+  TextInput,
 } from "react-native";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 
@@ -25,8 +29,17 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 const ResultScreen = ({ route }) => {
   const { text = { wordList: [], discard: [], products: [] } } = route.params || {}; // Default values
   const { wordList, discard, products } = text;
-  const [showModal, setShowModal] = useState(false);
+  const [showDateModal, setShowDateModal] = useState(false);
+  const [showEditProductModal, setShowEditProductModal] = useState(false);
   const [date, setDate] = useState(null);
+  const [productList, setProductList] = useState(products);
+
+  // Used to store the values when the edit modal is showing
+  const [prodNameChange, setProdNameChange] = useState("");
+  const [prodIdChange, setProdIdChange] = useState("");
+  const [prodAmountChange, setProdAmountChange] = useState("");
+  const [prodUnitPriceChange, setProdUnitPriceChange] = useState("");
+  const [prodTotalPriceChange, setProdTotalPriceChange] = useState("");
 
   const tableData = {
     tableHead: ['Product Name', 'Product ID', 'Price'],
@@ -47,7 +60,7 @@ const ResultScreen = ({ route }) => {
       parseInt(Config.ENCRYPT_COST),
       parseInt(Config.ENCRYPT_LENGTH)
     );
-    let fsfs= await decrypt({cipher, iv}, key);
+    let fsfs = await decrypt({ cipher, iv }, key);
     console.log(fsfs, "no?");
 
   }
@@ -55,14 +68,14 @@ const ResultScreen = ({ route }) => {
   //   sdfasdf();
 
   // }, [])
-  
+
   const handleDateChange = (event, selectedDate) => {
     if (event.type === "set") {
       const currentDate = selectedDate || date;
       console.log(selectedDate);
       setDate(currentDate);
     }
-    setShowModal(false);
+    setShowDateModal(false);
   }
 
   const formatDate = (date) => {
@@ -73,24 +86,82 @@ const ResultScreen = ({ route }) => {
     return `${day}-${month}-${year}`;
   };
 
+  const editExtractedInfo = (productIndex) => {
+    setProdNameChange(productList[productIndex].name);
+    setProdIdChange(productList[productIndex].prodId);
+    // setProdAmountChange(productList[productIndex]);
+    // setProdUnitPriceChange(productList[productIndex]);
+    setProdTotalPriceChange(productList[productIndex].totalPrice);
+    setShowEditProductModal(!showEditProductModal);
+  }
+
   return (
-    <ScrollView>
+    <ScrollView style={styles.mainContainer}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showEditProductModal}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setShowEditProductModal(!showEditProductModal);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text>Product Name</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setProdNameChange}
+              value={prodNameChange}
+            />
+            <Text>Product ID</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setProdIdChange}
+              value={prodIdChange}
+            />
+            <Text>Amount</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setProdAmountChange}
+              value={prodAmountChange}
+            />
+            <Text>Unit Price</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setProdUnitPriceChange}
+              value={prodUnitPriceChange}
+            />
+            <Text>Total Price</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={setProdTotalPriceChange}
+              value={prodTotalPriceChange}
+            />
+            <Text style={styles.modalText}>Hello World!</Text>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setShowEditProductModal(!showEditProductModal)}>
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.dateContainer}>
 
-      <Text style={styles.dateText}>Date: {date ? formatDate(date) : 'DD-MM-YYYY'}</Text>
-      <TouchableOpacity onPress={() => setShowModal(true)} style={styles.dateBtn}>
-        <Text style={styles.btnText}>Select Date</Text>
-      </TouchableOpacity>
+        <Text style={styles.dateText}>Date: {date ? formatDate(date) : 'DD-MM-YYYY'}</Text>
+        <TouchableOpacity onPress={() => setShowDateModal(true)} style={styles.dateBtn}>
+          <Text style={styles.btnText}>Select Date</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.container}>
+      {/* <View style={styles.tableContainer}>
         <Table borderStyle={{ borderWidth: 4, borderColor: 'teal' }}>
           <Row data={data.tableHead} style={styles.head} textStyle={styles.headText} />
           <Rows data={data.tableData} textStyle={styles.tableText} />
         </Table>
-      </View>
+      </View> */}
       {
-        showModal && (
-          <DateTimePicker 
+        showDateModal && (
+          <DateTimePicker
             mode={'date'}
             value={date || new Date()}
             onChange={handleDateChange}
@@ -113,6 +184,26 @@ const ResultScreen = ({ route }) => {
           {elem}
         </Text>
       ))} */}
+      {
+        productList.map((product, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.productCard}
+            onLongPress={() => editExtractedInfo(index)}
+          >
+            <View style={styles.leftSideCard}>
+              <Text style={styles.mainText}>{product.name}</Text>
+              <Text style={styles.secondaryText}>{product.prodId}</Text>
+            </View>
+            <View style={styles.rightSideCard}>
+              <Text style={styles.secondaryText}>{1} x ₡{99.999}</Text>
+              <Text style={styles.mainText}>₡{product.totalPrice}</Text>
+            </View>
+          </TouchableOpacity>
+
+        ))
+      }
+
     </ScrollView>
   );
 };
@@ -125,24 +216,66 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'black'
   },
-  container: { flex: 1, padding: 10, justifyContent: 'center', backgroundColor: '#fff' },
+  mainContainer: {
+    backgroundColor: "#2c2c2c"
+  },
+  tableContainer: { flex: 1, padding: 10, justifyContent: 'center', backgroundColor: '#fff' },
   head: { height: 44, backgroundColor: 'darkblue' },
   headText: { fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: 'white' },
-  tableText: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center', color:'black' },
+  tableText: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center', color: 'black' },
   dateBtn: {
-    flex:1,
-    justifyContent:'center',
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'red',
     width: 25,
     height: 40
   },
   dateContainer: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     alignItems: 'space-evenly',
-    
+
+  },
+  productCard: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'top',
+    padding: 10,
+    margin: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    height: 100,
+    borderRadius: 12,
+    width: "auto",//Dimensions.get('window').width - 30
+    backgroundColor: "#c2c2c2"
+  },
+  leftSideCard: {
+    flex: 1,
+    justifyContent: "center",
+
+    //backgroundColor: "#ccaaaa"
+
+  },
+  rightSideCard: {
+    flex: 1,
+    //flexDirection:"row",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    //flexWrap:"wrap",
+    //backgroundColor: "#aaccaa",
+
+  },
+  mainText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#222",
+  },
+  secondaryText: {
+    fontSize: 15,
+    color: "#222a",
   },
   dateText: {
     color: 'black',
@@ -153,13 +286,62 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   saveDataBtn: {
-    flex:1,
-    justifyContent:'center',
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: 'red',
     width: '100%',
     height: 40
-  }
+  },
+
+
+
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 200,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
 });
 
 export default ResultScreen;
