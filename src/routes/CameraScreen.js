@@ -37,12 +37,6 @@ const CameraScreen = ({ navigation }) => {
   });
 
 
-  useEffect(() => {
-
-    setIsActive(true);
-
-  }, [])
-
   // Start camera when entering the screen
   useFocusEffect(
     React.useCallback(() => {
@@ -99,20 +93,10 @@ const CameraScreen = ({ navigation }) => {
     navigation.navigate("ResultScreen", { text: text });
   }
 
-  const backToMenu = () => {
-    setShowCamera(false);
-  };
+
 
   if (device == null) {
     return <Text>Camera not available</Text>;
-  }
-
-  const setFormatedImagePath = (imagePath) => {
-    if (imagePath.startsWith("file://")) {
-      setImageSource(imagePath);
-    } else {
-      setImageSource("file://" + imagePath);
-    }
   }
 
 
