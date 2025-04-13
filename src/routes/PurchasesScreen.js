@@ -16,7 +16,6 @@ import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import TextRecognition from "@react-native-ml-kit/text-recognition";
 import { Camera, useCameraDevice } from "react-native-vision-camera";
 import { launchImageLibrary } from "react-native-image-picker";
-import { Table, Row, Rows } from 'react-native-table-component';
 import { readFromFile, addDataToFile } from "../utils/saveData";
 import { decrypt, generateKey } from "react-native-aes-crypto";
 import Config from 'react-native-config';

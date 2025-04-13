@@ -5,29 +5,39 @@
  * @format
  */
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/routes/HomeScreen';
 import CameraScreen from './src/routes/CameraScreen';
 import ResultScreen from './src/routes/ResultScreen';
 import PurchasesScreen from './src/routes/PurchasesScreen';
+import { connectToDatabase, createTables } from './db/db';
+import { useCallback, useEffect } from 'react';
+import { DbProvider } from './src/context/DbContext';
+
 
 const Stack = createNativeStackNavigator();
 
+
 const App = () => {
+
+
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{title: 'Welcome'}}
-        />
-        <Stack.Screen name="PurchasesScreen" component={PurchasesScreen} />
-        <Stack.Screen name="CameraScreen" component={CameraScreen} />
-        <Stack.Screen name="ResultScreen" component={ResultScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <DbProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{ title: 'Welcome' }}
+          />
+          <Stack.Screen name="PurchasesScreen" component={PurchasesScreen} />
+          <Stack.Screen name="CameraScreen" component={CameraScreen} />
+          <Stack.Screen name="ResultScreen" component={ResultScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </DbProvider>
   );
 };
 
