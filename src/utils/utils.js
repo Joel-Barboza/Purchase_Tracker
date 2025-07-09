@@ -1,6 +1,6 @@
 import TextRecognition from "@react-native-ml-kit/text-recognition";
 import { addPurchase } from "../../db/purchase";
-import { addProduct, findProductByCode } from "../../db/product";
+import { addProduct, findProductByCode, updateProductPrice } from "../../db/product";
 import { addProductPrice } from "../../db/productPrice";
 import { addPurchaseItem } from "../../db/purchaseItems";
 import { useDb } from "../context/DbContext";
@@ -12,10 +12,12 @@ let discard = [];
 
 export const ExtractText = async (image) => {
   if (image !== "") {
-    list = [];
+    lineList = [];
     products = [];
     discard = [];
-    const result = await TextRecognition.recognize(`file://${image}`);
+    console.log(image);
+    // const result = await TextRecognition.recognize(`file://${image}`);
+    const result = await TextRecognition.recognize(image);
     const wordList = processText(result);
     return { wordList, discard, products };
   }
@@ -43,9 +45,9 @@ const processText = (extractedText) => {
   return lineList;
 };
 
-const insertSortedVertically = (line) => {
+const insertSortedVertically = async (line) => {
   if (lineList.length == 0) {
-    lineList.push(line);
+    await lineList.push(line);
     return;
   }
   for (let i = 0; i < lineList.length; i++) {
@@ -142,27 +144,31 @@ const getProductFromLine = () => {
   for (let i = 0; i < lineList.length; i++) {
     const lineText = lineList[i].text || "";
     // verify if there's a prodCode in the line
-    console.log("----------"+lineText)
+    console.log("----------" + lineText)
     if (!(/(?<= )\d{11,16}(?!\d)K?/.test(lineText))) continue;
     // gets the prodCode, prodName and/or totalPrice if exists
     const nameMatch = lineText.match(/[a-z0-9 ]+(?= \d{11,16}K?)/i);
     const prodCodeMatch = lineText.match(/(?<= )\d{11,16}K?/);
-    const totalPriceMatch = lineText.match(/(?<=[0-9]{10}.* +)([0-9]{0,3}(,|.)[0-9]{0,3}(,|.)([0-9 ])*\s*G)/g);
+    /*
+     remove commas and last space from prices
+    */
+    const totalPriceMatch = lineText.match(/(?<=[0-9]{10}.* +)([0-9]{0,3}(,|.)[0-9]{0,3}(,|.)([0-9 ])*)(?=(\s*G))/g);
     /*-------
     if there's name, id and price in the same line it means that only one
     product was bought, so quantity = 1, unitPrice = totalPrice
     --------*/
     if (nameMatch && prodCodeMatch && totalPriceMatch) {
-      let totalPriceMatchCleanStr = totalPriceMatch[0].slice(0, -1);
+      let totalPriceMatchCleanStr = totalPriceMatch[0].slice(0, -1).replace(/[.,\s]/g, '');
       if (totalPriceMatch[0][-2] == " ") {
-        totalPriceMatchCleanStr = totalPriceMatch[0].slice(0, -2)
+        totalPriceMatchCleanStr = totalPriceMatch[0].slice(0, -2).replace(/[.,\s]/g, '')
       }
       let product = {
         name: nameMatch[0],
         prodCode: prodCodeMatch[0],
         quantity: "1",
         unitPrice: totalPriceMatchCleanStr,
-        totalPrice: totalPriceMatchCleanStr
+        totalPrice: totalPriceMatchCleanStr,
+        soldByKg: 0,
       };
       products.push(product);
 
@@ -184,9 +190,9 @@ const getProductFromLine = () => {
       // lookbehind product id, quantity bought and a "x", then matches the unit price, lookahead for an "X", unit price and total price
       const unitPrice = joinWithNextLine.match(/(?<=[0-9]{10}\s+\d+\s*x\s*[\$¢]*)(\d{1,3})([.,]*\d{1,3})(?=(\s*(\d{1,3})([.,]*\d{1,3})*\s*G))/gi)
 
-      let totalPriceMatchOnNextLineCleanStr = totalPriceMatchOnNextLine[0].slice(0, -1);
+      let totalPriceMatchOnNextLineCleanStr = totalPriceMatchOnNextLine[0].slice(0, -1).replace(/[.,\s]/g, '');
       if (totalPriceMatchOnNextLine[0][-2] == " ") {
-        totalPriceMatchOnNextLineCleanStr = totalPriceMatchOnNextLine[0].slice(0, -2)
+        totalPriceMatchOnNextLineCleanStr = totalPriceMatchOnNextLine[0].slice(0, -2).replace(/[.,\s]/g, '')
       }
       let product;
       /*--------------------
@@ -245,38 +251,43 @@ TODO: check inserts
 --------------------*/
 export const addToDB = async (products, date, db) => {
   const purchaseId = await addPurchase(db, date);
+  // console.log(products);
   products.forEach(async (product) => {
-    
-    console.log(product.prodCode);
-    
+
+    // console.log(product.prodCode);
+
     const productRow = await findProductByCode(db, product.prodCode);
-    console.log(productRow);
+    // console.log("prodRow")
+    // console.log(productRow);
     let productId;
     if (productRow != null) {
       productId = productRow.id;
-      console.log("before update product");
+      // console.log("before update product");
       await updateProductPrice(db, product.prodCode, product.unitPrice);
-      console.log("after update product");
+      // console.log("after update product");
     } else {
-      console.log("before add product:" + productId);
+      // console.log("before add product:" + productId);
       productId = await addProduct(db, product);
-      console.log("after add product:" + productId);
+      // console.log("after add product:" + productId);
     }
     await addProductPrice(db, productId, product.unitPrice, date);
     await addPurchaseItem(db, purchaseId, productId, product.unitPrice, product.quantity, product.totalPrice);
 
   });
-  const tableList = ["product", "product_price", "purchase", "purchase_items"];
-  for (const tableName of tableList) {
-    try {
-        const [result] = await db.executeSql(`SELECT * FROM ${tableName};`);
-        const rows = [];
-        for (let i = 0; i < result.rows.length; i++) {
-            rows.push(result.rows.item(i));
-        }
-        console.log(`📋 Contents of ${tableName}:`, rows);
-    } catch (error) {
-        console.error(`❌ Error reading ${tableName}:`, error);
-    }
-}
+  // const tableList = ["product", "product_price", "purchase", "purchase_items"];
+  // setTimeout(async () => {
+  //   console.log("reading tables")
+  //   for (const tableName of tableList) {
+  //     try {
+  //       const [result] = await db.executeSql(`SELECT * FROM ${tableName};`);
+  //       const rows = [];
+  //       for (let i = 0; i < result.rows.length; i++) {
+  //         rows.push(result.rows.item(i));
+  //       }
+  //       console.log(`📋 Contents of ${tableName}:`, rows);
+  //     } catch (error) {
+  //       console.error(`❌ Error reading ${tableName}:`, error);
+  //     }
+  //   }
+  // }, 3000);
 }

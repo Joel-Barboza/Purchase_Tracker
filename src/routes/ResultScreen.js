@@ -32,7 +32,7 @@ const ResultScreen = ({ route }) => {
   const { wordList, discard, products } = text;
   const [showDateModal, setShowDateModal] = useState(false);
   const [showEditProductModal, setShowEditProductModal] = useState(false);
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState(new Date());
   const [productList, setProductList] = useState(products);
 
   // Used to store the values when the edit modal is showing
@@ -100,6 +100,13 @@ const ResultScreen = ({ route }) => {
     setProdUnitPriceChange(productList[productIndex].unitPrice);
     setProdTotalPriceChange(productList[productIndex].totalPrice);
     setShowEditProductModal(true);
+    // console.log(productIndex);
+    // console.log(productList[productIndex].name);
+    // console.log(productList[productIndex].prodCode);
+    // console.log(productList[productIndex].quantity);
+    // console.log(productList[productIndex].unitPrice);
+    // console.log(productList[productIndex].totalPrice);
+    // console.log(showEditProductModal);
   }
 
   const editExtractedProductList = () => {
@@ -111,7 +118,7 @@ const ResultScreen = ({ route }) => {
         let editedElem = elem;
         editedElem.name = prodNameChange;
         editedElem.prodCode = prodCodeChange;
-        editedElem.amount = prodQuantityChange;
+        editedElem.quantity = prodQuantityChange;
         editedElem.unitPrice = prodUnitPriceChange;
         editedElem.totalPrice = prodTotalPriceChange;
         return editedElem;
@@ -133,6 +140,11 @@ const ResultScreen = ({ route }) => {
     setProdUnitPriceChange("");
     setProdTotalPriceChange("");
   }
+
+  // useEffect(() => {
+  //   console.log(new Date())
+  // }, [])
+  
 
   return (
     <ScrollView style={styles.mainContainer}>
@@ -159,7 +171,10 @@ const ResultScreen = ({ route }) => {
             <Text>Amount</Text>
             <TextInput
               style={styles.input}
-              onChangeText={setProdQuantityChange}
+              onChangeText={(text) => {
+                setProdQuantityChange(text);
+                setProdUnitPriceChange(parseInt(prodTotalPriceChange)/parseInt(text))
+              }}
               value={prodQuantityChange}
             />
             {prodQuantityChange != "1" &&
@@ -201,9 +216,9 @@ const ResultScreen = ({ route }) => {
       </Modal>
       <View style={styles.dateContainer}>
 
-        <Text style={styles.dateText}>Date: {date ? formatDate(date) : 'DD-MM-YYYY'}</Text>
         <TouchableOpacity onPress={() => setShowDateModal(true)} style={styles.dateBtn}>
-          <Text style={styles.btnText}>Select Date</Text>
+          <Text style={styles.dateText}>Date: {date ? formatDate(date) : 'DD-MM-YYYY'}</Text>
+          {/* <Text style={styles.btnText}>Select Date</Text> */}
         </TouchableOpacity>
       </View>
       {
@@ -216,16 +231,17 @@ const ResultScreen = ({ route }) => {
 
         )
       }
-      <TouchableOpacity onPress={() => sdfasdf()} style={styles.saveDataBtn}>
+      {/* <TouchableOpacity onPress={() => sdfasdf()} style={styles.saveDataBtn}>
         <Text style={styles.btnText}>Save Date</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {
         productList.map((product, index) => (
+
           <TouchableOpacity
             key={index}
             style={styles.productCard}
             delayLongPress={300}
-            onLongPress={() => openEditModal(index)}
+            onLongPress={() => { openEditModal(index); console.log(JSON.stringify(product) + " " + " " + JSON.stringify(index)) }}
           >
             <View style={styles.leftSideCard}>
               <Text style={styles.mainText}>{product.name}</Text>
@@ -242,7 +258,7 @@ const ResultScreen = ({ route }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => addToDB(products, date, db)}>
+        onPress={() => { addToDB(productList, date, db); console.log(productList) }}>
         <Text style={styles.textStyle}>Save</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -278,6 +294,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'space-evenly',
 
+  },
+  dateText: {
+    color: 'white',
+    fontSize: 20
   },
   productCard: {
     flex: 1,
@@ -317,10 +337,6 @@ const styles = StyleSheet.create({
   secondaryText: {
     fontSize: 15,
     color: "#222a",
-  },
-  dateText: {
-    color: 'black',
-    fontSize: 20
   },
   btnText: {
     color: 'black',

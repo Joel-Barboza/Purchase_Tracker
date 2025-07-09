@@ -22,8 +22,8 @@ export const createProductTable = async (db) => {
 TODO: complete inserts
 --------------------*/
 export const addProduct = async (db, product) => {
-    const [name, prodCode, unitPrice, soldByKg] = product;
-    console.log(product);
+    console.log("inside addProduct");
+    const { name, prodCode, unitPrice, soldByKg } = product;
     const query = "INSERT INTO product (product_name, product_code, last_price, sold_by_kg) VALUES (?, ?, ?, ?);";
     try {
         const [result] = await db.executeSql(query, [name, prodCode, unitPrice, soldByKg]);
@@ -84,3 +84,16 @@ export const findProductByCode = async (db, productCode) => {
         return null;
     }
 };
+
+export const getAllProducts = async (db) => {
+    try {
+        const [result] = await db.executeSql(`SELECT * FROM product;`);
+        if (result.rows.length > 0) {
+            return result.rows;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error(`Error reading products`, error);
+    }
+}

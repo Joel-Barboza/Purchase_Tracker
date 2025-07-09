@@ -30,11 +30,23 @@ const App = () => {
           <Stack.Screen
             name="HomeScreen"
             component={HomeScreen}
-            options={{ title: 'Welcome' }}
+            options={{ headerShown: false }}
           />
-          <Stack.Screen name="PurchasesScreen" component={PurchasesScreen} />
-          <Stack.Screen name="CameraScreen" component={CameraScreen} />
-          <Stack.Screen name="ResultScreen" component={ResultScreen} />
+          <Stack.Screen
+            name="PurchasesScreen"
+            component={PurchasesScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CameraScreen"
+            component={CameraScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ResultScreen"
+            component={ResultScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </DbProvider>

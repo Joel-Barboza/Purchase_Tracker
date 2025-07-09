@@ -18,6 +18,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera";
 import { launchImageLibrary } from "react-native-image-picker";
 import { ExtractText } from "../utils/utils";
+import { request, PERMISSIONS } from "react-native-permissions";
+import { pick, types } from "@react-native-documents/picker";
 
 const CameraScreen = ({ navigation }) => {
   const { hasPermission, requestPermission } = useCameraPermission();
@@ -28,6 +30,7 @@ const CameraScreen = ({ navigation }) => {
   const camera = useRef(null);
   const [isActive, setIsActive] = useState(true);
   const [photo, setPhoto] = useState(null);
+  const [flash, setFlash] = useState("off");
   const device = useCameraDevice("back", {
     physicalDevices: [
       "ultra-wide-angle-camera",
@@ -60,7 +63,7 @@ const CameraScreen = ({ navigation }) => {
 
   const capturePhoto = async () => {
     if (camera.current !== null) {
-      const photo = await camera.current.takePhoto({ flash: "off" });
+      const photo = await camera.current.takePhoto({ flash: flash });
       setImageSource(`file://${photo.path}`);
       setPhoto(photo);
       setIsActive(false);
@@ -70,25 +73,53 @@ const CameraScreen = ({ navigation }) => {
     }
   };
 
-  const openGallery = () => {
-    launchImageLibrary({}, (selected) => {
-      if (selected.assets !== undefined) {
-        setImageSource(selected.assets[0].uri);
-        setPhoto(selected.assets[0]);
-        setIsActive(false);
-      }
-
+  const toggleFlashState = () => {
+    if (flash == "off") {
+      setFlash("on");
+    } else if (flash == "on") {
+      setFlash("off");
     }
-    );
+  }
+
+  // request(PERMISSIONS.ANDROID.READ_MEDIA_IMAGES).then((status) => {
+  //   console.log("Camera status: " + status)
+  // })
+  // launchImageLibrary({}, (selected) => {
+  //   if (selected.assets !== undefined) {
+  //     setImageSource(selected.assets[0].uri);
+  //     setPhoto(selected.assets[0]);
+  //     setIsActive(false);
+  //     console.log(selected);
+  //   }
+
+  // }
+  // );
+
+
+  const openGallery = async () => {
+    try {
+        const [result] = await pick({
+          mode: 'open',
+          type: [types.images],
+        })
+        setImageSource(result.uri);
+        setPhoto(result);
+        setIsActive(false);
+      } catch (err) {
+        // see error handling https://react-native-documents.github.io/docs/sponsor-only/errors
+        console.log(err);
+      }
   };
 
   const processPhoto = async () => {
+    console.log("Starting to process photo");
     if (photo.path) {
       await CameraRoll.saveAsset(`file://${photo.path}`, {
         type: "photo",
         album: "PurchaseApp"
       });
       setImageSource(`file://${photo.path}`);
+      console.log("Ended to process photo");
     }
     navigation.navigate("ResultScreen", { text: text });
   }
@@ -127,8 +158,8 @@ const CameraScreen = ({ navigation }) => {
               photo={true}
               resizeMode="contain"
               photoQualityBalance="speed"
-              onPreviewStarted={() => console.log('Preview started!')}
-              onPreviewStopped={() => console.log('Preview stopped!')}
+              // onPreviewStarted={() => console.log('Preview started!')}
+              // onPreviewStopped={() => console.log('Preview stopped!')}
             />
 
           ) : (
@@ -156,10 +187,10 @@ const CameraScreen = ({ navigation }) => {
               />
               <TouchableOpacity
                 style={styles.simpleBtn}
-                onPress={() => console.log("not implemented")}
+                onPress={toggleFlashState}
                 color="#841584"
               >
-                <Text>Flash</Text>
+                <Text>Flash {flash}</Text>
               </TouchableOpacity>
             </>
 
@@ -205,7 +236,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 176,
+    height: Dimensions.get('window').height - 120, // excluding buttonContainer height
   },
   buttonContainer: {
     display: "flex",

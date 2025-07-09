@@ -28,17 +28,19 @@ export const addProductPrice = async(db, prodId, price, date) => {
 }
 
 export const getProductPriceById = async(db, prodId) => {
-    const query = "SELECT price FROM product_price WHERE product_id = ?;";
+    const query = "SELECT * FROM product_price WHERE product_id = ?;";
+    // const query = "SELECT price FROM product_price WHERE product_id = ?;";
+    console.log(prodId);
     try {
         const [result] = await db.executeSql(query, [prodId]);
-        console.log(`Insert price of ${prodId} to ${price}`);
+        // console.log(`Insert price of ${prodId} to ${price}`);
         if (result.rows.length > 0) {
-            return result.rows.item(0);
+            return result.rows;
         } else {
             return null;
         }
     } catch (error) {
-        console.error("Error Inserting price:", error);
+        console.error("Error getting product prices:", error);
         return null;
     }
 }
