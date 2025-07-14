@@ -18,9 +18,9 @@ const yes = async () => {
     parseInt(Config.ENCRYPT_COST),
     parseInt(Config.ENCRYPT_LENGTH)
   );
-  const { cipher, iv } = await encryptData(JSON.stringify({ "purchases": [] , "products": []}), key);
+  const { cipher, iv } = await encryptData(JSON.stringify({ "purchases": [], "products": [] }), key);
   console.log('Data encrypteds:', { cipher, iv });
-  await writeToFile(JSON.stringify({"cipher": cipher, "iv": iv}), key);
+  await writeToFile(JSON.stringify({ "cipher": cipher, "iv": iv }), key);
   console.log();
 
 }
@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }) => {
   //   console.log("fsdf");
   //   yes();
   // }, [])
-  
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.main}>
@@ -38,19 +38,11 @@ const HomeScreen = ({ navigation }) => {
         <Text>asdfasdfasdfa</Text>
         <Text>fasdfasdfasdf</Text>
       </ScrollView>
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <TouchableOpacity
           style={styles.footerBtn}
           onPress={() => navigation.navigate("PurchasesScreen")}
         >
-          <Text>Purchases</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.footerBtn}
-          onPress={() => navigation.navigate("CameraScreen")}
-        >
-          <Text>Scan</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.footerBtn}
           // onPress={async() => await restartFile()}
@@ -65,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
         >
           <Text>Encrypted</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -77,7 +69,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   main: {
-    backgroundColor: "lightblue",
+    backgroundColor: "#070709",
     width: "100%",
   },
   footer: {

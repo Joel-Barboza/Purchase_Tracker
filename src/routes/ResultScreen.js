@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   mainContainer: {
-    backgroundColor: "#2c2c2c"
+    backgroundColor: "#070709"
   },
   tableContainer: { flex: 1, padding: 10, justifyContent: 'center', backgroundColor: '#fff' },
   head: { height: 44, backgroundColor: 'darkblue' },
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 12,
     width: "auto",//Dimensions.get('window').width - 30
-    backgroundColor: "#c2c2c2"
+    backgroundColor: "#252429"
   },
   leftSideCard: {
     flex: 1,
@@ -332,11 +332,11 @@ const styles = StyleSheet.create({
   mainText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#222",
+    color: "#dddddd",
   },
   secondaryText: {
     fontSize: 15,
-    color: "#222a",
+    color: "#ddddddaa",
   },
   btnText: {
     color: 'black',

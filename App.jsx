@@ -14,18 +14,43 @@ import PurchasesScreen from './src/routes/PurchasesScreen';
 import { connectToDatabase, createTables } from './db/db';
 import { useCallback, useEffect } from 'react';
 import { DbProvider } from './src/context/DbContext';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TabBar from './src/components/TabBar';
+import CameraTab from './src/routes/CameraStack';
 
-
-const Stack = createNativeStackNavigator();
 
 
 const App = () => {
-
-
-
   return (
     <DbProvider>
       <NavigationContainer>
+        <CameraTab />
+        {/* <Tab.Navigator
+          tabBar={(props) => <TabBar {...props} />}
+        >
+          <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Tab.Screen name="Purc" component={PurchasesScreen} options={{ headerShown: false }} />
+          <Tab.Screen name="Cam" component={CameraTab} options={{ headerShown: false }} />
+          <Tab.Screen name="H" component={HomeScreen} options={{ headerShown: false }} />
+          <Tab.Screen name="P" component={PurchasesScreen} options={{ headerShown: false }} />
+        </Tab.Navigator> */}
+      </NavigationContainer>
+      {/* <NavigationContainer>
+
+        <Stack.Navigator>
+          <Stack.Screen
+            name="CameraScreen"
+            component={CameraScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ResultScreen"
+            component={ResultScreen}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer> */}
+      {/* <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             name="HomeScreen"
@@ -48,7 +73,8 @@ const App = () => {
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
-      </NavigationContainer>
+
+      </NavigationContainer> */}
     </DbProvider>
   );
 };

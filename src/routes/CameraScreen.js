@@ -20,6 +20,7 @@ import { launchImageLibrary } from "react-native-image-picker";
 import { ExtractText } from "../utils/utils";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { pick, types } from "@react-native-documents/picker";
+import DocumentScanner from "react-native-document-scanner-plugin";
 
 const CameraScreen = ({ navigation }) => {
   const { hasPermission, requestPermission } = useCameraPermission();
@@ -38,6 +39,24 @@ const CameraScreen = ({ navigation }) => {
       "telephoto-camera",
     ],
   });
+
+  // const [scannedImage, setScannedImage] = useState();
+
+  // const scanDocument = async () => {
+  //   // start the document scanner
+  //   const { scannedImages } = await DocumentScanner.scanDocument()
+
+  //   // get back an array with scanned image file paths
+  //   if (scannedImages.length > 0) {
+  //     // set the img src, so we can view the first scanned image
+  //     setScannedImage(scannedImages[0])
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   // call scanDocument on load
+  //   scanDocument()
+  // }, []);
 
 
   // Start camera when entering the screen
@@ -98,17 +117,17 @@ const CameraScreen = ({ navigation }) => {
 
   const openGallery = async () => {
     try {
-        const [result] = await pick({
-          mode: 'open',
-          type: [types.images],
-        })
-        setImageSource(result.uri);
-        setPhoto(result);
-        setIsActive(false);
-      } catch (err) {
-        // see error handling https://react-native-documents.github.io/docs/sponsor-only/errors
-        console.log(err);
-      }
+      const [result] = await pick({
+        mode: 'open',
+        type: [types.images],
+      })
+      setImageSource(result.uri);
+      setPhoto(result);
+      setIsActive(false);
+    } catch (err) {
+      // see error handling https://react-native-documents.github.io/docs/sponsor-only/errors
+      console.log(err);
+    }
   };
 
   const processPhoto = async () => {
@@ -145,7 +164,15 @@ const CameraScreen = ({ navigation }) => {
   )
 
 
+  // https://lukaszkurantdev.github.io/react-native-fast-opencv/availablefunctions#contourarea
+  // https://github.com/lukaszkurantdev/react-native-fast-opencv
+
   return (
+    // <Image
+    //   resizeMode="contain"
+    //   style={{ width: '100%', height: '100%' }}
+    //   source={{ uri: scannedImage }}
+    // />
     <View style={styles.container}>
       <>
         <View style={styles.cameraContainer}>
@@ -158,8 +185,8 @@ const CameraScreen = ({ navigation }) => {
               photo={true}
               resizeMode="contain"
               photoQualityBalance="speed"
-              // onPreviewStarted={() => console.log('Preview started!')}
-              // onPreviewStopped={() => console.log('Preview stopped!')}
+            // onPreviewStarted={() => console.log('Preview started!')}
+            // onPreviewStopped={() => console.log('Preview stopped!')}
             />
 
           ) : (
@@ -172,8 +199,7 @@ const CameraScreen = ({ navigation }) => {
 
           )}
         </View>
-        <Text>{imageSource.toString()}</Text>
-        {/* <Text>{text.textBlocks[0].text}</Text> */}
+        {/* <Text>{imageSource.toString()}</Text> */}
         <View style={styles.buttonContainer}>
           {isActive ? (
             <>
@@ -244,7 +270,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
 
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.84)",
+    backgroundColor: "#120f10",
     position: "absolute",
     width: "100%",
     height: 120,
@@ -278,7 +304,7 @@ const styles = StyleSheet.create({
     borderColor: "white",
   },
   simpleBtn: {
-    backgroundColor: '#531289',
+    backgroundColor: '#ee3a28',
     borderRadius: 8,
     padding: 15,
   },
