@@ -19,12 +19,12 @@ import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import TextRecognition from "@react-native-ml-kit/text-recognition";
 import { Camera, useCameraDevice } from "react-native-vision-camera";
 import { launchImageLibrary } from "react-native-image-picker";
-import { readFromFile, addDataToFile } from "../utils/saveData";
+import { readFromFile, addDataToFile } from "../../utils/saveData";
 import { decrypt, generateKey } from "react-native-aes-crypto";
 import Config from 'react-native-config';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { addToDB } from "../utils/utils";
-import { useDb } from "../context/DbContext";
+import { addToDB } from "../../utils/utils";
+import { useDb } from "../../context/DbContext";
 
 const ResultScreen = ({ route }) => {
   const db = useDb();

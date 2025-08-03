@@ -1,16 +1,16 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CameraScreen from "./CameraScreen";
-import ResultScreen from "./ResultScreen";
-import HomeTabs from "./HomeTabs";
+import CameraScreen from "./screens/CameraScreen";
+import ResultScreen from "./screens/ResultScreen";
+import HomeBottomTabs from "./HomeBottomTabs";
 
 const Stack = createNativeStackNavigator();
 
-const CameraTab = () => {
+const CameraStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
                 name="HomeTabs"
-                component={HomeTabs}
+                component={HomeBottomTabs}
                 options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -27,4 +27,4 @@ const CameraTab = () => {
     );
 };
 
-export default CameraTab;
+export default CameraStack;

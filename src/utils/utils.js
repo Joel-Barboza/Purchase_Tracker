@@ -18,13 +18,14 @@ export const ExtractText = async (image) => {
     console.log(image);
     // const result = await TextRecognition.recognize(`file://${image}`);
     const result = await TextRecognition.recognize(image);
-    const wordList = processText(result);
+    // console.log(JSON.stringify(result));
+    const wordList = await processText(result);
     return { wordList, discard, products };
   }
   return { wordList: [], discard: [], products: [] };
 };
 
-const processText = (extractedText) => {
+const processText = async (extractedText) => {
   for (let i = 0; i < extractedText.blocks.length; i++) {
     const block = extractedText.blocks[i];
 
@@ -200,7 +201,7 @@ const getProductFromLine = () => {
       --------------------*/
       if (prodCodeMatch[0].slice(-1).toLowerCase() == "k") {
         const weightInKg = joinWithNextLine.match(/(?<=[0-9]{10}k\s+)((\d{1,3}[.,])*\d{1,3})/gi);
-        const priceByKg = joinWithNextLine.match(/(?<=[0-9]{10}k\s+(\d{1,3}[.,])*\d{1,3}\s*k*[a-z]\s*A\s*)((\d{1,3}[.,])*\d{1,3})/gi);
+        const priceByKg = joinWithNextLine.match(/(?<=[0-9]{10}k\s+(\d{1,3}[.,])*\d{1,3}\s*k*[a-z0-9]\s*A\s*)((\d{1,3}[.,])*\d{1,3})/gi);
         console.log(priceByKg);
         product = {
           name: nameMatch[0],

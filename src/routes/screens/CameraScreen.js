@@ -17,7 +17,7 @@ import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { useFocusEffect } from '@react-navigation/native';
 import { Camera, useCameraDevice, useCameraPermission } from "react-native-vision-camera";
 import { launchImageLibrary } from "react-native-image-picker";
-import { ExtractText } from "../utils/utils";
+import { ExtractText } from "../../utils/utils";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { pick, types } from "@react-native-documents/picker";
 import DocumentScanner from "react-native-document-scanner-plugin";

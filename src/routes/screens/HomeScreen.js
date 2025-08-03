@@ -8,7 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { test, writeToFile, encryptData, generateKey, readFromFile, restartFile, readEncrypted } from "../utils/saveData";
+import { test, writeToFile, encryptData, generateKey, readFromFile, restartFile, readEncrypted } from "../../utils/saveData";
 import Config from 'react-native-config';
 
 const yes = async () => {
@@ -33,31 +33,8 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.main}>
-        <Text>asdfasdfasdf</Text>
-        <Text>asdfasdfasdf</Text>
-        <Text>asdfasdfasdfa</Text>
-        <Text>fasdfasdfasdf</Text>
+        <Text>Home screen</Text>
       </ScrollView>
-      {/* <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.footerBtn}
-          onPress={() => navigation.navigate("PurchasesScreen")}
-        >
-        <TouchableOpacity
-          style={styles.footerBtn}
-          // onPress={async() => await restartFile()}
-          onPress={async() => {console.log(await readFromFile())}}
-        >
-          <Text>Test</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.footerBtn}
-          // onPress={async() => await restartFile()}
-          onPress={async() => await readEncrypted()}
-        >
-          <Text>Encrypted</Text>
-        </TouchableOpacity>
-      </View> */}
     </View>
   );
 };
@@ -67,6 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    height: "93%", // excluding the footer
   },
   main: {
     backgroundColor: "#070709",

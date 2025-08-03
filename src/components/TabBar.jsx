@@ -12,7 +12,9 @@ import { Icon } from "react-native-vector-icons/Icon";
 
 const icons = {
   Home: "house",
-  Purchases: "money-bill"
+  Stats: "square-poll-vertical",
+  Wallet: "wallet",
+  ShoppingCart: "cart-shopping",
 }
 
 const TabBar = ({ state, descriptors, navigation }) => {
@@ -76,18 +78,18 @@ const TabBar = ({ state, descriptors, navigation }) => {
               onPress={onPress}
               onLongPress={onLongPress}
               key={route.key}
-              style={
+              style={ [styles.tabBarIcon,
                 index == 1
-                  ? [styles.leftIcons, { flex: 1, alignItems: "center" }]
+                  ? [styles.leftIcons, { flex: 1, alignItems: "center", borderRadius: 8 }]
                   : index == 2
-                    ? [styles.rightIcons, { flex: 1, alignItems: "center" }]
-                    : { flex: 1, alignItems: "center" }
+                    ? [styles.rightIcons, { flex: 1, alignItems: "center", borderRadius: 8 }]
+                    : { flex: 1, alignItems: "center", borderRadius: 8 }]
               }
             >
               <FontAwesome6
                 name={icons[route.name] || "circle"}
                 iconStyle="solid"
-                size={24}
+                size={26}
                 color={isFocused ? colors.primary : "#999dac"}
               />
               <Text style={{ color: isFocused ? colors.primary : colors.text }}>
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     backgroundColor: "#120f10",
     width: "100%",
-    height: "7%",
+    height: "8%",
     bottom: 0,
     flex: 1,
     // flexDirection: "row",
@@ -166,7 +168,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     bottom: '3.5%',
-  }
+  },
+  tabBarIcon: {
+    width: 24,
+    height: 24,
+  },
 });
 
 export default TabBar;
