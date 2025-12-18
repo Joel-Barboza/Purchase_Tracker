@@ -1,97 +1,112 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# About the proyect
 
-# Getting Started
+## Introduction
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+Purchase Tracker is a mobile app to hold a records of your supermarket purchases, using an OCR technology to extract the data from the purchase tickets, and storing it to see how much are you spending, where are you spending it and more.
 
-## Step 1: Start Metro
+## Feature List
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+1. OCR to extract data from purchase tickets such as:
+    
+    * Item name.
+    * Price (Unit and total of product, if more than one bought)
+    * Total price with and without IVA
+    * Product ID
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+2. Create a list with the products bought by Name, id, price (include if it had a discount)
 
-```sh
-# Using npm
-npm start
+3. Reminders for when you have spent too much in certain items.
 
-# OR using Yarn
-yarn start
+
+# We will use chocolatey to install packages
+
+[Chocolatey Home Page](https://chocolatey.org/)
+
+[Chocolatey Downloads](https://chocolatey.org/install#individual)
+
+# First, run on admin mode Powershell
+
+```bash
+choco install -y nodejs-lts microsoft-openjdk11
 ```
 
-## Step 2: Build and run your app
+# Then, follow the setup development environment
+* [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment)
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+* [Get Started Without a Framework](https://reactnative.dev/docs/getting-started-without-a-framework)
 
-### Android
+## If you are on Linux:
 
-```sh
-# Using npm
-npm run android
+* [Cargo install](https://doc.rust-lang.org/cargo/getting-started/installation.html)
 
-# OR using Yarn
-yarn android
+```bash
+cargo install fnm
 ```
 
-### iOS
+```bash
+# installs fnm (Fast Node Manager)
+curl -fsSL https://fnm.vercel.app/install | bash
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+# activate fnm
+source ~/.bashrc
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+# download and install Node.js
+fnm use --install-if-missing 20
 
-```sh
-bundle install
+# verifies the right Node.js version is in the environment
+node -v # should print `v20.18.0`
+
+# verifies the right npm version is in the environment
+npm -v # should print `10.8.2`
 ```
 
-Then, and every time you update your native dependencies, run:
+# Then, follow the setup development environment
+* [Set Up Your Environment, Linux](https://reactnative.dev/docs/set-up-your-environment?os=linux)
 
-```sh
-bundle exec pod install
+### The following commands helped too:
+```bash 
+chmod +x android/gradlew
+sudo apt update
+sudo apt install openjdk-17-jdk
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
 
-```sh
-# Using npm
-npm run ios
+## To connect to a specific device
 
-# OR using Yarn
-yarn ios
+### Get available devices ids' (on admin mode):
+
+```bash
+adb device
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Open on wanted device:
+```bash
+npx react-native run-android --deviceId=DEVICE_ID-RFCW40L8QBK
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+# To generate apk
 
-## Step 3: Modify your app
+```bash
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+```
+```bash
+cd android
+```
+```bash
+./gradlew assembleDebug
+```
 
-Now that you have successfully run the app, let's make changes!
+Done all at once (using "&&" to do the commands consecutively)
+```bash
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+Then you can get apk in **app/build/outputs/apk/debug/app-debug.apk**
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### If you have problems check:
+1. [react-native : El término 'react-native' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable.](https://stackoverflow.com/questions/38889487/react-native-is-not-recognized-as-an-internal-or-external-command-operable-pr)
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+2. [react-native : No se puede cargar el archivo C:\Users\\... porque la 
+ejecución de scripts está deshabilitada en este sistema.](https://es.stackoverflow.com/questions/321611/problema-con-scripts-en-visual-studio-code)

@@ -1,45 +1,39 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './src/routes/screens/HomeScreen';
+import CameraScreen from './src/routes/screens/CameraScreen';
+import ResultScreen from './src/routes/screens/ResultScreen';
+import PurchasesScreen from './src/routes/StatsMaterialTopTabs';
+import { connectToDatabase, createTables } from './db/db';
+import { useCallback, useEffect } from 'react';
+import { DbProvider } from './src/context/DbContext';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TabBar from './src/components/TabBar';
+import CameraStack from './src/routes/CameraStack';
+import { SafeAreaProvider, useSafeAreaInsets, SafeAreaView } from 'react-native-safe-area-context';
+//import { enableExperimentalWebImplementation } from "react-native-edge-to-edge";
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = () => {
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
 
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+  connectToDatabase();
+
+  // const insets = useSafeAreaInsets()k;
+
 
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <DbProvider>
+      <SafeAreaProvider>
+        <SafeAreaView style={{ flex: 1 , backgroundColor: '#b31212ff' }} edges={['top']}>
+          <NavigationContainer>
+            <CameraStack />
+          </NavigationContainer>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </DbProvider>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
+

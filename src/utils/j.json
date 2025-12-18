@@ -1,0 +1,4235 @@
+[
+  {
+    "products": [
+      {
+        "id": 1,
+        "product-price": "",
+        "product-code": "",
+        "is-sold-by-kg": false,
+        "prices": [
+          {
+            "price": 1,
+            "updated-on": 2025
+          },
+          {
+            "price": 1,
+            "updated-on": 2025
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "product-price": "",
+        "product-code": "",
+        "is-sold-by-kg": false,
+        "prices": [
+          {
+            "price": 1,
+            "updated-on": 2025
+          },
+          {
+            "price": 1,
+            "updated-on": 2025
+          }
+        ]
+      }
+    ],
+    "purchases": [
+      {
+        "id": 1,
+        "date": 2025,
+        "products": [
+          {
+            "product-id": 2,
+            "unit-price": 2,
+            "quantity": 1,
+            "total-price": 2
+          },
+          {
+            "product-id": 2,
+            "unit-price": 2,
+            "quantity": 1,
+            "total-price": 2
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "date": 2025,
+        "products": [
+          {
+            "product-id": 2,
+            "unit-price": 2,
+            "quantity": 1,
+            "total-price": 2
+          },
+          {
+            "product-id": 2,
+            "unit-price": 2,
+            "quantity": 1,
+            "total-price": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "blocks": [
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 1564,
+          "height": 81,
+          "left": 1409,
+          "width": 163
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 1564,
+                  "height": 81,
+                  "left": 1409,
+                  "width": 163
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1564,
+                    "x": 1417
+                  },
+                  {
+                    "y": 1581,
+                    "x": 1572
+                  },
+                  {
+                    "y": 1645,
+                    "x": 1564
+                  },
+                  {
+                    "y": 1628,
+                    "x": 1409
+                  }
+                ],
+                "text": "PALI"
+              }
+            ],
+            "frame": {
+              "top": 1564,
+              "height": 81,
+              "left": 1409,
+              "width": 163
+            },
+            "cornerPoints": [
+              {
+                "y": 1564,
+                "x": 1417
+              },
+              {
+                "y": 1581,
+                "x": 1572
+              },
+              {
+                "y": 1645,
+                "x": 1564
+              },
+              {
+                "y": 1628,
+                "x": 1409
+              }
+            ],
+            "text": "PALI"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 1564,
+            "x": 1417
+          },
+          {
+            "y": 1581,
+            "x": 1572
+          },
+          {
+            "y": 1645,
+            "x": 1564
+          },
+          {
+            "y": 1628,
+            "x": 1409
+          }
+        ],
+        "text": "PALI"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 1680,
+          "height": 247,
+          "left": 848,
+          "width": 1309
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "fr"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 1684,
+                  "height": 71,
+                  "left": 855,
+                  "width": 185
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1684,
+                    "x": 860
+                  },
+                  {
+                    "y": 1697,
+                    "x": 1040
+                  },
+                  {
+                    "y": 1755,
+                    "x": 1035
+                  },
+                  {
+                    "y": 1742,
+                    "x": 855
+                  }
+                ],
+                "text": "CORP."
+              },
+              {
+                "frame": {
+                  "top": 1701,
+                  "height": 95,
+                  "left": 1089,
+                  "width": 508
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1701,
+                    "x": 1094
+                  },
+                  {
+                    "y": 1738,
+                    "x": 1597
+                  },
+                  {
+                    "y": 1796,
+                    "x": 1592
+                  },
+                  {
+                    "y": 1759,
+                    "x": 1089
+                  }
+                ],
+                "text": "SUPERMERCADOS"
+              },
+              {
+                "frame": {
+                  "top": 1742,
+                  "height": 74,
+                  "left": 1636,
+                  "width": 243
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1742,
+                    "x": 1641
+                  },
+                  {
+                    "y": 1759,
+                    "x": 1879
+                  },
+                  {
+                    "y": 1816,
+                    "x": 1874
+                  },
+                  {
+                    "y": 1799,
+                    "x": 1636
+                  }
+                ],
+                "text": "UNIDOS"
+              },
+              {
+                "frame": {
+                  "top": 1763,
+                  "height": 75,
+                  "left": 1919,
+                  "width": 238
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1763,
+                    "x": 1924
+                  },
+                  {
+                    "y": 1780,
+                    "x": 2157
+                  },
+                  {
+                    "y": 1838,
+                    "x": 2152
+                  },
+                  {
+                    "y": 1821,
+                    "x": 1919
+                  }
+                ],
+                "text": "S.R.L."
+              }
+            ],
+            "frame": {
+              "top": 1684,
+              "height": 154,
+              "left": 855,
+              "width": 1302
+            },
+            "cornerPoints": [
+              {
+                "y": 1684,
+                "x": 860
+              },
+              {
+                "y": 1780,
+                "x": 2157
+              },
+              {
+                "y": 1838,
+                "x": 2152
+              },
+              {
+                "y": 1742,
+                "x": 855
+              }
+            ],
+            "text": "CORP. SUPERMERCADOS UNIDOS S.R.L."
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "es"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 1768,
+                  "height": 89,
+                  "left": 1097,
+                  "width": 171
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1768,
+                    "x": 1104
+                  },
+                  {
+                    "y": 1781,
+                    "x": 1268
+                  },
+                  {
+                    "y": 1857,
+                    "x": 1261
+                  },
+                  {
+                    "y": 1844,
+                    "x": 1097
+                  }
+                ],
+                "text": "PALI"
+              },
+              {
+                "frame": {
+                  "top": 1783,
+                  "height": 96,
+                  "left": 1275,
+                  "width": 281
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1783,
+                    "x": 1282
+                  },
+                  {
+                    "y": 1804,
+                    "x": 1556
+                  },
+                  {
+                    "y": 1879,
+                    "x": 1549
+                  },
+                  {
+                    "y": 1858,
+                    "x": 1275
+                  }
+                ],
+                "text": "CARTAGO"
+              },
+              {
+                "frame": {
+                  "top": 1808,
+                  "height": 94,
+                  "left": 1590,
+                  "width": 246
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1808,
+                    "x": 1597
+                  },
+                  {
+                    "y": 1827,
+                    "x": 1836
+                  },
+                  {
+                    "y": 1902,
+                    "x": 1829
+                  },
+                  {
+                    "y": 1883,
+                    "x": 1590
+                  }
+                ],
+                "text": "CENTRO"
+              }
+            ],
+            "frame": {
+              "top": 1768,
+              "height": 134,
+              "left": 1097,
+              "width": 739
+            },
+            "cornerPoints": [
+              {
+                "y": 1768,
+                "x": 1104
+              },
+              {
+                "y": 1826,
+                "x": 1836
+              },
+              {
+                "y": 1902,
+                "x": 1829
+              },
+              {
+                "y": 1844,
+                "x": 1097
+              }
+            ],
+            "text": "PALI CARTAGO CENTRO"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 1680,
+            "x": 860
+          },
+          {
+            "y": 1780,
+            "x": 2157
+          },
+          {
+            "y": 1927,
+            "x": 2145
+          },
+          {
+            "y": 1827,
+            "x": 848
+          }
+        ],
+        "text": "CORP. SUPERMERCADOS UNIDOS S.R.L.\nPALI CARTAGO CENTRO"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2757,
+          "height": 74,
+          "left": 584,
+          "width": 163
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2757,
+                  "height": 65,
+                  "left": 584,
+                  "width": 46
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2757,
+                    "x": 589
+                  },
+                  {
+                    "y": 2760,
+                    "x": 630
+                  },
+                  {
+                    "y": 2822,
+                    "x": 625
+                  },
+                  {
+                    "y": 2819,
+                    "x": 584
+                  }
+                ],
+                "text": "G"
+              },
+              {
+                "frame": {
+                  "top": 2763,
+                  "height": 67,
+                  "left": 667,
+                  "width": 80
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2763,
+                    "x": 672
+                  },
+                  {
+                    "y": 2768,
+                    "x": 747
+                  },
+                  {
+                    "y": 2830,
+                    "x": 742
+                  },
+                  {
+                    "y": 2825,
+                    "x": 667
+                  }
+                ],
+                "text": "13"
+              }
+            ],
+            "frame": {
+              "top": 2757,
+              "height": 74,
+              "left": 584,
+              "width": 163
+            },
+            "cornerPoints": [
+              {
+                "y": 2757,
+                "x": 589
+              },
+              {
+                "y": 2769,
+                "x": 747
+              },
+              {
+                "y": 2831,
+                "x": 742
+              },
+              {
+                "y": 2819,
+                "x": 584
+              }
+            ],
+            "text": "G 13"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2757,
+            "x": 589
+          },
+          {
+            "y": 2769,
+            "x": 747
+          },
+          {
+            "y": 2831,
+            "x": 742
+          },
+          {
+            "y": 2819,
+            "x": 584
+          }
+        ],
+        "text": "G 13"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 1870,
+          "height": 96,
+          "left": 1190,
+          "width": 512
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "am"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 1870,
+                  "height": 96,
+                  "left": 1190,
+                  "width": 512
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1870,
+                    "x": 1195
+                  },
+                  {
+                    "y": 1909,
+                    "x": 1702
+                  },
+                  {
+                    "y": 1966,
+                    "x": 1697
+                  },
+                  {
+                    "y": 1927,
+                    "x": 1190
+                  }
+                ],
+                "text": "506-2552-9005"
+              }
+            ],
+            "frame": {
+              "top": 1870,
+              "height": 96,
+              "left": 1190,
+              "width": 512
+            },
+            "cornerPoints": [
+              {
+                "y": 1870,
+                "x": 1195
+              },
+              {
+                "y": 1909,
+                "x": 1702
+              },
+              {
+                "y": 1966,
+                "x": 1697
+              },
+              {
+                "y": 1927,
+                "x": 1190
+              }
+            ],
+            "text": "506-2552-9005"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 1870,
+            "x": 1195
+          },
+          {
+            "y": 1909,
+            "x": 1702
+          },
+          {
+            "y": 1966,
+            "x": 1697
+          },
+          {
+            "y": 1927,
+            "x": 1190
+          }
+        ],
+        "text": "506-2552-9005"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 1935,
+          "height": 127,
+          "left": 1066,
+          "width": 832
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 1936,
+                  "height": 69,
+                  "left": 1066,
+                  "width": 118
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1936,
+                    "x": 1071
+                  },
+                  {
+                    "y": 1945,
+                    "x": 1184
+                  },
+                  {
+                    "y": 2005,
+                    "x": 1179
+                  },
+                  {
+                    "y": 1996,
+                    "x": 1066
+                  }
+                ],
+                "text": "CED"
+              },
+              {
+                "frame": {
+                  "top": 1948,
+                  "height": 72,
+                  "left": 1221,
+                  "width": 145
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1948,
+                    "x": 1226
+                  },
+                  {
+                    "y": 1959,
+                    "x": 1366
+                  },
+                  {
+                    "y": 2020,
+                    "x": 1361
+                  },
+                  {
+                    "y": 2009,
+                    "x": 1221
+                  }
+                ],
+                "text": "JUR."
+              },
+              {
+                "frame": {
+                  "top": 1963,
+                  "height": 99,
+                  "left": 1417,
+                  "width": 481
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1963,
+                    "x": 1422
+                  },
+                  {
+                    "y": 2001,
+                    "x": 1898
+                  },
+                  {
+                    "y": 2062,
+                    "x": 1893
+                  },
+                  {
+                    "y": 2024,
+                    "x": 1417
+                  }
+                ],
+                "text": "3-102-007223"
+              }
+            ],
+            "frame": {
+              "top": 1935,
+              "height": 127,
+              "left": 1066,
+              "width": 832
+            },
+            "cornerPoints": [
+              {
+                "y": 1935,
+                "x": 1071
+              },
+              {
+                "y": 2001,
+                "x": 1898
+              },
+              {
+                "y": 2062,
+                "x": 1893
+              },
+              {
+                "y": 1996,
+                "x": 1066
+              }
+            ],
+            "text": "CED JUR. 3-102-007223"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 1935,
+            "x": 1071
+          },
+          {
+            "y": 2001,
+            "x": 1898
+          },
+          {
+            "y": 2062,
+            "x": 1893
+          },
+          {
+            "y": 1996,
+            "x": 1066
+          }
+        ],
+        "text": "CED JUR. 3-102-007223"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 1969,
+          "height": 366,
+          "left": 652,
+          "width": 1610
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 1969,
+                  "height": 101,
+                  "left": 670,
+                  "width": 307
+                },
+                "cornerPoints": [
+                  {
+                    "y": 1969,
+                    "x": 677
+                  },
+                  {
+                    "y": 1994,
+                    "x": 977
+                  },
+                  {
+                    "y": 2070,
+                    "x": 970
+                  },
+                  {
+                    "y": 2045,
+                    "x": 670
+                  }
+                ],
+                "text": "TDA#3114"
+              },
+              {
+                "frame": {
+                  "top": 2000,
+                  "height": 112,
+                  "left": 1034,
+                  "width": 433
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2000,
+                    "x": 1041
+                  },
+                  {
+                    "y": 2036,
+                    "x": 1467
+                  },
+                  {
+                    "y": 2112,
+                    "x": 1460
+                  },
+                  {
+                    "y": 2076,
+                    "x": 1034
+                  }
+                ],
+                "text": "OP#00000071"
+              },
+              {
+                "frame": {
+                  "top": 2046,
+                  "height": 85,
+                  "left": 1567,
+                  "width": 120
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2046,
+                    "x": 1574
+                  },
+                  {
+                    "y": 2055,
+                    "x": 1687
+                  },
+                  {
+                    "y": 2131,
+                    "x": 1680
+                  },
+                  {
+                    "y": 2122,
+                    "x": 1567
+                  }
+                ],
+                "text": "TE#"
+              },
+              {
+                "frame": {
+                  "top": 2060,
+                  "height": 84,
+                  "left": 1726,
+                  "width": 119
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2060,
+                    "x": 1733
+                  },
+                  {
+                    "y": 2069,
+                    "x": 1845
+                  },
+                  {
+                    "y": 2144,
+                    "x": 1838
+                  },
+                  {
+                    "y": 2135,
+                    "x": 1726
+                  }
+                ],
+                "text": "041"
+              },
+              {
+                "frame": {
+                  "top": 2074,
+                  "height": 84,
+                  "left": 1889,
+                  "width": 122
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2074,
+                    "x": 1896
+                  },
+                  {
+                    "y": 2083,
+                    "x": 2011
+                  },
+                  {
+                    "y": 2158,
+                    "x": 2004
+                  },
+                  {
+                    "y": 2149,
+                    "x": 1889
+                  }
+                ],
+                "text": "TR#"
+              },
+              {
+                "frame": {
+                  "top": 2088,
+                  "height": 92,
+                  "left": 2052,
+                  "width": 210
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2088,
+                    "x": 2059
+                  },
+                  {
+                    "y": 2105,
+                    "x": 2262
+                  },
+                  {
+                    "y": 2180,
+                    "x": 2255
+                  },
+                  {
+                    "y": 2163,
+                    "x": 2052
+                  }
+                ],
+                "text": "22644"
+              }
+            ],
+            "frame": {
+              "top": 1969,
+              "height": 211,
+              "left": 670,
+              "width": 1592
+            },
+            "cornerPoints": [
+              {
+                "y": 1969,
+                "x": 677
+              },
+              {
+                "y": 2104,
+                "x": 2262
+              },
+              {
+                "y": 2180,
+                "x": 2255
+              },
+              {
+                "y": 2045,
+                "x": 670
+              }
+            ],
+            "text": "TDA#3114 OP#00000071 TE# 041 TR# 22644"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2047,
+                  "height": 95,
+                  "left": 658,
+                  "width": 273
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2047,
+                    "x": 665
+                  },
+                  {
+                    "y": 2069,
+                    "x": 931
+                  },
+                  {
+                    "y": 2142,
+                    "x": 924
+                  },
+                  {
+                    "y": 2120,
+                    "x": 658
+                  }
+                ],
+                "text": "SALCHON"
+              },
+              {
+                "frame": {
+                  "top": 2074,
+                  "height": 87,
+                  "left": 979,
+                  "width": 175
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2074,
+                    "x": 986
+                  },
+                  {
+                    "y": 2088,
+                    "x": 1154
+                  },
+                  {
+                    "y": 2161,
+                    "x": 1147
+                  },
+                  {
+                    "y": 2147,
+                    "x": 979
+                  }
+                ],
+                "text": "750G"
+              },
+              {
+                "frame": {
+                  "top": 2092,
+                  "height": 110,
+                  "left": 1187,
+                  "width": 448
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2092,
+                    "x": 1194
+                  },
+                  {
+                    "y": 2129,
+                    "x": 1635
+                  },
+                  {
+                    "y": 2202,
+                    "x": 1628
+                  },
+                  {
+                    "y": 2165,
+                    "x": 1187
+                  }
+                ],
+                "text": "744107420436"
+              }
+            ],
+            "frame": {
+              "top": 2047,
+              "height": 155,
+              "left": 658,
+              "width": 977
+            },
+            "cornerPoints": [
+              {
+                "y": 2047,
+                "x": 665
+              },
+              {
+                "y": 2129,
+                "x": 1635
+              },
+              {
+                "y": 2202,
+                "x": 1628
+              },
+              {
+                "y": 2120,
+                "x": 658
+              }
+            ],
+            "text": "SALCHON 750G 744107420436"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2131,
+                  "height": 76,
+                  "left": 673,
+                  "width": 68
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2131,
+                    "x": 679
+                  },
+                  {
+                    "y": 2136,
+                    "x": 741
+                  },
+                  {
+                    "y": 2207,
+                    "x": 735
+                  },
+                  {
+                    "y": 2202,
+                    "x": 673
+                  }
+                ],
+                "text": "SB"
+              },
+              {
+                "frame": {
+                  "top": 2139,
+                  "height": 92,
+                  "left": 780,
+                  "width": 273
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2139,
+                    "x": 786
+                  },
+                  {
+                    "y": 2160,
+                    "x": 1053
+                  },
+                  {
+                    "y": 2231,
+                    "x": 1047
+                  },
+                  {
+                    "y": 2210,
+                    "x": 780
+                  }
+                ],
+                "text": "SARDINA"
+              }
+            ],
+            "frame": {
+              "top": 2130,
+              "height": 102,
+              "left": 673,
+              "width": 379
+            },
+            "cornerPoints": [
+              {
+                "y": 2130,
+                "x": 679
+              },
+              {
+                "y": 2160,
+                "x": 1052
+              },
+              {
+                "y": 2232,
+                "x": 1046
+              },
+              {
+                "y": 2202,
+                "x": 673
+              }
+            ],
+            "text": "SB SARDINA"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 1969,
+            "x": 672
+          },
+          {
+            "y": 2103,
+            "x": 2262
+          },
+          {
+            "y": 2335,
+            "x": 2242
+          },
+          {
+            "y": 2201,
+            "x": 652
+          }
+        ],
+        "text": "TDA#3114 OP#00000071 TE# 041 TR# 22644\nSALCHON 750G 744107420436\nSB SARDINA"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2176,
+          "height": 356,
+          "left": 1138,
+          "width": 534
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "am"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2176,
+                  "height": 102,
+                  "left": 1158,
+                  "width": 475
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2176,
+                    "x": 1164
+                  },
+                  {
+                    "y": 2216,
+                    "x": 1633
+                  },
+                  {
+                    "y": 2278,
+                    "x": 1627
+                  },
+                  {
+                    "y": 2238,
+                    "x": 1158
+                  }
+                ],
+                "text": "744107822717"
+              }
+            ],
+            "frame": {
+              "top": 2176,
+              "height": 102,
+              "left": 1158,
+              "width": 475
+            },
+            "cornerPoints": [
+              {
+                "y": 2176,
+                "x": 1164
+              },
+              {
+                "y": 2216,
+                "x": 1633
+              },
+              {
+                "y": 2278,
+                "x": 1627
+              },
+              {
+                "y": 2238,
+                "x": 1158
+              }
+            ],
+            "text": "744107822717"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2262,
+                  "height": 62,
+                  "left": 1187,
+                  "width": 38
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2262,
+                    "x": 1190
+                  },
+                  {
+                    "y": 2263,
+                    "x": 1225
+                  },
+                  {
+                    "y": 2324,
+                    "x": 1222
+                  },
+                  {
+                    "y": 2323,
+                    "x": 1187
+                  }
+                ],
+                "text": "2"
+              },
+              {
+                "frame": {
+                  "top": 2265,
+                  "height": 62,
+                  "left": 1268,
+                  "width": 37
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2265,
+                    "x": 1271
+                  },
+                  {
+                    "y": 2266,
+                    "x": 1305
+                  },
+                  {
+                    "y": 2327,
+                    "x": 1302
+                  },
+                  {
+                    "y": 2326,
+                    "x": 1268
+                  }
+                ],
+                "text": "X"
+              },
+              {
+                "frame": {
+                  "top": 2282,
+                  "height": 72,
+                  "left": 1426,
+                  "width": 158
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2282,
+                    "x": 1430
+                  },
+                  {
+                    "y": 2290,
+                    "x": 1584
+                  },
+                  {
+                    "y": 2354,
+                    "x": 1580
+                  },
+                  {
+                    "y": 2346,
+                    "x": 1426
+                  }
+                ],
+                "text": "¢480"
+              }
+            ],
+            "frame": {
+              "top": 2261,
+              "height": 93,
+              "left": 1186,
+              "width": 399
+            },
+            "cornerPoints": [
+              {
+                "y": 2261,
+                "x": 1190
+              },
+              {
+                "y": 2277,
+                "x": 1585
+              },
+              {
+                "y": 2354,
+                "x": 1581
+              },
+              {
+                "y": 2338,
+                "x": 1186
+              }
+            ],
+            "text": "2 X ¢480"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2343,
+                  "height": 92,
+                  "left": 1260,
+                  "width": 308
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2343,
+                    "x": 1266
+                  },
+                  {
+                    "y": 2367,
+                    "x": 1568
+                  },
+                  {
+                    "y": 2435,
+                    "x": 1562
+                  },
+                  {
+                    "y": 2411,
+                    "x": 1260
+                  }
+                ],
+                "text": "Subtotal"
+              },
+              {
+                "frame": {
+                  "top": 2373,
+                  "height": 69,
+                  "left": 1618,
+                  "width": 41
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2373,
+                    "x": 1624
+                  },
+                  {
+                    "y": 2375,
+                    "x": 1659
+                  },
+                  {
+                    "y": 2442,
+                    "x": 1653
+                  },
+                  {
+                    "y": 2440,
+                    "x": 1618
+                  }
+                ],
+                "text": "¢"
+              }
+            ],
+            "frame": {
+              "top": 2343,
+              "height": 100,
+              "left": 1260,
+              "width": 399
+            },
+            "cornerPoints": [
+              {
+                "y": 2343,
+                "x": 1266
+              },
+              {
+                "y": 2375,
+                "x": 1659
+              },
+              {
+                "y": 2443,
+                "x": 1653
+              },
+              {
+                "y": 2411,
+                "x": 1260
+              }
+            ],
+            "text": "Subtotal ¢"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2432,
+                  "height": 92,
+                  "left": 1386,
+                  "width": 197
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2432,
+                    "x": 1394
+                  },
+                  {
+                    "y": 2450,
+                    "x": 1583
+                  },
+                  {
+                    "y": 2524,
+                    "x": 1575
+                  },
+                  {
+                    "y": 2506,
+                    "x": 1386
+                  }
+                ],
+                "text": "Total"
+              },
+              {
+                "frame": {
+                  "top": 2455,
+                  "height": 76,
+                  "left": 1611,
+                  "width": 42
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2455,
+                    "x": 1619
+                  },
+                  {
+                    "y": 2458,
+                    "x": 1653
+                  },
+                  {
+                    "y": 2531,
+                    "x": 1645
+                  },
+                  {
+                    "y": 2528,
+                    "x": 1611
+                  }
+                ],
+                "text": "¢"
+              }
+            ],
+            "frame": {
+              "top": 2432,
+              "height": 100,
+              "left": 1386,
+              "width": 267
+            },
+            "cornerPoints": [
+              {
+                "y": 2432,
+                "x": 1394
+              },
+              {
+                "y": 2458,
+                "x": 1653
+              },
+              {
+                "y": 2532,
+                "x": 1645
+              },
+              {
+                "y": 2506,
+                "x": 1386
+              }
+            ],
+            "text": "Total ¢"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2176,
+            "x": 1163
+          },
+          {
+            "y": 2215,
+            "x": 1672
+          },
+          {
+            "y": 2532,
+            "x": 1647
+          },
+          {
+            "y": 2493,
+            "x": 1138
+          }
+        ],
+        "text": "744107822717\n2 X ¢480\nSubtotal ¢\nTotal ¢"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2829,
+          "height": 155,
+          "left": 584,
+          "width": 868
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "es"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2829,
+                  "height": 84,
+                  "left": 584,
+                  "width": 199
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2829,
+                    "x": 591
+                  },
+                  {
+                    "y": 2849,
+                    "x": 783
+                  },
+                  {
+                    "y": 2913,
+                    "x": 776
+                  },
+                  {
+                    "y": 2893,
+                    "x": 584
+                  }
+                ],
+                "text": "TOTAL"
+              },
+              {
+                "frame": {
+                  "top": 2855,
+                  "height": 75,
+                  "left": 820,
+                  "width": 122
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2855,
+                    "x": 827
+                  },
+                  {
+                    "y": 2867,
+                    "x": 942
+                  },
+                  {
+                    "y": 2930,
+                    "x": 935
+                  },
+                  {
+                    "y": 2918,
+                    "x": 820
+                  }
+                ],
+                "text": "IVA"
+              },
+              {
+                "frame": {
+                  "top": 2871,
+                  "height": 66,
+                  "left": 978,
+                  "width": 40
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2871,
+                    "x": 985
+                  },
+                  {
+                    "y": 2874,
+                    "x": 1018
+                  },
+                  {
+                    "y": 2937,
+                    "x": 1011
+                  },
+                  {
+                    "y": 2934,
+                    "x": 978
+                  }
+                ],
+                "text": "A"
+              },
+              {
+                "frame": {
+                  "top": 2879,
+                  "height": 84,
+                  "left": 1053,
+                  "width": 201
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2879,
+                    "x": 1060
+                  },
+                  {
+                    "y": 2899,
+                    "x": 1254
+                  },
+                  {
+                    "y": 2963,
+                    "x": 1247
+                  },
+                  {
+                    "y": 2943,
+                    "x": 1053
+                  }
+                ],
+                "text": "PAGAR"
+              },
+              {
+                "frame": {
+                  "top": 2913,
+                  "height": 70,
+                  "left": 1372,
+                  "width": 80
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2913,
+                    "x": 1379
+                  },
+                  {
+                    "y": 2920,
+                    "x": 1452
+                  },
+                  {
+                    "y": 2983,
+                    "x": 1445
+                  },
+                  {
+                    "y": 2976,
+                    "x": 1372
+                  }
+                ],
+                "text": "19"
+              }
+            ],
+            "frame": {
+              "top": 2829,
+              "height": 155,
+              "left": 584,
+              "width": 868
+            },
+            "cornerPoints": [
+              {
+                "y": 2829,
+                "x": 591
+              },
+              {
+                "y": 2920,
+                "x": 1452
+              },
+              {
+                "y": 2984,
+                "x": 1445
+              },
+              {
+                "y": 2893,
+                "x": 584
+              }
+            ],
+            "text": "TOTAL IVA A PAGAR 19"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2829,
+            "x": 591
+          },
+          {
+            "y": 2920,
+            "x": 1452
+          },
+          {
+            "y": 2984,
+            "x": 1445
+          },
+          {
+            "y": 2893,
+            "x": 584
+          }
+        ],
+        "text": "TOTAL IVA A PAGAR 19"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2450,
+          "height": 511,
+          "left": 583,
+          "width": 1563
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2494,
+                  "height": 93,
+                  "left": 1124,
+                  "width": 319
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2494,
+                    "x": 1131
+                  },
+                  {
+                    "y": 2523,
+                    "x": 1443
+                  },
+                  {
+                    "y": 2587,
+                    "x": 1436
+                  },
+                  {
+                    "y": 2558,
+                    "x": 1124
+                  }
+                ],
+                "text": "TARJETAS"
+              },
+              {
+                "frame": {
+                  "top": 2528,
+                  "height": 70,
+                  "left": 1483,
+                  "width": 81
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2528,
+                    "x": 1489
+                  },
+                  {
+                    "y": 2535,
+                    "x": 1564
+                  },
+                  {
+                    "y": 2598,
+                    "x": 1558
+                  },
+                  {
+                    "y": 2591,
+                    "x": 1483
+                  }
+                ],
+                "text": "ON"
+              },
+              {
+                "frame": {
+                  "top": 2539,
+                  "height": 66,
+                  "left": 1604,
+                  "width": 40
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2539,
+                    "x": 1610
+                  },
+                  {
+                    "y": 2542,
+                    "x": 1644
+                  },
+                  {
+                    "y": 2605,
+                    "x": 1638
+                  },
+                  {
+                    "y": 2602,
+                    "x": 1604
+                  }
+                ],
+                "text": "¢"
+              }
+            ],
+            "frame": {
+              "top": 2494,
+              "height": 112,
+              "left": 1124,
+              "width": 520
+            },
+            "cornerPoints": [
+              {
+                "y": 2494,
+                "x": 1131
+              },
+              {
+                "y": 2542,
+                "x": 1644
+              },
+              {
+                "y": 2606,
+                "x": 1637
+              },
+              {
+                "y": 2558,
+                "x": 1124
+              }
+            ],
+            "text": "TARJETAS ON ¢"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "es"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2606,
+                  "height": 93,
+                  "left": 672,
+                  "width": 285
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2606,
+                    "x": 679
+                  },
+                  {
+                    "y": 2634,
+                    "x": 957
+                  },
+                  {
+                    "y": 2699,
+                    "x": 950
+                  },
+                  {
+                    "y": 2671,
+                    "x": 672
+                  }
+                ],
+                "text": "PRECIOS"
+              },
+              {
+                "frame": {
+                  "top": 2639,
+                  "height": 97,
+                  "left": 991,
+                  "width": 325
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2639,
+                    "x": 998
+                  },
+                  {
+                    "y": 2671,
+                    "x": 1316
+                  },
+                  {
+                    "y": 2736,
+                    "x": 1309
+                  },
+                  {
+                    "y": 2704,
+                    "x": 991
+                  }
+                ],
+                "text": "INCLUYEN"
+              },
+              {
+                "frame": {
+                  "top": 2676,
+                  "height": 80,
+                  "left": 1348,
+                  "width": 154
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2676,
+                    "x": 1355
+                  },
+                  {
+                    "y": 2691,
+                    "x": 1502
+                  },
+                  {
+                    "y": 2756,
+                    "x": 1495
+                  },
+                  {
+                    "y": 2741,
+                    "x": 1348
+                  }
+                ],
+                "text": "IMP."
+              },
+              {
+                "frame": {
+                  "top": 2697,
+                  "height": 85,
+                  "left": 1552,
+                  "width": 205
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2697,
+                    "x": 1559
+                  },
+                  {
+                    "y": 2717,
+                    "x": 1757
+                  },
+                  {
+                    "y": 2782,
+                    "x": 1750
+                  },
+                  {
+                    "y": 2762,
+                    "x": 1552
+                  }
+                ],
+                "text": "VALOR"
+              },
+              {
+                "frame": {
+                  "top": 2723,
+                  "height": 98,
+                  "left": 1798,
+                  "width": 334
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2723,
+                    "x": 1805
+                  },
+                  {
+                    "y": 2756,
+                    "x": 2132
+                  },
+                  {
+                    "y": 2821,
+                    "x": 2125
+                  },
+                  {
+                    "y": 2788,
+                    "x": 1798
+                  }
+                ],
+                "text": "AGREGADO"
+              }
+            ],
+            "frame": {
+              "top": 2606,
+              "height": 215,
+              "left": 672,
+              "width": 1460
+            },
+            "cornerPoints": [
+              {
+                "y": 2606,
+                "x": 679
+              },
+              {
+                "y": 2756,
+                "x": 2132
+              },
+              {
+                "y": 2821,
+                "x": 2125
+              },
+              {
+                "y": 2671,
+                "x": 672
+              }
+            ],
+            "text": "PRECIOS INCLUYEN IMP. VALOR AGREGADO"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "es"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2594,
+                  "height": 87,
+                  "left": 1314,
+                  "width": 247
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2594,
+                    "x": 1320
+                  },
+                  {
+                    "y": 2615,
+                    "x": 1561
+                  },
+                  {
+                    "y": 2681,
+                    "x": 1555
+                  },
+                  {
+                    "y": 2660,
+                    "x": 1314
+                  }
+                ],
+                "text": "CAMBIO"
+              },
+              {
+                "frame": {
+                  "top": 2620,
+                  "height": 68,
+                  "left": 1597,
+                  "width": 43
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2620,
+                    "x": 1603
+                  },
+                  {
+                    "y": 2623,
+                    "x": 1640
+                  },
+                  {
+                    "y": 2688,
+                    "x": 1634
+                  },
+                  {
+                    "y": 2685,
+                    "x": 1597
+                  }
+                ],
+                "text": "¢"
+              }
+            ],
+            "frame": {
+              "top": 2594,
+              "height": 94,
+              "left": 1314,
+              "width": 326
+            },
+            "cornerPoints": [
+              {
+                "y": 2594,
+                "x": 1320
+              },
+              {
+                "y": 2622,
+                "x": 1640
+              },
+              {
+                "y": 2688,
+                "x": 1634
+              },
+              {
+                "y": 2660,
+                "x": 1314
+              }
+            ],
+            "text": "CAMBIO ¢"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2680,
+                  "height": 75,
+                  "left": 592,
+                  "width": 158
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2680,
+                    "x": 597
+                  },
+                  {
+                    "y": 2690,
+                    "x": 750
+                  },
+                  {
+                    "y": 2755,
+                    "x": 745
+                  },
+                  {
+                    "y": 2745,
+                    "x": 592
+                  }
+                ],
+                "text": "IVAX"
+              },
+              {
+                "frame": {
+                  "top": 2718,
+                  "height": 83,
+                  "left": 983,
+                  "width": 239
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2718,
+                    "x": 989
+                  },
+                  {
+                    "y": 2739,
+                    "x": 1222
+                  },
+                  {
+                    "y": 2801,
+                    "x": 1216
+                  },
+                  {
+                    "y": 2780,
+                    "x": 983
+                  }
+                ],
+                "text": "PRECIO"
+              }
+            ],
+            "frame": {
+              "top": 2676,
+              "height": 125,
+              "left": 591,
+              "width": 633
+            },
+            "cornerPoints": [
+              {
+                "y": 2676,
+                "x": 597
+              },
+              {
+                "y": 2723,
+                "x": 1224
+              },
+              {
+                "y": 2801,
+                "x": 1218
+              },
+              {
+                "y": 2754,
+                "x": 591
+              }
+            ],
+            "text": "IVAX PRECIO"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "am"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2800,
+                  "height": 81,
+                  "left": 1022,
+                  "width": 193
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2800,
+                    "x": 1028
+                  },
+                  {
+                    "y": 2814,
+                    "x": 1215
+                  },
+                  {
+                    "y": 2881,
+                    "x": 1209
+                  },
+                  {
+                    "y": 2867,
+                    "x": 1022
+                  }
+                ],
+                "text": "1,871"
+              }
+            ],
+            "frame": {
+              "top": 2800,
+              "height": 81,
+              "left": 1022,
+              "width": 193
+            },
+            "cornerPoints": [
+              {
+                "y": 2800,
+                "x": 1028
+              },
+              {
+                "y": 2814,
+                "x": 1215
+              },
+              {
+                "y": 2881,
+                "x": 1209
+              },
+              {
+                "y": 2867,
+                "x": 1022
+              }
+            ],
+            "text": "1,871"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2450,
+            "x": 616
+          },
+          {
+            "y": 2581,
+            "x": 2146
+          },
+          {
+            "y": 2961,
+            "x": 2113
+          },
+          {
+            "y": 2830,
+            "x": 583
+          }
+        ],
+        "text": "TARJETAS ON ¢\nPRECIOS INCLUYEN IMP. VALOR AGREGADO\nCAMBIO ¢\nIVAX PRECIO\n1,871"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2785,
+          "height": 147,
+          "left": 1585,
+          "width": 116
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2785,
+                  "height": 68,
+                  "left": 1585,
+                  "width": 116
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2785,
+                    "x": 1585
+                  },
+                  {
+                    "y": 2785,
+                    "x": 1701
+                  },
+                  {
+                    "y": 2853,
+                    "x": 1701
+                  },
+                  {
+                    "y": 2853,
+                    "x": 1585
+                  }
+                ],
+                "text": "IVA"
+              }
+            ],
+            "frame": {
+              "top": 2785,
+              "height": 68,
+              "left": 1585,
+              "width": 116
+            },
+            "cornerPoints": [
+              {
+                "y": 2785,
+                "x": 1585
+              },
+              {
+                "y": 2785,
+                "x": 1701
+              },
+              {
+                "y": 2853,
+                "x": 1701
+              },
+              {
+                "y": 2853,
+                "x": 1585
+              }
+            ],
+            "text": "IVA"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2868,
+                  "height": 64,
+                  "left": 1625,
+                  "width": 68
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2868,
+                    "x": 1625
+                  },
+                  {
+                    "y": 2868,
+                    "x": 1693
+                  },
+                  {
+                    "y": 2932,
+                    "x": 1693
+                  },
+                  {
+                    "y": 2932,
+                    "x": 1625
+                  }
+                ],
+                "text": "19"
+              }
+            ],
+            "frame": {
+              "top": 2868,
+              "height": 64,
+              "left": 1625,
+              "width": 68
+            },
+            "cornerPoints": [
+              {
+                "y": 2868,
+                "x": 1625
+              },
+              {
+                "y": 2868,
+                "x": 1693
+              },
+              {
+                "y": 2932,
+                "x": 1693
+              },
+              {
+                "y": 2932,
+                "x": 1625
+              }
+            ],
+            "text": "19"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2785,
+            "x": 1585
+          },
+          {
+            "y": 2785,
+            "x": 1701
+          },
+          {
+            "y": 2932,
+            "x": 1701
+          },
+          {
+            "y": 2932,
+            "x": 1585
+          }
+        ],
+        "text": "IVA\n19"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2977,
+          "height": 287,
+          "left": 532,
+          "width": 1102
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2978,
+                  "height": 93,
+                  "left": 542,
+                  "width": 170
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2978,
+                    "x": 552
+                  },
+                  {
+                    "y": 2997,
+                    "x": 712
+                  },
+                  {
+                    "y": 3071,
+                    "x": 702
+                  },
+                  {
+                    "y": 3052,
+                    "x": 542
+                  }
+                ],
+                "text": "CTA"
+              },
+              {
+                "frame": {
+                  "top": 3004,
+                  "height": 80,
+                  "left": 760,
+                  "width": 54
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3004,
+                    "x": 770
+                  },
+                  {
+                    "y": 3009,
+                    "x": 814
+                  },
+                  {
+                    "y": 3084,
+                    "x": 804
+                  },
+                  {
+                    "y": 3079,
+                    "x": 760
+                  }
+                ],
+                "text": "#:"
+              },
+              {
+                "frame": {
+                  "top": 3017,
+                  "height": 113,
+                  "left": 865,
+                  "width": 322
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3017,
+                    "x": 875
+                  },
+                  {
+                    "y": 3055,
+                    "x": 1187
+                  },
+                  {
+                    "y": 3130,
+                    "x": 1177
+                  },
+                  {
+                    "y": 3092,
+                    "x": 865
+                  }
+                ],
+                "text": "46113100"
+              },
+              {
+                "frame": {
+                  "top": 3057,
+                  "height": 93,
+                  "left": 1186,
+                  "width": 165
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3057,
+                    "x": 1196
+                  },
+                  {
+                    "y": 3076,
+                    "x": 1351
+                  },
+                  {
+                    "y": 3150,
+                    "x": 1341
+                  },
+                  {
+                    "y": 3131,
+                    "x": 1186
+                  }
+                ],
+                "text": "x***"
+              },
+              {
+                "frame": {
+                  "top": 3081,
+                  "height": 93,
+                  "left": 1388,
+                  "width": 162
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3081,
+                    "x": 1398
+                  },
+                  {
+                    "y": 3099,
+                    "x": 1550
+                  },
+                  {
+                    "y": 3174,
+                    "x": 1540
+                  },
+                  {
+                    "y": 3156,
+                    "x": 1388
+                  }
+                ],
+                "text": "*K*"
+              },
+              {
+                "frame": {
+                  "top": 3107,
+                  "height": 78,
+                  "left": 1590,
+                  "width": 43
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3107,
+                    "x": 1600
+                  },
+                  {
+                    "y": 3111,
+                    "x": 1633
+                  },
+                  {
+                    "y": 3185,
+                    "x": 1623
+                  },
+                  {
+                    "y": 3181,
+                    "x": 1590
+                  }
+                ],
+                "text": "I"
+              }
+            ],
+            "frame": {
+              "top": 2977,
+              "height": 208,
+              "left": 542,
+              "width": 1091
+            },
+            "cornerPoints": [
+              {
+                "y": 2977,
+                "x": 552
+              },
+              {
+                "y": 3110,
+                "x": 1633
+              },
+              {
+                "y": 3185,
+                "x": 1623
+              },
+              {
+                "y": 3052,
+                "x": 542
+              }
+            ],
+            "text": "CTA #: 46113100 x*** *K* I"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "es"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 3062,
+                  "height": 81,
+                  "left": 598,
+                  "width": 32
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3062,
+                    "x": 608
+                  },
+                  {
+                    "y": 3064,
+                    "x": 630
+                  },
+                  {
+                    "y": 3143,
+                    "x": 620
+                  },
+                  {
+                    "y": 3141,
+                    "x": 598
+                  }
+                ],
+                "text": "#"
+              },
+              {
+                "frame": {
+                  "top": 3065,
+                  "height": 89,
+                  "left": 628,
+                  "width": 97
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3065,
+                    "x": 638
+                  },
+                  {
+                    "y": 3075,
+                    "x": 725
+                  },
+                  {
+                    "y": 3154,
+                    "x": 715
+                  },
+                  {
+                    "y": 3144,
+                    "x": 628
+                  }
+                ],
+                "text": "DE"
+              },
+              {
+                "frame": {
+                  "top": 3079,
+                  "height": 106,
+                  "left": 752,
+                  "width": 230
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3079,
+                    "x": 762
+                  },
+                  {
+                    "y": 3105,
+                    "x": 982
+                  },
+                  {
+                    "y": 3185,
+                    "x": 972
+                  },
+                  {
+                    "y": 3159,
+                    "x": 752
+                  }
+                ],
+                "text": "AUTO.:"
+              },
+              {
+                "frame": {
+                  "top": 3111,
+                  "height": 108,
+                  "left": 1017,
+                  "width": 252
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3111,
+                    "x": 1027
+                  },
+                  {
+                    "y": 3139,
+                    "x": 1269
+                  },
+                  {
+                    "y": 3219,
+                    "x": 1259
+                  },
+                  {
+                    "y": 3191,
+                    "x": 1017
+                  }
+                ],
+                "text": "478090"
+              }
+            ],
+            "frame": {
+              "top": 3061,
+              "height": 158,
+              "left": 598,
+              "width": 671
+            },
+            "cornerPoints": [
+              {
+                "y": 3061,
+                "x": 608
+              },
+              {
+                "y": 3139,
+                "x": 1269
+              },
+              {
+                "y": 3219,
+                "x": 1259
+              },
+              {
+                "y": 3141,
+                "x": 598
+              }
+            ],
+            "text": "# DE AUTO.: 478090"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2977,
+            "x": 552
+          },
+          {
+            "y": 3108,
+            "x": 1634
+          },
+          {
+            "y": 3264,
+            "x": 1614
+          },
+          {
+            "y": 3133,
+            "x": 532
+          }
+        ],
+        "text": "CTA #: 46113100 x*** *K* I\n# DE AUTO.: 478090"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2176,
+          "height": 78,
+          "left": 2047,
+          "width": 207
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2176,
+                  "height": 72,
+                  "left": 2047,
+                  "width": 122
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2176,
+                    "x": 2052
+                  },
+                  {
+                    "y": 2184,
+                    "x": 2169
+                  },
+                  {
+                    "y": 2248,
+                    "x": 2164
+                  },
+                  {
+                    "y": 2240,
+                    "x": 2047
+                  }
+                ],
+                "text": "930"
+              },
+              {
+                "frame": {
+                  "top": 2188,
+                  "height": 65,
+                  "left": 2214,
+                  "width": 40
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2188,
+                    "x": 2219
+                  },
+                  {
+                    "y": 2190,
+                    "x": 2254
+                  },
+                  {
+                    "y": 2253,
+                    "x": 2249
+                  },
+                  {
+                    "y": 2251,
+                    "x": 2214
+                  }
+                ],
+                "text": "G"
+              }
+            ],
+            "frame": {
+              "top": 2176,
+              "height": 78,
+              "left": 2047,
+              "width": 207
+            },
+            "cornerPoints": [
+              {
+                "y": 2176,
+                "x": 2052
+              },
+              {
+                "y": 2190,
+                "x": 2254
+              },
+              {
+                "y": 2254,
+                "x": 2249
+              },
+              {
+                "y": 2240,
+                "x": 2047
+              }
+            ],
+            "text": "930 G"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2176,
+            "x": 2052
+          },
+          {
+            "y": 2190,
+            "x": 2254
+          },
+          {
+            "y": 2254,
+            "x": 2249
+          },
+          {
+            "y": 2240,
+            "x": 2047
+          }
+        ],
+        "text": "930 G"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2338,
+          "height": 76,
+          "left": 2061,
+          "width": 179
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2338,
+                  "height": 76,
+                  "left": 2061,
+                  "width": 122
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2338,
+                    "x": 2061
+                  },
+                  {
+                    "y": 2338,
+                    "x": 2183
+                  },
+                  {
+                    "y": 2414,
+                    "x": 2183
+                  },
+                  {
+                    "y": 2414,
+                    "x": 2061
+                  }
+                ],
+                "text": "960"
+              },
+              {
+                "frame": {
+                  "top": 2338,
+                  "height": 76,
+                  "left": 2204,
+                  "width": 36
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2338,
+                    "x": 2204
+                  },
+                  {
+                    "y": 2338,
+                    "x": 2240
+                  },
+                  {
+                    "y": 2414,
+                    "x": 2240
+                  },
+                  {
+                    "y": 2414,
+                    "x": 2204
+                  }
+                ],
+                "text": "G"
+              }
+            ],
+            "frame": {
+              "top": 2338,
+              "height": 76,
+              "left": 2061,
+              "width": 179
+            },
+            "cornerPoints": [
+              {
+                "y": 2338,
+                "x": 2061
+              },
+              {
+                "y": 2338,
+                "x": 2240
+              },
+              {
+                "y": 2414,
+                "x": 2240
+              },
+              {
+                "y": 2414,
+                "x": 2061
+              }
+            ],
+            "text": "960 G"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2338,
+            "x": 2061
+          },
+          {
+            "y": 2338,
+            "x": 2240
+          },
+          {
+            "y": 2414,
+            "x": 2240
+          },
+          {
+            "y": 2414,
+            "x": 2061
+          }
+        ],
+        "text": "960 G"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 3395,
+          "height": 258,
+          "left": 817,
+          "width": 950
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 3395,
+                  "height": 114,
+                  "left": 817,
+                  "width": 141
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3395,
+                    "x": 834
+                  },
+                  {
+                    "y": 3417,
+                    "x": 958
+                  },
+                  {
+                    "y": 3509,
+                    "x": 941
+                  },
+                  {
+                    "y": 3487,
+                    "x": 817
+                  }
+                ],
+                "text": "TO#"
+              },
+              {
+                "frame": {
+                  "top": 3425,
+                  "height": 227,
+                  "left": 988,
+                  "width": 778
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3425,
+                    "x": 1005
+                  },
+                  {
+                    "y": 3560,
+                    "x": 1766
+                  },
+                  {
+                    "y": 3652,
+                    "x": 1749
+                  },
+                  {
+                    "y": 3517,
+                    "x": 988
+                  }
+                ],
+                "text": "37977499816665S09819"
+              }
+            ],
+            "frame": {
+              "top": 3395,
+              "height": 258,
+              "left": 817,
+              "width": 950
+            },
+            "cornerPoints": [
+              {
+                "y": 3395,
+                "x": 834
+              },
+              {
+                "y": 3561,
+                "x": 1767
+              },
+              {
+                "y": 3653,
+                "x": 1750
+              },
+              {
+                "y": 3487,
+                "x": 817
+              }
+            ],
+            "text": "TO# 37977499816665S09819"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 3395,
+            "x": 834
+          },
+          {
+            "y": 3561,
+            "x": 1767
+          },
+          {
+            "y": 3653,
+            "x": 1750
+          },
+          {
+            "y": 3487,
+            "x": 817
+          }
+        ],
+        "text": "TO# 37977499816665S09819"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2406,
+          "height": 84,
+          "left": 1952,
+          "width": 196
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "am"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2406,
+                  "height": 84,
+                  "left": 1952,
+                  "width": 196
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2406,
+                    "x": 1952
+                  },
+                  {
+                    "y": 2406,
+                    "x": 2148
+                  },
+                  {
+                    "y": 2490,
+                    "x": 2148
+                  },
+                  {
+                    "y": 2490,
+                    "x": 1952
+                  }
+                ],
+                "text": "1,890"
+              }
+            ],
+            "frame": {
+              "top": 2406,
+              "height": 84,
+              "left": 1952,
+              "width": 196
+            },
+            "cornerPoints": [
+              {
+                "y": 2406,
+                "x": 1952
+              },
+              {
+                "y": 2406,
+                "x": 2148
+              },
+              {
+                "y": 2490,
+                "x": 2148
+              },
+              {
+                "y": 2490,
+                "x": 1952
+              }
+            ],
+            "text": "1,890"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2406,
+            "x": 1952
+          },
+          {
+            "y": 2406,
+            "x": 2148
+          },
+          {
+            "y": 2490,
+            "x": 2148
+          },
+          {
+            "y": 2490,
+            "x": 1952
+          }
+        ],
+        "text": "1,890"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2492,
+          "height": 85,
+          "left": 1940,
+          "width": 204
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "am"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2492,
+                  "height": 85,
+                  "left": 1940,
+                  "width": 204
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2492,
+                    "x": 1946
+                  },
+                  {
+                    "y": 2506,
+                    "x": 2144
+                  },
+                  {
+                    "y": 2577,
+                    "x": 2138
+                  },
+                  {
+                    "y": 2563,
+                    "x": 1940
+                  }
+                ],
+                "text": "1,890"
+              }
+            ],
+            "frame": {
+              "top": 2492,
+              "height": 85,
+              "left": 1940,
+              "width": 204
+            },
+            "cornerPoints": [
+              {
+                "y": 2492,
+                "x": 1946
+              },
+              {
+                "y": 2506,
+                "x": 2144
+              },
+              {
+                "y": 2577,
+                "x": 2138
+              },
+              {
+                "y": 2563,
+                "x": 1940
+              }
+            ],
+            "text": "1,890"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2492,
+            "x": 1946
+          },
+          {
+            "y": 2506,
+            "x": 2144
+          },
+          {
+            "y": 2577,
+            "x": 2138
+          },
+          {
+            "y": 2563,
+            "x": 1940
+          }
+        ],
+        "text": "1,890"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2573,
+          "height": 79,
+          "left": 1937,
+          "width": 201
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "am"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2573,
+                  "height": 79,
+                  "left": 1937,
+                  "width": 201
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2573,
+                    "x": 1940
+                  },
+                  {
+                    "y": 2580,
+                    "x": 2138
+                  },
+                  {
+                    "y": 2652,
+                    "x": 2135
+                  },
+                  {
+                    "y": 2645,
+                    "x": 1937
+                  }
+                ],
+                "text": "1,890"
+              }
+            ],
+            "frame": {
+              "top": 2573,
+              "height": 79,
+              "left": 1937,
+              "width": 201
+            },
+            "cornerPoints": [
+              {
+                "y": 2573,
+                "x": 1940
+              },
+              {
+                "y": 2580,
+                "x": 2138
+              },
+              {
+                "y": 2652,
+                "x": 2135
+              },
+              {
+                "y": 2645,
+                "x": 1937
+              }
+            ],
+            "text": "1,890"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2573,
+            "x": 1940
+          },
+          {
+            "y": 2580,
+            "x": 2138
+          },
+          {
+            "y": 2652,
+            "x": 2135
+          },
+          {
+            "y": 2645,
+            "x": 1937
+          }
+        ],
+        "text": "1,890"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2675,
+          "height": 63,
+          "left": 2089,
+          "width": 45
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2675,
+                  "height": 63,
+                  "left": 2089,
+                  "width": 45
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2675,
+                    "x": 2096
+                  },
+                  {
+                    "y": 2678,
+                    "x": 2134
+                  },
+                  {
+                    "y": 2738,
+                    "x": 2127
+                  },
+                  {
+                    "y": 2735,
+                    "x": 2089
+                  }
+                ],
+                "text": "0"
+              }
+            ],
+            "frame": {
+              "top": 2675,
+              "height": 63,
+              "left": 2089,
+              "width": 45
+            },
+            "cornerPoints": [
+              {
+                "y": 2675,
+                "x": 2096
+              },
+              {
+                "y": 2678,
+                "x": 2134
+              },
+              {
+                "y": 2738,
+                "x": 2127
+              },
+              {
+                "y": 2735,
+                "x": 2089
+              }
+            ],
+            "text": "0"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2675,
+            "x": 2096
+          },
+          {
+            "y": 2678,
+            "x": 2134
+          },
+          {
+            "y": 2738,
+            "x": 2127
+          },
+          {
+            "y": 2735,
+            "x": 2089
+          }
+        ],
+        "text": "0"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 2819,
+          "height": 192,
+          "left": 1970,
+          "width": 241
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "en"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2819,
+                  "height": 101,
+                  "left": 1984,
+                  "width": 209
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2819,
+                    "x": 1997
+                  },
+                  {
+                    "y": 2856,
+                    "x": 2193
+                  },
+                  {
+                    "y": 2920,
+                    "x": 2180
+                  },
+                  {
+                    "y": 2883,
+                    "x": 1984
+                  }
+                ],
+                "text": "TOTAL"
+              }
+            ],
+            "frame": {
+              "top": 2819,
+              "height": 101,
+              "left": 1984,
+              "width": 209
+            },
+            "cornerPoints": [
+              {
+                "y": 2819,
+                "x": 1997
+              },
+              {
+                "y": 2856,
+                "x": 2193
+              },
+              {
+                "y": 2920,
+                "x": 2180
+              },
+              {
+                "y": 2883,
+                "x": 1984
+              }
+            ],
+            "text": "TOTAL"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "am"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 2911,
+                  "height": 90,
+                  "left": 1987,
+                  "width": 210
+                },
+                "cornerPoints": [
+                  {
+                    "y": 2911,
+                    "x": 1995
+                  },
+                  {
+                    "y": 2930,
+                    "x": 2197
+                  },
+                  {
+                    "y": 3001,
+                    "x": 2189
+                  },
+                  {
+                    "y": 2982,
+                    "x": 1987
+                  }
+                ],
+                "text": "1,890"
+              }
+            ],
+            "frame": {
+              "top": 2911,
+              "height": 90,
+              "left": 1987,
+              "width": 210
+            },
+            "cornerPoints": [
+              {
+                "y": 2911,
+                "x": 1995
+              },
+              {
+                "y": 2930,
+                "x": 2197
+              },
+              {
+                "y": 3001,
+                "x": 2189
+              },
+              {
+                "y": 2982,
+                "x": 1987
+              }
+            ],
+            "text": "1,890"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 2819,
+            "x": 1994
+          },
+          {
+            "y": 2850,
+            "x": 2211
+          },
+          {
+            "y": 3011,
+            "x": 2187
+          },
+          {
+            "y": 2980,
+            "x": 1970
+          }
+        ],
+        "text": "TOTAL\n1,890"
+      },
+      {
+        "recognizedLanguages": [
+          {
+            "languageCode": "und"
+          }
+        ],
+        "frame": {
+          "top": 3107,
+          "height": 446,
+          "left": 535,
+          "width": 1652
+        },
+        "lines": [
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "es"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 3207,
+                  "height": 124,
+                  "left": 536,
+                  "width": 293
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3207,
+                    "x": 549
+                  },
+                  {
+                    "y": 3246,
+                    "x": 829
+                  },
+                  {
+                    "y": 3331,
+                    "x": 816
+                  },
+                  {
+                    "y": 3292,
+                    "x": 536
+                  }
+                ],
+                "text": "Tiquete"
+              },
+              {
+                "frame": {
+                  "top": 3251,
+                  "height": 145,
+                  "left": 848,
+                  "width": 443
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3251,
+                    "x": 861
+                  },
+                  {
+                    "y": 3311,
+                    "x": 1291
+                  },
+                  {
+                    "y": 3396,
+                    "x": 1278
+                  },
+                  {
+                    "y": 3336,
+                    "x": 848
+                  }
+                ],
+                "text": "Electronico"
+              },
+              {
+                "frame": {
+                  "top": 3322,
+                  "height": 199,
+                  "left": 1351,
+                  "width": 824
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3322,
+                    "x": 1364
+                  },
+                  {
+                    "y": 3436,
+                    "x": 2175
+                  },
+                  {
+                    "y": 3521,
+                    "x": 2162
+                  },
+                  {
+                    "y": 3407,
+                    "x": 1351
+                  }
+                ],
+                "text": "11700041040000026223"
+              }
+            ],
+            "frame": {
+              "top": 3207,
+              "height": 314,
+              "left": 536,
+              "width": 1639
+            },
+            "cornerPoints": [
+              {
+                "y": 3207,
+                "x": 549
+              },
+              {
+                "y": 3436,
+                "x": 2175
+              },
+              {
+                "y": 3521,
+                "x": 2162
+              },
+              {
+                "y": 3292,
+                "x": 536
+              }
+            ],
+            "text": "Tiquete Electronico 11700041040000026223"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "es"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 3180,
+                  "height": 86,
+                  "left": 878,
+                  "width": 77
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3180,
+                    "x": 890
+                  },
+                  {
+                    "y": 3189,
+                    "x": 955
+                  },
+                  {
+                    "y": 3266,
+                    "x": 943
+                  },
+                  {
+                    "y": 3257,
+                    "x": 878
+                  }
+                ],
+                "text": "#"
+              },
+              {
+                "frame": {
+                  "top": 3193,
+                  "height": 104,
+                  "left": 973,
+                  "width": 195
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3193,
+                    "x": 985
+                  },
+                  {
+                    "y": 3219,
+                    "x": 1168
+                  },
+                  {
+                    "y": 3297,
+                    "x": 1156
+                  },
+                  {
+                    "y": 3271,
+                    "x": 973
+                  }
+                ],
+                "text": "ARTS."
+              },
+              {
+                "frame": {
+                  "top": 3226,
+                  "height": 124,
+                  "left": 1205,
+                  "width": 336
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3226,
+                    "x": 1217
+                  },
+                  {
+                    "y": 3272,
+                    "x": 1541
+                  },
+                  {
+                    "y": 3350,
+                    "x": 1529
+                  },
+                  {
+                    "y": 3304,
+                    "x": 1205
+                  }
+                ],
+                "text": "VENDIDOS"
+              }
+            ],
+            "frame": {
+              "top": 3179,
+              "height": 171,
+              "left": 878,
+              "width": 663
+            },
+            "cornerPoints": [
+              {
+                "y": 3179,
+                "x": 890
+              },
+              {
+                "y": 3272,
+                "x": 1541
+              },
+              {
+                "y": 3350,
+                "x": 1529
+              },
+              {
+                "y": 3257,
+                "x": 878
+              }
+            ],
+            "text": "# ARTS. VENDIDOS"
+          },
+          {
+            "recognizedLanguages": [
+              {
+                "languageCode": "und-Latn"
+              }
+            ],
+            "elements": [
+              {
+                "frame": {
+                  "top": 3305,
+                  "height": 76,
+                  "left": 1773,
+                  "width": 64
+                },
+                "cornerPoints": [
+                  {
+                    "y": 3305,
+                    "x": 1787
+                  },
+                  {
+                    "y": 3315,
+                    "x": 1837
+                  },
+                  {
+                    "y": 3381,
+                    "x": 1823
+                  },
+                  {
+                    "y": 3371,
+                    "x": 1773
+                  }
+                ],
+                "text": "3"
+              }
+            ],
+            "frame": {
+              "top": 3305,
+              "height": 76,
+              "left": 1773,
+              "width": 64
+            },
+            "cornerPoints": [
+              {
+                "y": 3305,
+                "x": 1787
+              },
+              {
+                "y": 3315,
+                "x": 1837
+              },
+              {
+                "y": 3381,
+                "x": 1823
+              },
+              {
+                "y": 3371,
+                "x": 1773
+              }
+            ],
+            "text": "3"
+          }
+        ],
+        "cornerPoints": [
+          {
+            "y": 3107,
+            "x": 565
+          },
+          {
+            "y": 3369,
+            "x": 2187
+          },
+          {
+            "y": 3553,
+            "x": 2157
+          },
+          {
+            "y": 3291,
+            "x": 535
+          }
+        ],
+        "text": "Tiquete Electronico 11700041040000026223\n# ARTS. VENDIDOS\n3"
+      }
+    ],
+    "text": "PALI\nCORP. SUPERMERCADOS UNIDOS S.R.L.\nPALI CARTAGO CENTRO\nG 13\n506-2552-9005\nCED JUR. 3-102-007223\nTDA#3114 OP#00000071 TE# 041 TR# 22644\nSALCHON 750G 744107420436\nSB SARDINA\n744107822717\n2 X ¢480\nSubtotal ¢\nTotal ¢\nTOTAL IVA A PAGAR 19\nTARJETAS ON ¢\nPRECIOS INCLUYEN IMP. VALOR AGREGADO\nCAMBIO ¢\nIVAX PRECIO\n1,871\nIVA\n19\nCTA #: 46113100 x*** *K* I\n# DE AUTO.: 478090\n930 G\n960 G\nTO# 37977499816665S09819\n1,890\n1,890\n1,890\n0\nTOTAL\n1,890\nTiquete Electronico 11700041040000026223\n# ARTS. VENDIDOS\n3"
+  },
+  {
+    "purchases": [
+      [
+        {
+          "name": "JET LATA 473",
+          "prodId": "76400903894",
+          "totalPrice": "720 "
+        },
+        {
+          "name": "SB SARDI PIC",
+          "prodId": "744107822733",
+          "totalPrice": "480 "
+        },
+        {
+          "name": "PAN CUA BIMB",
+          "prodId": "744102955677",
+          "totalPrice": "2.230"
+        },
+        {
+          "name": "SARD SDM SAL",
+          "prodId": "744100260100",
+          "totalPrice": "1,200 "
+        }
+      ],
+      [
+        {
+          "name": "JET LATA 473",
+          "prodId": "76400903894",
+          "totalPrice": "720 "
+        },
+        {
+          "name": "SB SARDI PIC",
+          "prodId": "744107822733",
+          "totalPrice": "480 "
+        },
+        {
+          "name": "PAN CUA BIMB",
+          "prodId": "744102955677",
+          "totalPrice": "2.230"
+        },
+        {
+          "name": "SARD SDM SAL",
+          "prodId": "744100260100",
+          "totalPrice": "1,200 "
+        }
+      ]
+    ],
+    "products": [
+      {
+        "name": "JET LATA 473",
+        "prodId": "76400903894",
+        "totalPrice": "720 "
+      },
+      {
+        "name": "SB SARDI PIC",
+        "prodId": "744107822733",
+        "totalPrice": "480 "
+      },
+      {
+        "name": "PAN CUA BIMB",
+        "prodId": "744102955677",
+        "totalPrice": "2.230"
+      },
+      {
+        "name": "SARD SDM SAL",
+        "prodId": "744100260100",
+        "totalPrice": "1,200 "
+      }
+    ]
+  }
+]
