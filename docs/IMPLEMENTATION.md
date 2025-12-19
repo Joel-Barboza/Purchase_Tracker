@@ -50,6 +50,7 @@ The main pain points addressed are:
 - Visualization of spending trends and price evolution over time.
 - Viewing and editing extracted products and purchases.
 - Managing and saving products not purchased at supported supermarkets.
+- Shopping cart functions.
 
 ---
 
