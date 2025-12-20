@@ -1,0 +1,165 @@
+# User Stories
+
+This document defines user-facing behavior and system expectations
+derived from real receipt-processing constraints.
+
+---
+
+## Phase 0 — Receipt Ingestion & OCR
+
+### US-001 Capture receipt image
+As a user  
+I want to capture a receipt using my camera  
+So that I can digitize my purchase without manual entry
+
+Acceptance Criteria:
+- [ ] Camera access is available
+- [ ] Image is stored locally
+- [ ] Image is associated with a receipt entity
+
+---
+
+### US-002 Select receipt from gallery
+As a user  
+I want to select a receipt image from my gallery  
+So that I can process receipts taken earlier
+
+Acceptance Criteria:
+- [ ] Gallery picker is supported
+- [ ] Selected image follows the same pipeline as camera images
+
+---
+
+### US-003 Perform offline OCR
+As a user  
+I want text extracted from my receipt without internet access  
+So that my data remains private
+
+Acceptance Criteria:
+- [ ] OCR output (blocks, lines, and elements) is serialized
+- [ ] Serialized OCR data is stored locally (SQLite)
+- [ ] Receipt references both the original image path and OCR data
+
+
+---
+
+## Phase 1 — Text Structuring & Parsing
+
+### US-004 Structure OCR text spatially
+As a system  
+I want OCR lines ordered vertically and horizontally  
+So that textual meaning is preserved
+
+Acceptance Criteria:
+- [ ] Lines are sorted by vertical position
+- [ ] Elements within lines are sorted horizontally
+- [ ] Visually continuous lines are merged
+
+---
+
+### US-005 Filter non-product content
+As a system  
+I want to discard irrelevant receipt text  
+So that parsing focuses on products only
+
+Acceptance Criteria:
+- [ ] Headers, URLs, and metadata are ignored
+- [ ] Filtering does not remove valid product lines
+
+---
+
+### US-006 Identify product candidates
+As a system  
+I want to detect lines containing product identifiers  
+So that products can be extracted reliably
+
+Acceptance Criteria:
+- [ ] Product codes are detected via patterns
+- [ ] Candidate lines are flagged for parsing
+
+---
+
+### US-007 Parse product details
+As a system  
+I want to extract product attributes from receipt text  
+So that purchases can be reconstructed
+
+Acceptance Criteria:
+- [ ] Product name is extracted
+- [ ] Quantity is inferred or defaulted
+- [ ] Unit price and total price are parsed
+- [ ] Weight-based products are handled explicitly
+
+---
+
+## Phase 2 — Purchase Construction & Persistence
+
+### US-008 Create a purchase record
+As a user  
+I want each receipt to become a purchase  
+So that my shopping history is preserved
+
+Acceptance Criteria:
+- [ ] Purchase date is stored
+- [ ] Purchase contains one or more products
+
+---
+
+### US-009 Deduplicate products by code
+As a system  
+I want to reuse existing products when possible  
+So that product history remains consistent
+
+Acceptance Criteria:
+- [ ] Products are matched by product code
+- [ ] Prices are updated when needed
+
+---
+
+## Phase 3 — Manual Review & Correction
+
+### US-010 Review extracted products
+As a user  
+I want to review extracted products before saving  
+So that errors do not affect my data
+
+Acceptance Criteria:
+- [ ] Products are editable
+- [ ] Original extracted text remains available
+
+---
+
+## Phase 4 — Categorization
+
+### US-011 Automatic product categorization
+As a user  
+I want products categorized automatically  
+So that spending analysis is meaningful
+
+Acceptance Criteria:
+- [ ] Rule-based categorization runs offline
+- [ ] Unknown products fall back to a safe category
+
+---
+
+### US-012 Manual category correction
+As a user  
+I want to change a product’s category  
+So that misclassifications don’t persist
+
+Acceptance Criteria:
+- [ ] Category changes are saved
+- [ ] Corrections influence future behavior
+
+---
+
+## Phase 5 — Spending Insights
+
+### US-013 View spending per category
+As a user  
+I want to see spending grouped by category  
+So that I understand my habits
+
+Acceptance Criteria:
+- [ ] Aggregations reflect corrected data
+- [ ] Totals match stored purchases
