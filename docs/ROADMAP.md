@@ -23,7 +23,7 @@ The system can reliably extract raw text blocks from a receipt image.
 
 ---
 
-## Phase 1 — Text Structuring & Parsing (Critical)
+## Phase 1 — Text Structuring & Parsing
 
 Goal:
 Convert raw OCR output into structured, interpretable data.
