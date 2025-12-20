@@ -2,38 +2,38 @@
 
 ## Why?
 
-The initial development process became disorganized, which made iteration and maintenance difficult.  
-Because of this, I decided to refactor the project following a **clear development plan**, migrating to **TypeScript** and adopting a more structured creation process.
+The initial development process became disorganized, which made iteration and
+maintenance difficult.
 
-This refactor is guided by the article:  
-[How to Create an App in 10 Easy Steps: From Idea to Launch](https://riseuplabs.com/how-to-create-an-app/)
+Because of this, the project was refactored following a **clear development plan**, migrating to **TypeScript** and adopting a more structured creation process.
 
+This refactor is guided, but not limited by the article: [How to Create an App in 10 Easy Steps: From Idea to Launch](https://riseuplabs.com/how-to-create-an-app/)
 
-# 1. App Idea
+---
 
-## Problem it solves
+## App Idea
 
-### What is the main goal of the app?
+### Problem it solves
 
-The main goal is to **track spending and help users reduce unnecessary expenses** by making them aware of what they are actually buying, without requiring manual data entry.
+The main goal of the app is to **track spending and help users reduce unnecessary expenses** by making them aware of what they are actually buying, without requiring manual data entry.
 
 ---
 
 ### Target audience and pain points
 
-The target audience is people who frequently shop at large supermarkets in Costa Rica, specifically:
+The target audience consists of people who frequently shop at large supermarkets in Costa Rica, specifically:
 
 - Walmart  
 - Palí  
 - Maxi Palí  
 
-The main pain points addressed are:
+Key pain points include:
 
-- Manually entering purchase data is tedious and time-consuming.
-- Most expense-tracking apps require an internet connection to process receipts.
-- Existing apps often misinterpret Costa Rican price formats (decimal and thousand separators).
-- Product-level information is rarely accessible or editable after receipt scanning.
-- Quantity and weight-based products are poorly handled.
+- Manual entry of purchase data is time-consuming
+- Most expense-tracking apps require an internet connection
+- Misinterpretation of Costa Rican price formats
+- Limited access to product-level purchase data
+- Poor handling of quantity- and weight-based items
 
 ---
 
@@ -41,78 +41,149 @@ The main pain points addressed are:
 
 **Essential (MVP):**
 
-- Extract purchase data from receipts using the device camera.
-- Automatically classify products into categories.
-- Track the amount spent per category.
+- Receipt data extraction using the device camera
+- Automatic product categorization
+- Tracking spending per category
 
 **Planned for later stages:**
 
-- Visualization of spending trends and price evolution over time.
-- Viewing and editing extracted products and purchases.
-- Managing and saving products not purchased at supported supermarkets.
-- Shopping cart functions.
+- Spending visualizations over time
+- Editing and managing extracted products and purchases
+- Support for manually added purchases
+- Shopping cart–related features
 
 ---
 
 ### Differentiation from existing solutions
 
-This app differs from existing alternatives in several key aspects:
+The application differentiates itself by:
 
-- Works **fully offline**, avoiding slow network-dependent receipt processing.
-- Designed specifically for **Costa Rican receipts**, correctly handling local price formats.
-- Focuses on **product-level data**, not just totals, store names, or tax values.
-- Allows inspection (and later editing) of individual products.
-- Considers **quantity and weight-based items**, which many apps ignore.
-
-While other apps commonly offer:
-
-- Manual correction of extracted data
-- Basic statistics
-- Cloud backups
-- Purchase categorization (in limited cases)
-
-They often fail to provide accurate, transparent, and localized product information.
+- Operating **fully offline**
+- Supporting **Costa Rican receipt formats**
+- Focusing on **product-level data**
+- Allowing inspection and correction of extracted products
+- Handling quantity- and weight-based items
 
 ---
 
 ### Monetization model
 
-This is currently a **personal project** intended to be **free**.
+This is a **personal project** intended to be **free**.
 
-For that reason, the app avoids:
-
+As a result, the app avoids:
 - Paid APIs
 - Server-side processing
 - Subscription-based services
 
-All core functionality is designed to run **locally on the device**.
+All core functionality runs locally on the device.
 
 ---
 
 ## Implementation Constraints
 
-The following constraints directly influence architectural and technical decisions:
+The following constraints guide all technical decisions:
 
-- The application must work **fully offline**.
-- No paid APIs or external services may be used.
-- All processing (OCR, classification, and storage) must run **locally on the device**.
-- The app must correctly interpret **Costa Rican receipt formats**, including decimal separators and currency conventions.
-- The solution should prioritize performance on mid-range mobile devices.
+- Full offline operation
+- No paid APIs or external services
+- Local execution of OCR, classification, and storage
+- Correct handling of Costa Rican currency and formatting
+- Acceptable performance on mid-range mobile devices
 
 ---
 
 ## Scope and Non-Goals
 
-This project is intentionally focused on:
+### In scope
 
-- Personal expense tracking.
-- Supermarket receipts from a limited set of stores.
-- Product-level analysis rather than full financial accounting.
+- Personal expense tracking
+- Supermarket receipts from a limited set of stores
+- Product-level spending analysis
 
-The following are considered out of scope **for now**:
+### Out of scope (for now)
 
-- Cloud synchronization or online backups.
-- Cross-device data sharing.
-- Support for all international receipt formats.
-- Real-time price comparison between stores.
-- Integration with banking or payment systems.
+- Cloud synchronization or backups
+- Cross-device data sharing
+- International receipt formats
+- Real-time price comparison
+- Banking or payment system integration
+
+## Data Model
+
+This section defines the core data entities used by the application and their relationships. The data model is designed to support offline processing, product-level analysis, and progressive data refinement through user feedback.
+
+---
+
+### Receipt
+
+A **Receipt** represents the raw input artifact captured by the user.
+
+It preserves the original data used during processing and allows traceability and reprocessing if needed.
+
+**Responsibilities:**
+- Store the original receipt image reference
+- Store raw OCR output
+- Track processing status and timestamps
+
+A receipt produces exactly one purchase.
+
+---
+
+### Purchase
+
+A **Purchase** represents a single shopping event.
+
+It acts as the aggregation unit for products extracted from a receipt.
+
+**Responsibilities:**
+- Store purchase date and time
+- Store store or supermarket identifier
+- Store total amount and optional tax information
+- Maintain a list of associated products
+
+A purchase contains one or more products.
+
+---
+
+### Product
+
+A **Product** represents a single line item extracted from a receipt.
+
+Products are the primary unit of classification and analysis.
+
+**Responsibilities:**
+- Store normalized product name
+- Store unit price and total price
+- Store quantity or weight when applicable
+- Reference an assigned category
+- Preserve original OCR text for traceability
+
+Products belong to a single purchase and are classified into one category.
+
+---
+
+### Category
+
+A **Category** represents a semantic grouping used for spending analysis.
+
+Categories are stable and shared across purchases.
+
+**Responsibilities:**
+- Define category identity (e.g., Dairy, Meat, Cleaning)
+- Serve as a grouping mechanism for products
+- Support user-driven reassignment
+
+A category may be associated with many products.
+
+---
+
+### Entity Relationships
+
+```text
+Receipt
+   |
+   v
+Purchase
+   |
+   v
+Product --------> Category
+```
