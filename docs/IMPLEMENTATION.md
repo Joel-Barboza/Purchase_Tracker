@@ -2,12 +2,40 @@
 
 ## Why?
 
-The initial development process became disorganized, which made iteration and
-maintenance difficult.
+The initial development process became disorganized, which made iteration and maintenance difficult.
 
 Because of this, the project was refactored following a **clear development plan**, migrating to **TypeScript** and adopting a more structured creation process.
 
 This refactor is guided, but not limited by the article: [How to Create an App in 10 Easy Steps: From Idea to Launch](https://riseuplabs.com/how-to-create-an-app/)
+
+# Table of Contents
+- [App Idea](#app-idea)
+  - [Problem it solves](#problem-it-solves)
+  - [Target audience and pain points](#target-audience-and-pain-points)
+  - [Essential features vs future features](#essential-features-vs-future-features)
+  - [Differentiation from existing solutions](#differentiation-from-existing-solutions)
+  - [Monetization model](#monetization-model)
+
+- [Scope and Constraints](#scope-and-constraints)
+  - [Implementation Constraints](#implementation-constraints)
+  - [In Scope](#in-scope)
+  - [Out of Scope (for now)](#out-of-scope-for-now)
+
+- [Data Model](#data-model)
+  - [Receipt](#receipt)
+  - [Purchase](#purchase)
+  - [Product](#product)
+  - [Category](#category)
+  - [Entity Relationships](#entity-relationships)
+
+- [Technology Stack](#technology-stack)
+  - [Mobile Framework](#mobile-framework)
+  - [Language](#language)
+  - [OCR Engine](#ocr-engine)
+  - [Data Storage](#data-storage)
+  - [State Management](#state-management)
+  - [Styling and UI](#styling-and-ui)
+  - [Optional / Future Technologies](#optional--future-technologies)
 
 ---
 
@@ -79,7 +107,9 @@ All core functionality runs locally on the device.
 
 ---
 
-## Implementation Constraints
+## Scope and Constraints
+
+### Implementation Constraints
 
 The following constraints guide all technical decisions:
 
@@ -91,21 +121,23 @@ The following constraints guide all technical decisions:
 
 ---
 
-## Scope and Non-Goals
-
-### In scope
+### In Scope
 
 - Personal expense tracking
 - Supermarket receipts from a limited set of stores
 - Product-level spending analysis
 
-### Out of scope (for now)
+---
+
+### Out of Scope (for now)
 
 - Cloud synchronization or backups
 - Cross-device data sharing
 - International receipt formats
 - Real-time price comparison
 - Banking or payment system integration
+
+---
 
 ## Data Model
 
@@ -187,3 +219,101 @@ Purchase
    v
 Product --------> Category
 ```
+
+
+## Technology Stack
+
+This section describes the technologies selected for implementing the application.
+The focus is on offline-first execution, performance on mobile devices, and long-term maintainability.
+
+---
+
+### Mobile Framework
+
+**React Native (TypeScript)**
+
+The application is built using React Native with TypeScript.
+
+This choice provides:
+- Cross-platform support (Android-first, with future iOS compatibility)
+- Strong ecosystem for camera, storage, and native modules
+- Type safety and better refactoring guarantees through TypeScript
+
+---
+
+### Language
+
+**TypeScript**
+
+TypeScript is used across the codebase to:
+- Reduce runtime errors
+- Improve code readability and maintainability
+- Enable safer refactoring as the project evolves
+
+---
+
+### OCR Engine
+
+**On-device OCR (ML Kit)**
+
+Optical Character Recognition is performed entirely on-device.
+
+Key characteristics:
+- No network dependency
+- Low latency
+- Privacy-preserving (no image upload)
+
+The OCR output is treated as raw input and always passed through a normalization stage.
+
+---
+
+### Data Storage
+
+**Local persistent storage (SQLite or equivalent)**
+
+All data is stored locally on the device, including:
+- Purchases
+- Products
+- Categories
+- User corrections
+
+The storage layer is designed to:
+- Support structured queries
+- Enable future migrations
+- Work reliably without internet access
+
+---
+
+### State Management
+
+**Local application state (React hooks / lightweight state management)**
+
+State management prioritizes:
+- Simplicity
+- Predictability
+- Clear separation between UI state and persisted data
+
+Global state libraries are avoided unless complexity increases significantly.
+
+---
+
+### Styling and UI
+
+**Platform-native UI components**
+
+The UI follows platform conventions and accessibility guidelines.
+
+Design goals:
+- Minimal friction
+- Clear review and correction flows
+- Focus on data clarity rather than visual complexity
+
+---
+
+### Optional / Future Technologies
+
+These are explicitly **not part of the current implementation**, but may be considered later:
+
+- Cloud backup / synchronization
+- Remote analytics
+- Advanced ML models requiring server-side training
