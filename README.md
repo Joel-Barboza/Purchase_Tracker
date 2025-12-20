@@ -1,3 +1,15 @@
+## Project Status
+
+This branch contains the **original JavaScript implementation** of the project.
+
+Further development has moved to a clean rewrite using **TypeScript** due to architectural and maintainability concerns.
+
+See:
+- `rewrite/ts` for active development
+- `refactor` for planning and architectural documentation
+
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
