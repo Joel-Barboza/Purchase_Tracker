@@ -31,9 +31,47 @@ choco install -y nodejs-lts microsoft-openjdk11
 ```
 
 # Then, follow the setup development environment
-[Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment)
+* [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment)
 
-[Get Started Without a Framework](https://reactnative.dev/docs/getting-started-without-a-framework)
+* [Get Started Without a Framework](https://reactnative.dev/docs/getting-started-without-a-framework)
+
+## If you are on Linux:
+
+* [Cargo install](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+
+```bash
+cargo install fnm
+```
+
+```bash
+# installs fnm (Fast Node Manager)
+curl -fsSL https://fnm.vercel.app/install | bash
+
+# activate fnm
+source ~/.bashrc
+
+# download and install Node.js
+fnm use --install-if-missing 20
+
+# verifies the right Node.js version is in the environment
+node -v # should print `v20.18.0`
+
+# verifies the right npm version is in the environment
+npm -v # should print `10.8.2`
+```
+
+# Then, follow the setup development environment
+* [Set Up Your Environment, Linux](https://reactnative.dev/docs/set-up-your-environment?os=linux)
+
+### The following commands helped too:
+```bash 
+chmod +x android/gradlew
+sudo apt update
+sudo apt install openjdk-17-jdk
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+```
+
 
 ## To connect to a specific device
 
@@ -51,13 +89,18 @@ npx react-native run-android --deviceId=DEVICE_ID-RFCW40L8QBK
 # To generate apk
 
 ```bash
-react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 ```
 ```bash
 cd android
 ```
 ```bash
 ./gradlew assembleDebug
+```
+
+Done all at once (using "&&" to do the commands consecutively)
+```bash
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleDebug
 ```
 
 Then you can get apk in **app/build/outputs/apk/debug/app-debug.apk**
