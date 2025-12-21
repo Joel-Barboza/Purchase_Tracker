@@ -13,7 +13,7 @@ I want to capture a receipt using my camera
 So that I can digitize my purchase without manual entry
 
 Acceptance Criteria:
-- [ ] Camera access is available
+- [X] Camera access is available
 - [ ] Image is stored locally
 - [ ] Image is associated with a receipt entity
 

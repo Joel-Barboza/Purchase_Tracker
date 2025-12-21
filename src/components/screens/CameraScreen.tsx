@@ -33,9 +33,9 @@ const PermissionsPage = (): JSX.Element => {
     const { requestPermission }: { requestPermission: () =>Promise<boolean> } = useCameraPermission();
 
     const requestCameraPermission = async (): Promise<boolean> =>{
-        const permission = await requestPermission();
+        const permission: boolean = await requestPermission();
         if (permission === false) await Linking.openSettings();
-        return permission
+        return permission;
     }
 
     return (
