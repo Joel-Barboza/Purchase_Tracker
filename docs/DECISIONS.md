@@ -124,3 +124,26 @@ Use local-only persistent storage.
 **Consequences:**
 - No automatic backups
 - Data loss risk if device is lost (acceptable for current scope)
+
+---
+
+## Decision X: Template
+
+**Context:**
+
+
+**Options considered:**
+- 
+- 
+- 
+
+**Decision:**
+
+
+**Rationale:**
+- 
+- 
+- 
+
+**Consequences:**
+- 

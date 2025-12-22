@@ -15,7 +15,7 @@ So that I can digitize my purchase without manual entry
 Acceptance Criteria:
 - [X] Camera access is available
 - [X] Image is stored locally
-- [ ] Image is associated with a receipt entity
+- [X] Captured image URI is stored and linked to a receipt record
 
 ---
 

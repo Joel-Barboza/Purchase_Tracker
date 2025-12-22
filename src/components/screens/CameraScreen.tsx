@@ -1,4 +1,4 @@
-import { CameraRoll } from "@react-native-camera-roll/camera-roll";
+import { CameraRoll, PhotoIdentifier } from "@react-native-camera-roll/camera-roll";
 import React, { useEffect, useRef, useState } from "react";
 import type { JSX } from "react";
 import {
@@ -12,8 +12,12 @@ import {
 } from "react-native";
 
 import { Camera, CameraDevice, CameraDeviceFormat, PhotoFile, useCameraDevice, useCameraFormat, useCameraPermission } from "react-native-vision-camera";
+import { addReceipt, getReceipts } from "../../db/receipt";
+import { useDb } from "../../context/DbContext";
+import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
 
 const CameraScreen = (): JSX.Element => {
+    const db: NitroSQLiteConnection | null = useDb();
     const device = useCameraDevice('back');
     const format = useCameraFormat(device, [
         { fps: 60 },
@@ -37,7 +41,7 @@ const CameraScreen = (): JSX.Element => {
         setTimeout(() => {
             setIsActive(true);
         }, 500);
-        
+
     }, [photo]);
 
 
@@ -78,11 +82,21 @@ const CameraScreen = (): JSX.Element => {
             return
         }
         if (photo.path) {
-            await CameraRoll.saveAsset(`file://${photo.path}`, {
+            const CAPTURE_URI: string = `file://${photo.path}`;
+            const photoIdentifier:PhotoIdentifier = await CameraRoll.saveAsset(CAPTURE_URI, {
                 type: "photo",
                 album: "PurchaseApp"
             });
-            setImageSource(`file://${photo.path}`);
+            const SAVE_URI: string = photoIdentifier.node.image.uri;
+            setImageSource(CAPTURE_URI);
+            if (!db) {
+                Alert.alert(
+                    "No DB instance",
+                    `Invalid DB instance value: ${db}`
+                );
+                return
+            }
+            await addReceipt(db, SAVE_URI, Date.now());
         }
     }
 
@@ -99,10 +113,21 @@ const CameraScreen = (): JSX.Element => {
                 photo={true}
                 format={format}
             />
-            <TouchableOpacity
-                style={style.camButton}
-                onPress={capturePhoto}
-            />
+            <View style={style.btnContainer}>
+
+                <TouchableOpacity
+                    style={style.camButton}
+                    onPress={capturePhoto}
+                />
+                <TouchableOpacity
+                    style={style.camButton}
+                    onPress={async () => { db && await getReceipts(db) }}
+                >
+                    <Text>
+                        get recipt
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -158,7 +183,11 @@ const style = StyleSheet.create({
         borderRadius: 40,
         backgroundColor: "#B2BEB5",
         borderWidth: 4,
-        borderColor: "white",
+        borderColor: "white"
+    },
+    btnContainer: {
+        flex:1 ,
+        flexDirection: 'row'
     }
 })
 
