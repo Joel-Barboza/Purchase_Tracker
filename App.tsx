@@ -1,17 +1,18 @@
-
-
 import {
   SafeAreaProvider,
 } from 'react-native-safe-area-context';
-import CameraScreen from './src/components/screens/CameraScreen';
 import { DbProvider } from './src/context/DbContext';
+import { NavigationContainer } from '@react-navigation/native';
+import ImageProcessingStack from './src/routes/ImageProcessingStack';
 
 function App() {
 
   return (
     <DbProvider>
       <SafeAreaProvider>
-        <CameraScreen />
+        <NavigationContainer>
+          <ImageProcessingStack />
+        </NavigationContainer>
       </SafeAreaProvider>
     </DbProvider>
   );

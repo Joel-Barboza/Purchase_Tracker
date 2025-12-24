@@ -25,8 +25,8 @@ I want to select a receipt image from my gallery
 So that I can process receipts taken earlier
 
 Acceptance Criteria:
-- [ ] Gallery picker is supported
-- [ ] Selected image follows the same pipeline as camera images
+- [X] Gallery picker is supported
+- [X] Selected image follows the same pipeline as camera images
 
 ---
 
