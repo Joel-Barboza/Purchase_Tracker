@@ -28,7 +28,6 @@ type Props = NativeStackScreenProps<
 
 
 const CameraScreen = ({ navigation }: Props): JSX.Element => {
-  const db: NitroSQLiteConnection | null = useDb();
   const device = useCameraDevice('back');
   const format = useCameraFormat(device, [
     { fps: 60 },
@@ -38,7 +37,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
     { photoResolution: 'max' },
   ])
   const { hasPermission } = useCameraPermission();
-
+  const db: NitroSQLiteConnection | null = useDb();
   const camera = useRef<Camera | null>(null);
   const [imageSource, setImageSource] = useState<string | null>(null);
   const [isActive, setIsActive] = useState<boolean>(true);
@@ -58,16 +57,9 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
       album: "PurchaseApp"
     });
     const SAVE_URI: string = photoIdentifier.node.image.uri;
-    if (!db) {
-      Alert.alert(
-        "No DB instance",
-        `Invalid DB instance value: ${db}`
-      );
-      return
-    }
-    await addReceipt(db, SAVE_URI, Date.now());
+
     const imageProps: ImageProps = {
-      uri: SAVE_URI,
+      imageUri: SAVE_URI,
       height: photoIdentifier.node.image.height,
       width: photoIdentifier.node.image.width
     }
@@ -119,7 +111,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
       // return value from gallery doesn't have the dimensions
       const data: ImageSize = await Image.getSize(file.uri);
       const imageProps: ImageProps = {
-        uri: file.uri,
+        imageUri: file.uri,
         height: data.height,
         width: data.width
       }

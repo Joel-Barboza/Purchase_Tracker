@@ -2,7 +2,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { JSX } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ImageProcessingStackParamList } from "../ImageProcessingStack";
-import { ExtractText } from "../../utils/OCR";
+import { processReceiptImage } from "../../utils/processReceiptImage";
+import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
+import { useDb } from "../../context/DbContext";
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
@@ -10,7 +12,7 @@ type Props = NativeStackScreenProps<
 >;
 
 const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
-
+  const db: NitroSQLiteConnection | null = useDb();
   const { imageUri, height, width } = route.params.imageProps;
 
   return (
@@ -30,7 +32,7 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
         </TouchableOpacity>
         <TouchableOpacity
           style={style.simpleBtn}
-          onPress={() => ExtractText(imageUri)}
+          onPress={() => db && processReceiptImage(db, imageUri)}
           accessibilityLabel="Go to text extraction page"
         >
           <Text>Extract</Text>
