@@ -36,9 +36,9 @@ I want text extracted from my receipt without internet access
 So that my data remains private
 
 Acceptance Criteria:
-- [ ] OCR output (blocks, lines, and elements) is serialized
-- [ ] Serialized OCR data is stored locally (SQLite)
-- [ ] Receipt references both the original image path and OCR data
+- [X] OCR output (blocks, lines, and elements) is serialized
+- [X] Serialized OCR data is stored locally (SQLite)
+- [X] Receipt references both the original image path and OCR data
 
 
 ---
