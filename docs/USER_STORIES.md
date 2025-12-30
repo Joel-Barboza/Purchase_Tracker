@@ -51,9 +51,9 @@ I want OCR lines ordered vertically and horizontally
 So that textual meaning is preserved
 
 Acceptance Criteria:
-- [ ] Lines are sorted by vertical position
-- [ ] Elements within lines are sorted horizontally
-- [ ] Visually continuous lines are merged
+- [X] Lines are sorted by vertical position
+- [X] Elements within lines are sorted horizontally
+- [X] Visually continuous lines are merged
 
 ---
 

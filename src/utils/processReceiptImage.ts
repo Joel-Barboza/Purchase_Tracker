@@ -1,10 +1,19 @@
-import TextRecognition, { TextRecognitionResult } from "@react-native-ml-kit/text-recognition";
+import TextRecognition, { Frame, TextElement, TextLine, TextRecognitionResult } from "@react-native-ml-kit/text-recognition";
 import { addReceipt } from "../db/receipt";
 import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
 
 // let lineList = [];
 // let products = [];
 // let discard = [];
+
+const STORES = ['walmart', 'maxipali', 'pali'] as const;
+
+type StoreName = typeof STORES[number];
+
+type Store = {
+  name: StoreName | undefined;
+};
+
 
 export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<boolean> => {
 
@@ -13,9 +22,11 @@ export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: s
   if (!rawOcrResult) {
     console.error('Unable to extract text from the image')
     return false;
-
   }
   const serializedOCR: string = JSON.stringify(rawOcrResult);
+  const {lines, store}: {lines: TextElement[][], store: Store} = processOcrResult(rawOcrResult);
+  console.log(store)
+  console.log(lines)
 
   if (!db) {
     console.error(`Invalid DB instance value: ${db}`);
@@ -37,6 +48,7 @@ const extractText = async (imageUri: string): Promise<TextRecognitionResult | un
   // discard = [];
   try {
     const result = await TextRecognition.recognize(imageUri);
+    console.log(result)
     return result;
   } catch (e) {
     throw new Error("Could not extract the text from the image");
@@ -45,6 +57,103 @@ const extractText = async (imageUri: string): Promise<TextRecognitionResult | un
 
   // const wordList = await processText(result);
 };
+
+const processOcrResult = (
+  rawOcrResult: TextRecognitionResult
+): { lines: TextElement[][], store: Store } => {
+
+  const wordList: TextElement[] = getWordList(rawOcrResult);
+
+  sortVertically(wordList); // mutates wordList
+  
+  const store: Store = getReceiptStore(wordList);
+
+  const lines = createLines(wordList);
+
+  sortLineElementsHorizontally(lines); // mutates lines
+
+  console.log(lines)
+  return { lines: lines, store: store };
+}
+
+const getWordList = (rawOcrResult: TextRecognitionResult): TextElement[] => {
+  let resultObject: TextElement[] = [];
+
+  let counter = 0
+  for (let i = 0; i < rawOcrResult.blocks.length; i++) {
+    const block = rawOcrResult.blocks[i];
+
+    // Loop through each line in the block
+    for (let j = 0; j < block.lines.length; j++) {
+      const line = block.lines[j];
+      counter++
+      for (let k = 0; k < line.elements.length; k++) {
+        resultObject.push(line.elements[k]);
+      }
+    }
+  }
+  console.log(counter)
+  return resultObject
+}
+
+const getReceiptStore = (wordList: TextElement[]): Store => {
+  for (const word of wordList) {
+    const text = word.text.toLowerCase();
+
+    if (STORES.includes(text as StoreName)) {
+      return { name: text as StoreName };
+    }
+  }
+  return { name: undefined };
+};
+
+
+const sortVertically = (wordList: TextElement[]): void => {
+  wordList.sort((a: TextElement, b: TextElement) => {
+    if (!a.frame || !b.frame) return 0
+    return a.frame.top - b.frame.top
+  })
+}
+
+const createLines = (wordList: TextElement[]): TextElement[][] => {
+
+  let lines: TextElement[][] = []; // Join words in lines
+
+  for (let i = 0; i < wordList.length; i++) {
+    const word = wordList[i];
+
+    if (!word.frame) continue;
+
+    if (i === 0) {
+      lines.push([word]);
+      continue;
+    }
+    const line = lines.length - 1
+    const prevWord = lines[line].at(-1)
+
+    if (!prevWord) continue;
+    const midFrameY = word.frame.top + word.frame.height * 0.5;
+    const prevWordFrame = prevWord.frame;
+
+    if (!prevWordFrame) continue;
+    if (midFrameY >= prevWordFrame.top &&
+      midFrameY < prevWordFrame.top + prevWordFrame.height
+    ) {
+      lines[line].push(word)
+    } else {
+      lines.push([word])
+    }
+  }
+  return lines;
+}
+
+const sortLineElementsHorizontally = (lines: TextElement[][]) => {
+  lines.forEach(line => line.sort((a: TextElement, b: TextElement) => {
+    if (!a.frame || !b.frame) return 0;
+    return a.frame.left - b.frame.left;
+  }))
+}
+
 
 // const processText = async (extractedText) => {
 //   for (let i = 0; i < extractedText.blocks.length; i++) {
