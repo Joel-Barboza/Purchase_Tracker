@@ -1,5 +1,5 @@
 import { TextElement } from "@react-native-ml-kit/text-recognition";
-import { NormalizedOcr, ProductSection } from "./types";
+import { ClassifiedProductLines, NormalizedOcr, ProductSection } from "./types";
 import { findLeftAndWidthFromSection, getMaxBottomFromLine, getMinTopFromLine } from "./utils";
 
 let productSection: ProductSection = {
@@ -20,6 +20,8 @@ type ProductLine = {
 export const parseWalmartReceipt = (normalizedOcr: NormalizedOcr): void => {
   const receiptLines = normalizedOcr.lines;
   const productSection = findWalmartProductSection(receiptLines);
+  if (!productSection?.lines) return;
+  const classifiedProductLines = classifyProductLines(productSection.lines);
   console.log(productSection)
 }
 
@@ -51,7 +53,7 @@ const findWalmartProductSection = (receiptLines: TextElement[][]): ProductSectio
 
 const findFirstProduct = (receiptLines: TextElement[][]): ProductLine | undefined => {
 
-  const wordsPreProductSection = ['#', 'tda#', 'op#', 'te#', 'tr#', 'tda', 'op', 'te', 'tr']
+  const wordsPreProductSection = ['#', 'tda#', 'op#', 'te#', 'tr#', 'tda']
   for (const line of receiptLines) {
     for (const word of line) {
       // https://stackoverflow.com/questions/37428338/check-if-a-string-contains-any-element-of-an-array-in-javascript
@@ -88,12 +90,12 @@ const findLastProduct = (receiptLines: TextElement[][], index: number): ProductL
       })
 
       if (hasFoundWords) {
-        const lastProductLine: TextElement[] | undefined = receiptLines.at(i-1);
-        
+        const lastProductLine: TextElement[] | undefined = receiptLines.at(i - 1);
+
         if (!lastProductLine) return;
         return {
           line: lastProductLine,
-          index: i-1
+          index: i - 1
         };
       }
 
@@ -101,3 +103,44 @@ const findLastProduct = (receiptLines: TextElement[][], index: number): ProductL
     productSection.lines.push(line);
   }
 }
+
+const classifyProductLines = (productSectionLines: TextElement[][]): ClassifiedProductLines=> {
+  let classifiedProductLines: ClassifiedProductLines = {
+    lines: []
+  }
+  for (let i = 0; i < productSectionLines.length; i++){
+    const line = productSectionLines[i]
+    for (const word of line) {
+      
+      const prodCodeMatch = word.text.match(/\d{4,16}K?/g);
+      const shortProdCodeMatch = word.text.match(/\d{4,6}K?/g);
+      
+      if (prodCodeMatch) {
+        // const prodCodeWithKMatch = word.text.match(/\d{4,16}K/g);
+        // if (prodCodeWithKMatch) {
+
+        // }
+        classifiedProductLines.lines.push({
+          line: line,
+          type: 'product'
+        })
+        // parseProductLine(prodCodeMatch[0], line);
+      } else if (shortProdCodeMatch) {
+        classifiedProductLines.lines.push({
+          line: line,
+          type: 'product'
+        })
+      } else {
+        classifiedProductLines.lines.push({
+          line: line,
+          type: 'info'
+        })
+      }
+    }
+  }
+  return classifiedProductLines;
+}
+
+// const parseProductLine = (prodCode: string, line: TextElement[]) => {
+
+// }

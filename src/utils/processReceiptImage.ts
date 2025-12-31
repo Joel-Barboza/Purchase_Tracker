@@ -99,33 +99,47 @@ const sortVertically = (wordList: TextElement[]): void => {
 const createLines = (wordList: TextElement[]): TextElement[][] => {
 
   let lines: TextElement[][] = []; // Join words in lines
-
+  
   for (let i = 0; i < wordList.length; i++) {
     const word = wordList[i];
-
+    
     if (!word.frame) continue;
-
+    
     if (i === 0) {
       lines.push([word]);
       continue;
     }
-    const line = lines.length - 1
-    const prevWord = lines[line].at(-1)
-
-    if (!prevWord) continue;
+    
+    const lastLineIndex = lines.length - 1
     const midFrameY = word.frame.top + word.frame.height * 0.5;
-    const prevWordFrame = prevWord.frame;
-
-    if (!prevWordFrame) continue;
-    if (midFrameY >= prevWordFrame.top &&
-      midFrameY < prevWordFrame.top + prevWordFrame.height
+    const lineTopAndBottom = avgLineTopAndBottom(lines[lastLineIndex])
+    if (!lineTopAndBottom) continue;
+    if (midFrameY >= lineTopAndBottom.top &&
+      midFrameY < lineTopAndBottom.bottom
     ) {
-      lines[line].push(word)
+      lines[lastLineIndex].push(word)
     } else {
       lines.push([word])
     }
   }
   return lines;
+}
+
+const avgLineTopAndBottom = (line: TextElement[]): {top: number, bottom: number} => {
+  let sumOfTops: number = 0;
+  let sumOfBottoms: number = 0;
+
+
+  for (const word of line) {
+    if (!word.frame) continue;
+    sumOfTops += word.frame.top;
+    sumOfBottoms += word.frame.top + word.frame.height;
+  }
+  const avgTop: number = sumOfTops/line.length
+  const avgBottom: number = sumOfBottoms/line.length
+
+  const result = {top: avgTop, bottom: avgBottom}
+  return result
 }
 
 const sortLineElementsHorizontally = (lines: TextElement[][]) => {
@@ -146,7 +160,7 @@ const parseReceipt = (normalizedOcr: NormalizedOcr) => {
       break;
 
     default:
-      console.error('Store not supported')
+      console.error('Store not supported, using default: Walmart')
       break;
   }
 }

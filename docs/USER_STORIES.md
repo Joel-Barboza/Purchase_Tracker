@@ -74,7 +74,7 @@ I want to detect lines containing product identifiers
 So that products can be extracted reliably
 
 Acceptance Criteria:
-- [ ] Product codes are detected via patterns
+- [X] Product codes are detected via patterns
 - [ ] Candidate lines are flagged for parsing
 
 ---

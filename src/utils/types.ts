@@ -22,3 +22,9 @@ export type ProductSection = {
     width: number
   }
 }
+
+export type ClassifiedProductLines = {
+  lines: {
+    line: TextElement[], type: 'info' | 'product'
+  }[]
+}
