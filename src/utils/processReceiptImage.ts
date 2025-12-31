@@ -1,19 +1,8 @@
 import TextRecognition, { Frame, TextElement, TextLine, TextRecognitionResult } from "@react-native-ml-kit/text-recognition";
 import { addReceipt } from "../db/receipt";
 import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
-
-// let lineList = [];
-// let products = [];
-// let discard = [];
-
-const STORES = ['walmart', 'maxipali', 'pali'] as const;
-
-type StoreName = typeof STORES[number];
-
-type Store = {
-  name: StoreName | undefined;
-};
-
+import { parseWalmartReceipt } from "./parseWalmartReceipt";
+import { NormalizedOcr, Store, StoreName, STORES } from "./types";
 
 export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<boolean> => {
 
@@ -23,16 +12,17 @@ export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: s
     console.error('Unable to extract text from the image')
     return false;
   }
-  const serializedOCR: string = JSON.stringify(rawOcrResult);
-  const {lines, store}: {lines: TextElement[][], store: Store} = processOcrResult(rawOcrResult);
-  console.log(store)
-  console.log(lines)
+  const serializedOcr: string = JSON.stringify(rawOcrResult);
+  const normalizedOcr: NormalizedOcr = normalizeOcrResult(rawOcrResult);
+
+
+  parseReceipt(normalizedOcr);
 
   if (!db) {
     console.error(`Invalid DB instance value: ${db}`);
     return false;
   }
-  await addReceipt(db, imageUri, serializedOCR, Date.now());
+  await addReceipt(db, imageUri, serializedOcr, Date.now());
 
   return true;
 }
@@ -43,9 +33,6 @@ const extractText = async (imageUri: string): Promise<TextRecognitionResult | un
     return;
   }
 
-  // lineList = [];
-  // products = [];
-  // discard = [];
   try {
     const result = await TextRecognition.recognize(imageUri);
     console.log(result)
@@ -54,45 +41,39 @@ const extractText = async (imageUri: string): Promise<TextRecognitionResult | un
     throw new Error("Could not extract the text from the image");
   }
 
-
-  // const wordList = await processText(result);
 };
 
-const processOcrResult = (
+const normalizeOcrResult = (
   rawOcrResult: TextRecognitionResult
 ): { lines: TextElement[][], store: Store } => {
 
   const wordList: TextElement[] = getWordList(rawOcrResult);
 
   sortVertically(wordList); // mutates wordList
-  
+
   const store: Store = getReceiptStore(wordList);
 
   const lines = createLines(wordList);
 
   sortLineElementsHorizontally(lines); // mutates lines
 
-  console.log(lines)
   return { lines: lines, store: store };
 }
 
 const getWordList = (rawOcrResult: TextRecognitionResult): TextElement[] => {
   let resultObject: TextElement[] = [];
 
-  let counter = 0
   for (let i = 0; i < rawOcrResult.blocks.length; i++) {
     const block = rawOcrResult.blocks[i];
 
     // Loop through each line in the block
     for (let j = 0; j < block.lines.length; j++) {
       const line = block.lines[j];
-      counter++
       for (let k = 0; k < line.elements.length; k++) {
         resultObject.push(line.elements[k]);
       }
     }
   }
-  console.log(counter)
   return resultObject
 }
 
@@ -153,6 +134,25 @@ const sortLineElementsHorizontally = (lines: TextElement[][]) => {
     return a.frame.left - b.frame.left;
   }))
 }
+
+const parseReceipt = (normalizedOcr: NormalizedOcr) => {
+
+  // https://stackoverflow.com/questions/6476994/using-or-operator-in-javascript-switch-statement
+  switch (normalizedOcr.store.name) {
+    case STORES[0]: // 'walmart'
+    case STORES[1]: // 'maxipali'
+    case STORES[2]: // 'pali'
+      parseWalmartReceipt(normalizedOcr);
+      break;
+
+    default:
+      console.error('Store not supported')
+      break;
+  }
+}
+
+
+
 
 
 // const processText = async (extractedText) => {

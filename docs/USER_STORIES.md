@@ -63,8 +63,8 @@ I want to discard irrelevant receipt text
 So that parsing focuses on products only
 
 Acceptance Criteria:
-- [ ] Headers, URLs, and metadata are ignored
-- [ ] Filtering does not remove valid product lines
+- [X] Headers, URLs, and metadata are ignored
+- [X] Filtering does not remove valid product lines
 
 ---
 
