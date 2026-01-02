@@ -2,7 +2,7 @@ import TextRecognition, { Frame, TextElement, TextLine, TextRecognitionResult } 
 import { addReceipt } from "../db/receipt";
 import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
 import { parseWalmartReceipt } from "./parseWalmartReceipt";
-import { NormalizedOcr, Store, StoreName, STORES } from "./types";
+import { Line, NormalizedOcr, Store, StoreName, STORES } from "./types";
 
 export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<boolean> => {
 
@@ -45,7 +45,7 @@ const extractText = async (imageUri: string): Promise<TextRecognitionResult | un
 
 const normalizeOcrResult = (
   rawOcrResult: TextRecognitionResult
-): { lines: TextElement[][], store: Store } => {
+): { lines: Line[], store: Store } => {
 
   const wordList: TextElement[] = getWordList(rawOcrResult);
 
@@ -57,7 +57,9 @@ const normalizeOcrResult = (
 
   sortLineElementsHorizontally(lines); // mutates lines
 
-  return { lines: lines, store: store };
+  const formatedLines: Line[] = formatLines(lines)
+
+  return { lines: formatedLines, store: store };
 }
 
 const getWordList = (rawOcrResult: TextRecognitionResult): TextElement[] => {
@@ -147,6 +149,23 @@ const sortLineElementsHorizontally = (lines: TextElement[][]) => {
     if (!a.frame || !b.frame) return 0;
     return a.frame.left - b.frame.left;
   }))
+}
+
+const formatLines = (lines: TextElement[][]): Line[] => {
+  let formatedLines: Line[] = []
+  for (const line of lines) {
+    let formatedLine: Line = {
+      words: [],
+      text: ''
+    }
+    for (const word of line) {
+      formatedLine.words.push(word);
+      formatedLine.text += word.text + ' ';
+    }
+    formatedLine.text = formatedLine.text.trimEnd(); // remove trailing spaces
+    formatedLines.push(formatedLine)
+  }
+  return formatedLines;
 }
 
 const parseReceipt = (normalizedOcr: NormalizedOcr) => {

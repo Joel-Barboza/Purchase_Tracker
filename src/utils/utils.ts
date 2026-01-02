@@ -1,4 +1,5 @@
 import { TextElement } from "@react-native-ml-kit/text-recognition";
+import { Line } from "./types";
 
 export const getMinTopFromLine = (
   line: TextElement[]
@@ -33,17 +34,17 @@ export const getMaxBottomFromLine = (
 }
 
 export const findLeftAndWidthFromSection = (
-  section: TextElement[][]
+  section: Line[]
 ): { left: number; width: number } | undefined => {
 
   let left = Infinity;
   let right = -Infinity;
 
   for (const line of section) {
-    if (line.length === 0) continue;
+    if (line.words.length === 0) continue;
 
-    const first = line[0];
-    const last = line[line.length - 1];
+    const first = line.words[0];
+    const last = line.words[line.words.length - 1];
 
     if (!first.frame || !last.frame) continue;
 

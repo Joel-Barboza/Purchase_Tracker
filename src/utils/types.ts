@@ -8,13 +8,18 @@ export type Store = {
   name: StoreName | undefined;
 };
 
+export type Line = {
+  words: TextElement[],
+  text: string
+}
+
 export type NormalizedOcr = {
-  lines: TextElement[][],
+  lines: Line[],
   store: Store
 }
 
 export type ProductSection = {
-  lines: TextElement[][],
+  lines: Line[],
   frame: {
     top: number,
     left: number,
@@ -27,4 +32,13 @@ export type ClassifiedProductLines = {
   lines: {
     line: TextElement[], type: 'info' | 'product'
   }[]
+}
+
+export type Product = {
+  name: string,
+  prodCode: string,
+  quantity: number,
+  unitPrice: number,
+  totalPrice: number,
+  soldByKg: 0 | 1, // false
 }
