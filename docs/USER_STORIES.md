@@ -75,7 +75,7 @@ So that products can be extracted reliably
 
 Acceptance Criteria:
 - [X] Product codes are detected via patterns
-- [ ] Candidate lines are flagged for parsing
+- [X] Candidate lines are flagged for parsing
 
 ---
 
@@ -85,10 +85,10 @@ I want to extract product attributes from receipt text
 So that purchases can be reconstructed
 
 Acceptance Criteria:
-- [ ] Product name is extracted
-- [ ] Quantity is inferred or defaulted
-- [ ] Unit price and total price are parsed
-- [ ] Weight-based products are handled explicitly
+- [X] Product name is extracted
+- [X] Quantity is inferred or defaulted
+- [X] Unit price and total price are parsed
+- [X] Weight-based products are handled explicitly
 
 ---
 

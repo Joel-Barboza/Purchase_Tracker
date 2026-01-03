@@ -28,17 +28,11 @@ export type ProductSection = {
   }
 }
 
-export type ClassifiedProductLines = {
-  lines: {
-    line: TextElement[], type: 'info' | 'product'
-  }[]
-}
-
 export type Product = {
-  name: string,
-  prodCode: string,
-  quantity: number,
-  unitPrice: number,
-  totalPrice: number,
-  soldByKg: 0 | 1, // false
+  name: string | undefined,
+  prodCode: string | undefined,
+  quantity: number | undefined,
+  unitPrice: number | undefined,
+  totalPrice: number | undefined,
+  soldByKg: 0 | 1 | undefined, // false
 }

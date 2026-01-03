@@ -1,5 +1,5 @@
 import { TextElement } from "@react-native-ml-kit/text-recognition";
-import { ClassifiedProductLines, Line, NormalizedOcr, Product, ProductSection } from "./types";
+import { Line, NormalizedOcr, Product, ProductSection } from "./types";
 import { findLeftAndWidthFromSection, getMaxBottomFromLine, getMinTopFromLine } from "./utils";
 
 
@@ -13,7 +13,8 @@ export const parseWalmartReceipt = (normalizedOcr: NormalizedOcr): void => {
   const receiptLines = normalizedOcr.lines;
   const productSection = findWalmartProductSection(receiptLines);
   if (!productSection?.lines) return;
-  const classifiedProductLines = classifyProductLines(productSection.lines);
+  const groupedProductLines = groupProductLines(productSection.lines);
+  console.log(groupedProductLines)
   console.log(productSection)
 }
 
@@ -107,48 +108,186 @@ const findLastProduct = (receiptLines: Line[], index: number): ProductLine | und
   }
 }
 
-const classifyProductLines = (productSectionLines: Line[]): ClassifiedProductLines => {
-  let classifiedProductLines: ClassifiedProductLines = {
-    lines: []
-  }
-  let hasPreviousLineProdCode: boolean = false;
+const groupProductLines = (productSectionLines: Line[]): Line[][] => {
+  let productLineGroups: Line[][] = []
   let groupedLines: Line[] = []
   for (let i = 0; i < productSectionLines.length; i++) {
     const line = productSectionLines[i]
+    const nextLine = productSectionLines[i + 1] ? productSectionLines[i + 1] : undefined;
 
     const prodCodeMatch = line.text.match(/\d{4,16}K?/g);
+    const priceMatch = line.text.match(/(?<=\d{4,16}K?.*)([\d{1,3}i][.,])*\d{1,3}(?= * G)/g)
 
-    if (prodCodeMatch) {
-      if (hasPreviousLineProdCode) {
-        getProductFromLines(groupedLines);
-        groupedLines = [];
-      }
+    if (prodCodeMatch && priceMatch) {
       groupedLines.push(line)
-      hasPreviousLineProdCode = true;
-      continue;
-    } else {
-      groupedLines.push(line)
-      getProductFromLines(groupedLines)
-      hasPreviousLineProdCode = false;
+      productLineGroups.push(groupedLines)
+      getProductFromLines(groupedLines);
       groupedLines = [];
+
+    } else if (prodCodeMatch) {
+      groupedLines.push(line)
+      if (nextLine) groupedLines.push(nextLine);
+
+      productLineGroups.push(groupedLines)
+      getProductFromLines(groupedLines)
+      groupedLines = [];
+      i++;
     }
   }
-  getProductFromLines(groupedLines); // last grouped line remains unprocessed
-  return classifiedProductLines;
+  return productLineGroups;
 }
 
-const getProductFromLines = (line: Line[]): Product => {
+const getProductFromLines = (productLines: Line[]): Product | undefined => {
+  if (productLines.length === 1) {
+    const product: Product = parseOneLineProduct(productLines);
+    console.log(product)
+    return product;
+
+  } else if (productLines.length === 2) {
+    const product: Product = parseTwoLinesProduct(productLines);
+    console.log(product)
+    return product;
+  }
+
+
+  return
+}
+
+
+const parseOneLineProduct = (productLines: Line[]): Product => {
+  const line: Line = productLines[0];
+  // https://regexr.com/
+  const nameMatch = line.text.match(/^(.*)(?= \d{4,16}K?)/i);
+  const prodCodeMatch = line.text.match(/(?<= )\d{4,20}K?/);
+  const totalPriceMatch = line.text.match(/(?<=[0-9]{4}.* +)([0-9]{0,3}(,|.)[0-9]{0,3}(,|.)([0-9 ])*)(?=(\s*G))/g);
+
+  const totalPriceMatchCleanNumber =
+    totalPriceMatch
+      ? parseInt(totalPriceMatch[0].slice(0, -1).replace(/[.,\s]/g, ''))
+      : undefined;
+
   const product: Product = {
-    name: '',
-    prodCode: '',
+    name: nameMatch ? nameMatch[0] : undefined,
+    prodCode: prodCodeMatch ? prodCodeMatch[0] : undefined,
     quantity: 1,
-    unitPrice: 1,
-    totalPrice: 1,
+    unitPrice: totalPriceMatchCleanNumber,
+    totalPrice: totalPriceMatchCleanNumber,
     soldByKg: 0, // false
   }
-  console.log(line)
+  return product;
+}
 
 
 
-  return product
+const parseTwoLinesProduct = (productLines: Line[]): Product => {
+
+  const nameMatch = productLines[0].text.match(/^(.*)(?= \d{4,20}K?)/i);
+  const prodCodeMatch = productLines[0].text.match(/(?<= )\d{4,20}K?/);
+  const prodCodeWithKMatch = productLines[0].text.match(/(?<= )\d{4,20}K/);
+
+  if (prodCodeWithKMatch) {
+    const product: Product = handleProductSoldByKg(productLines[1], nameMatch, prodCodeWithKMatch);
+    return product
+
+  } else if (prodCodeMatch) {
+    const product: Product = handleProductSoldByUnits(productLines[1], nameMatch, prodCodeMatch);
+    return product
+
+  } else {
+    const product: Product = {
+      name: nameMatch ? nameMatch[0] : undefined,
+      prodCode: prodCodeMatch ? prodCodeMatch[0] : undefined,
+      quantity: undefined,
+      unitPrice: undefined,
+      totalPrice: undefined,
+      soldByKg: undefined, // false
+    }
+    return product
+  }
+}
+
+
+const handleProductSoldByKg = (
+  secondLine: Line, name: RegExpMatchArray | null, prodCode: RegExpMatchArray | null
+): Product => {
+
+  const priceByKg = secondLine.text.match(/((?<=A* *)(\d{1,3}[.,])*\d{1,3}(?= *\/Kg))/gi);
+  const cleanPriceByKg =
+  priceByKg
+  ? parseInt(priceByKg[0].replace(/[.,\s]/g, ''))
+  : undefined;
+  
+  
+  const totalPriceMatch = secondLine.text.match(/(?<=\s)([0-9]{0,3}(,|.)[0-9]{0,3}(,|.)([0-9 ])*)(?=(\s*G))/g);
+  const cleanTotalPriceNumber =
+  totalPriceMatch
+  ? parseInt(totalPriceMatch[0].replace(/[.,\sG]/g, ''))
+  : undefined;
+  
+  const weightInKg = secondLine.text.match(/((\d{1,3}[.,])*\d{1,3}(?= *Kg))/gi);
+  let cleanWeightNumber;
+  if (!weightInKg && cleanTotalPriceNumber && cleanPriceByKg) {
+    const inferedQuantity = cleanTotalPriceNumber / cleanPriceByKg;
+    cleanWeightNumber = inferedQuantity;
+  } else if (weightInKg) {
+    cleanWeightNumber = parseFloat(weightInKg[0].replace(/[\s]/g, ''));
+  } else {
+    cleanWeightNumber = undefined;
+  }
+  
+  const product: Product = {
+    name: name ? name[0] : undefined,
+    prodCode: prodCode ? prodCode[0] : undefined,
+    quantity: cleanWeightNumber,
+    unitPrice: cleanPriceByKg,
+    totalPrice: cleanTotalPriceNumber,
+    soldByKg: 1, // true
+
+  }
+  return product;
+}
+
+
+const handleProductSoldByUnits = (
+  secondLine: Line, name: RegExpMatchArray | null, prodCode: RegExpMatchArray | null
+): Product => {
+
+
+
+  const unitPrice = secondLine.text.match(/(?<=\d+ *X *[¢$]*)(\d{1,3}[.,])*\d{1,3}(?= *)/gi);
+  const cleanUnitPrice =
+    unitPrice
+      ? parseInt(unitPrice[0])
+      : undefined;
+
+
+  const totalPriceMatch = secondLine.text.match(/(?<=(\d{1,3}[.,])*\d{1,3} *)(\d{1,3}[.,])*\d{1,3}(?= * G)/g);
+  const cleanTotalPriceNumber =
+    totalPriceMatch
+      ? parseInt(totalPriceMatch[0])
+      : undefined;
+
+  const quantity = secondLine.text.match(/\d+ *(?=x *[¢$]*\d*)/gi);
+  let cleanQuantityNumber;
+  if (!quantity && cleanTotalPriceNumber && cleanUnitPrice) {
+    const inferedQuantity = cleanTotalPriceNumber / cleanUnitPrice;
+    cleanQuantityNumber = inferedQuantity;
+  } else if (quantity) {
+    cleanQuantityNumber = parseInt(quantity[0]);
+  } else {
+    cleanQuantityNumber = undefined;
+  }
+
+
+  const product: Product = {
+    name: name ? name[0] : undefined,
+    prodCode: prodCode ? prodCode[0] : undefined,
+    quantity: cleanQuantityNumber,
+    unitPrice: cleanUnitPrice,
+    totalPrice: cleanTotalPriceNumber,
+    soldByKg: 0, // true
+
+  }
+  return product;
+
 }
