@@ -100,7 +100,7 @@ I want each receipt to become a purchase
 So that my shopping history is preserved
 
 Acceptance Criteria:
-- [ ] Purchase date is stored
+- [ ] Purchase's scan date is stored
 - [ ] Purchase contains one or more products
 
 ---
