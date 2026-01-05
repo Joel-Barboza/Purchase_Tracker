@@ -1,30 +1,36 @@
-import TextRecognition, { Frame, TextElement, TextLine, TextRecognitionResult } from "@react-native-ml-kit/text-recognition";
-import { addReceipt } from "../db/receipt";
+import TextRecognition, { TextElement, TextRecognitionResult } from "@react-native-ml-kit/text-recognition";
 import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
 import { parseWalmartReceipt } from "./parseWalmartReceipt";
-import { Line, NormalizedOcr, Store, StoreName, STORES } from "./types";
+import { Line, NormalizedOcr, OcrInfo, Product, Store, StoreName, STORES } from "./types";
+import { persistPurchaseData } from "./utils";
 
-export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<boolean> => {
+export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<Product[] | undefined> => {
 
   const rawOcrResult: TextRecognitionResult | undefined = await extractText(imageUri);
 
   if (!rawOcrResult) {
     console.error('Unable to extract text from the image')
-    return false;
+    return;
   }
   const serializedOcr: string = JSON.stringify(rawOcrResult);
   const normalizedOcr: NormalizedOcr = normalizeOcrResult(rawOcrResult);
+  const ocrInfo: OcrInfo = { ...normalizedOcr, image_uri: imageUri, serialized_ocr: serializedOcr }
 
 
-  parseReceipt(normalizedOcr);
+  const productList: Product[] | undefined = parseReceipt(ocrInfo);
 
   if (!db) {
     console.error(`Invalid DB instance value: ${db}`);
-    return false;
+    return;
   }
-  await addReceipt(db, imageUri, serializedOcr, Date.now());
+  if (!productList)  {
+    console.error('No product list obtained');
+    return;
+  }
+  await persistPurchaseData(db, productList, ocrInfo.image_uri, ocrInfo.serialized_ocr, ocrInfo.store)
+  console.log(productList)
 
-  return true;
+  return productList;
 }
 
 const extractText = async (imageUri: string): Promise<TextRecognitionResult | undefined> => {
@@ -101,17 +107,17 @@ const sortVertically = (wordList: TextElement[]): void => {
 const createLines = (wordList: TextElement[]): TextElement[][] => {
 
   let lines: TextElement[][] = []; // Join words in lines
-  
+
   for (let i = 0; i < wordList.length; i++) {
     const word = wordList[i];
-    
+
     if (!word.frame) continue;
-    
+
     if (i === 0) {
       lines.push([word]);
       continue;
     }
-    
+
     const lastLineIndex = lines.length - 1
     const midFrameY = word.frame.top + word.frame.height * 0.5;
     const lineTopAndBottom = avgLineTopAndBottom(lines[lastLineIndex])
@@ -127,7 +133,7 @@ const createLines = (wordList: TextElement[]): TextElement[][] => {
   return lines;
 }
 
-const avgLineTopAndBottom = (line: TextElement[]): {top: number, bottom: number} => {
+const avgLineTopAndBottom = (line: TextElement[]): { top: number, bottom: number } => {
   let sumOfTops: number = 0;
   let sumOfBottoms: number = 0;
 
@@ -137,10 +143,10 @@ const avgLineTopAndBottom = (line: TextElement[]): {top: number, bottom: number}
     sumOfTops += word.frame.top;
     sumOfBottoms += word.frame.top + word.frame.height;
   }
-  const avgTop: number = sumOfTops/line.length
-  const avgBottom: number = sumOfBottoms/line.length
+  const avgTop: number = sumOfTops / line.length
+  const avgBottom: number = sumOfBottoms / line.length
 
-  const result = {top: avgTop, bottom: avgBottom}
+  const result = { top: avgTop, bottom: avgBottom }
   return result
 }
 
@@ -168,19 +174,20 @@ const formatLines = (lines: TextElement[][]): Line[] => {
   return formatedLines;
 }
 
-const parseReceipt = (normalizedOcr: NormalizedOcr) => {
+const parseReceipt = (ocrInfo: OcrInfo): Product[] | undefined => {
 
   // https://stackoverflow.com/questions/6476994/using-or-operator-in-javascript-switch-statement
-  switch (normalizedOcr.store.name) {
+  switch (ocrInfo.store.name) {
     case STORES[0]: // 'walmart'
     case STORES[1]: // 'maxipali'
     case STORES[2]: // 'pali'
-      parseWalmartReceipt(normalizedOcr);
-      break;
+      const productList: Product[] | undefined = parseWalmartReceipt(ocrInfo);
+      return productList;
 
     default:
       console.error('Store not supported, using default: Walmart')
-      break;
+      const productListErrorCase: Product[] | undefined = parseWalmartReceipt(ocrInfo);
+      return productListErrorCase;
   }
 }
 

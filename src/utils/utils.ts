@@ -1,5 +1,10 @@
 import { TextElement } from "@react-native-ml-kit/text-recognition";
-import { Line } from "./types";
+import { Line, Product, Store } from "./types";
+import { NitroSQLiteConnection, QueryResultRowItem, SQLiteValue } from "react-native-nitro-sqlite";
+import { addPurchase } from "../db/purchase";
+import { addProduct, findProductByCode, updateProductPrice } from "../db/product";
+import { addPurchaseItem } from "../db/purchaseItems";
+import { addProductPrice } from "../db/productPrice";
 
 export const getMinTopFromLine = (
   line: TextElement[]
@@ -63,3 +68,50 @@ export const findLeftAndWidthFromSection = (
     width: right - left,
   };
 };
+
+
+export const persistPurchaseData = async (
+  db: NitroSQLiteConnection, products: Product[], image_uri: string | null, serialized_ocr: string | null, store: Store
+): Promise<void> => {
+  const purchaseId: number | undefined = await addPurchase(db, image_uri, serialized_ocr, store);
+  if (!purchaseId) return;
+  
+  products.forEach(async (product: Product) => {
+
+    if (!product.prodCode || !product.unitPrice || !product.quantity || !product.totalPrice) return;
+    const productRow = await findProductByCode(db, product.prodCode);
+    
+    let productId: number;
+    if (productRow != null) {
+      productId = Number(productRow.id);
+      await updateProductPrice(db, product.prodCode, product.unitPrice);
+
+    } else {
+      const insertId = await addProduct(db, product);
+      if (!insertId) return;
+      productId = insertId;
+    }
+    await addProductPrice(db, productId, product.unitPrice);
+    await addPurchaseItem(db, purchaseId, productId, product.unitPrice, product.quantity, product.totalPrice);
+
+  });
+  const tableList = ["product", "product_price", "purchase", "purchase_items"];
+  setTimeout(async () => {
+    console.log("reading tables")
+    for (const tableName of tableList) {
+      try {
+        const result = await db.executeAsync(`SELECT * FROM ${tableName};`);
+        const rows = [];
+        if (!result.rows) return;
+        for (let i = 0; i < result.rows.length; i++) {
+          rows.push(result.rows.item(i));
+        }
+        console.log(`📋 Contents of ${tableName}:`, rows);
+      } catch (error) {
+        console.error(`❌ Error reading ${tableName}:`, error);
+      }
+    }
+  }, 3000);
+
+}
+

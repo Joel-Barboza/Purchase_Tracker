@@ -5,7 +5,7 @@ export const STORES = ['walmart', 'maxipali', 'pali'] as const;
 export type StoreName = typeof STORES[number];
 
 export type Store = {
-  name: StoreName | undefined;
+  name: StoreName | string | undefined;
 };
 
 export type Line = {
@@ -15,7 +15,14 @@ export type Line = {
 
 export type NormalizedOcr = {
   lines: Line[],
-  store: Store
+  store: Store,
+}
+
+export type OcrInfo = {
+  lines: Line[],
+  store: Store,
+  image_uri: string | null,
+  serialized_ocr: string | null,
 }
 
 export type ProductSection = {

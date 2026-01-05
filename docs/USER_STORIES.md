@@ -100,8 +100,8 @@ I want each receipt to become a purchase
 So that my shopping history is preserved
 
 Acceptance Criteria:
-- [ ] Purchase's scan date is stored
-- [ ] Purchase contains one or more products
+- [X] Purchase's scan date is stored
+- [X] Purchase contains one or more products
 
 ---
 
@@ -111,8 +111,8 @@ I want to reuse existing products when possible
 So that product history remains consistent
 
 Acceptance Criteria:
-- [ ] Products are matched by product code
-- [ ] Prices are updated when needed
+- [X] Products are matched by product code
+- [X] Prices are updated when needed
 
 ---
 

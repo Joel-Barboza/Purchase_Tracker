@@ -1,5 +1,8 @@
 import { NitroSQLiteConnection, open } from 'react-native-nitro-sqlite'
-import { createReceiptTable } from './receipt';
+import { createPurchaseTable } from './purchase';
+import { createPurchaseItemsTable } from './purchaseItems';
+import { createProductTable } from './product';
+import { createProductPricesTable } from './productPrice';
 
 export const connectToDatabase = async (): Promise<NitroSQLiteConnection | undefined> => {
   try {
@@ -16,24 +19,23 @@ export const connectToDatabase = async (): Promise<NitroSQLiteConnection | undef
 
 
 export const createTables = async (db: NitroSQLiteConnection): Promise<void>=> {
-  console.log();
     try {
       await db.executeAsync("PRAGMA foreign_keys = OFF;");
 
 
-      await db.executeAsync("DROP TABLE IF EXISTS receipt;");
-      // await db.executeAsync("DROP TABLE IF EXISTS product;");
-      // await db.executeAsync("DROP TABLE IF EXISTS product_price;");
-      // await db.executeAsync("DROP TABLE IF EXISTS purchase;");
-      // await db.executeAsync("DROP TABLE IF EXISTS purchase_items;");
+      // await db.executeAsync("DROP TABLE IF EXISTS receipt;");
+      await db.executeAsync("DROP TABLE IF EXISTS product;");
+      await db.executeAsync("DROP TABLE IF EXISTS product_price;");
+      await db.executeAsync("DROP TABLE IF EXISTS purchase;");
+      await db.executeAsync("DROP TABLE IF EXISTS purchase_items;");
       await db.executeAsync("PRAGMA foreign_keys = ON;");
 
 
-      await createReceiptTable(db);
-      // await createProductTable(db);
-      // await createProductPricesTable(db);
-      // await createPurchaseTable(db);
-      // await createPurchaseItemsTable(db);
+      // await createReceiptTable(db);
+      await createProductTable(db);
+      await createProductPricesTable(db);
+      await createPurchaseTable(db);
+      await createPurchaseItemsTable(db);
       console.log("All tables created successfully");
     } catch (error) {
       console.error("Error creating tables", error);

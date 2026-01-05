@@ -1,57 +1,52 @@
 import { TextElement } from "@react-native-ml-kit/text-recognition";
-import { Line, NormalizedOcr, Product, ProductSection } from "./types";
+import { Line, OcrInfo, Product, ProductSection } from "./types";
 import { findLeftAndWidthFromSection, getMaxBottomFromLine, getMinTopFromLine } from "./utils";
-
-
 
 type ProductLine = {
   line: TextElement[],
   index: number
 }
 
-export const parseWalmartReceipt = (normalizedOcr: NormalizedOcr): void => {
-  const receiptLines = normalizedOcr.lines;
-  const productSection = findWalmartProductSection(receiptLines);
-  if (!productSection?.lines) return;
-  const groupedProductLines = groupProductLines(productSection.lines);
-  console.log(groupedProductLines)
-  console.log(productSection)
+export const parseWalmartReceipt = (ocrInfo: OcrInfo): Product[] | undefined => {
+  const receiptLines: Line[] = ocrInfo.lines;
+  const productSection: ProductSection | undefined = findWalmartProductSection(receiptLines);
+
+  if (!productSection || !productSection.lines) return;
+
+  const productList = getProductList(productSection.lines);
+  return productList;
 }
 
 const findWalmartProductSection = (receiptLines: Line[]): ProductSection | undefined => {
-  let productSection: ProductSection = {
-    lines: [],
-    frame: {
-      top: 0,
-      left: 0,
-      heigth: 0,
-      width: 0
-    }
-  }
 
-  const firstProduct = findFirstProduct(receiptLines);
+  const firstProduct: ProductLine | undefined = findFirstProduct(receiptLines);
 
   if (!firstProduct) return;
   const minTop: number | undefined = getMinTopFromLine(firstProduct.line);
 
   if (!minTop) return;
-  productSection.frame.top = minTop;
+  const top: number = minTop;
 
   const lastProduct = findLastProduct(receiptLines, firstProduct.index);
 
   if (!lastProduct) return;
   const maxBottom: number | undefined = getMaxBottomFromLine(lastProduct.line);
-  productSection.lines = receiptLines.slice(firstProduct.index, lastProduct.index + 1);
+  const lines: Line[] = receiptLines.slice(firstProduct.index, lastProduct.index + 1);
 
   if (!maxBottom) return;
-  productSection.frame.heigth = maxBottom - minTop;
+  const heigth: number = maxBottom - minTop;
 
-  const leftAndWidth = findLeftAndWidthFromSection(productSection.lines);
+  const leftAndWidth: { left: number, width: number } | undefined = findLeftAndWidthFromSection(lines);
 
   if (!leftAndWidth || !leftAndWidth.left || !leftAndWidth.width) return;
-  productSection.frame.left = leftAndWidth.left;
-  productSection.frame.width = leftAndWidth.width;
+  const left: number = leftAndWidth.left;
+  const width: number = leftAndWidth.width;
 
+  const productSection: ProductSection = {
+    lines,
+    frame: { top, left, heigth, width }
+  }
+  console.log(productSection)
   return productSection;
 }
 
@@ -59,26 +54,27 @@ const findWalmartProductSection = (receiptLines: Line[]): ProductSection | undef
 const findFirstProduct = (receiptLines: Line[]): ProductLine | undefined => {
 
   const wordsPreProductSection = ['#', 'tda#', 'op#', 'te#', 'tr#', 'tda']
+  console.log(receiptLines)
   for (const line of receiptLines) {
     for (const word of line.words) {
       // https://stackoverflow.com/questions/37428338/check-if-a-string-contains-any-element-of-an-array-in-javascript
       const hasFoundWords = wordsPreProductSection.some(subString => {
-        return word.text.toLowerCase() === subString
+        return word.text.toLowerCase().includes(subString)
       })
+      
+      if (!hasFoundWords) continue;
+      const firstProductLineIndex: number = receiptLines.indexOf(line) + 1;
+      const firstProductLine: Line | undefined = receiptLines.at(firstProductLineIndex);
+      
+      if (!firstProductLine) return;
+      
+      const prodLine: ProductLine = {
+        line: firstProductLine.words,
+        index: firstProductLineIndex
+      };
+      return prodLine;
 
-      if (hasFoundWords) {
-        const firstProductLineIndex: number = receiptLines.indexOf(line) + 1;
-        const firstProductLine: Line | undefined = receiptLines.at(firstProductLineIndex);
 
-        if (!firstProductLine) return;
-
-        const prodLine: ProductLine = {
-          line: firstProductLine.words,
-          index: firstProductLineIndex
-        };
-        return prodLine;
-
-      }
     }
   }
 }
@@ -94,23 +90,23 @@ const findLastProduct = (receiptLines: Line[], index: number): ProductLine | und
         return word.text.toLowerCase().includes(subString)
       })
 
-      if (hasFoundWords) {
-        const lastProductLine: Line | undefined = receiptLines.at(i - 1);
+      if (!hasFoundWords) continue;
+      const lastProductLine: Line | undefined = receiptLines.at(i - 1);
 
-        if (!lastProductLine) return;
-        return {
-          line: lastProductLine.words,
-          index: i - 1
-        };
-      }
-
+      if (!lastProductLine) return;
+      return {
+        line: lastProductLine.words,
+        index: i - 1
+      };
     }
   }
 }
 
-const groupProductLines = (productSectionLines: Line[]): Line[][] => {
+
+const getProductList = (productSectionLines: Line[]): Product[] => {
   let productLineGroups: Line[][] = []
   let groupedLines: Line[] = []
+  let productList: Product[] = [];
   for (let i = 0; i < productSectionLines.length; i++) {
     const line = productSectionLines[i]
     const nextLine = productSectionLines[i + 1] ? productSectionLines[i + 1] : undefined;
@@ -121,7 +117,8 @@ const groupProductLines = (productSectionLines: Line[]): Line[][] => {
     if (prodCodeMatch && priceMatch) {
       groupedLines.push(line)
       productLineGroups.push(groupedLines)
-      getProductFromLines(groupedLines);
+      const product = getProductFromLines(groupedLines);
+      if (product) productList.push(product);
       groupedLines = [];
 
     } else if (prodCodeMatch) {
@@ -129,12 +126,15 @@ const groupProductLines = (productSectionLines: Line[]): Line[][] => {
       if (nextLine) groupedLines.push(nextLine);
 
       productLineGroups.push(groupedLines)
-      getProductFromLines(groupedLines)
+      const product = getProductFromLines(groupedLines);
+
+      if (product) productList.push(product);
+
       groupedLines = [];
       i++;
     }
   }
-  return productLineGroups;
+  return productList;
 }
 
 const getProductFromLines = (productLines: Line[]): Product | undefined => {
@@ -148,9 +148,7 @@ const getProductFromLines = (productLines: Line[]): Product | undefined => {
     console.log(product)
     return product;
   }
-
-
-  return
+  return;
 }
 
 
@@ -213,17 +211,16 @@ const handleProductSoldByKg = (
 
   const priceByKg = secondLine.text.match(/((?<=A* *)(\d{1,3}[.,])*\d{1,3}(?= *\/Kg))/gi);
   const cleanPriceByKg =
-  priceByKg
-  ? parseInt(priceByKg[0].replace(/[.,\s]/g, ''))
-  : undefined;
-  
-  
+    priceByKg
+      ? parseInt(priceByKg[0].replace(/[.,\s]/g, ''))
+      : undefined;
+
   const totalPriceMatch = secondLine.text.match(/(?<=\s)([0-9]{0,3}(,|.)[0-9]{0,3}(,|.)([0-9 ])*)(?=(\s*G))/g);
   const cleanTotalPriceNumber =
-  totalPriceMatch
-  ? parseInt(totalPriceMatch[0].replace(/[.,\sG]/g, ''))
-  : undefined;
-  
+    totalPriceMatch
+      ? parseInt(totalPriceMatch[0].replace(/[.,\sG]/g, ''))
+      : undefined;
+
   const weightInKg = secondLine.text.match(/((\d{1,3}[.,])*\d{1,3}(?= *Kg))/gi);
   let cleanWeightNumber;
   if (!weightInKg && cleanTotalPriceNumber && cleanPriceByKg) {
@@ -234,7 +231,7 @@ const handleProductSoldByKg = (
   } else {
     cleanWeightNumber = undefined;
   }
-  
+
   const product: Product = {
     name: name ? name[0] : undefined,
     prodCode: prodCode ? prodCode[0] : undefined,
@@ -251,8 +248,6 @@ const handleProductSoldByKg = (
 const handleProductSoldByUnits = (
   secondLine: Line, name: RegExpMatchArray | null, prodCode: RegExpMatchArray | null
 ): Product => {
-
-
 
   const unitPrice = secondLine.text.match(/(?<=\d+ *X *[¢$]*)(\d{1,3}[.,])*\d{1,3}(?= *)/gi);
   const cleanUnitPrice =

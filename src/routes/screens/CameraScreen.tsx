@@ -14,12 +14,12 @@ import {
 } from "react-native";
 
 import { Camera, CameraDevice, CameraDeviceFormat, PhotoFile, useCameraDevice, useCameraFormat, useCameraPermission } from "react-native-vision-camera";
-import { addReceipt, getReceipts } from "../../db/receipt";
 import { useDb } from "../../context/DbContext";
 import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
 import { DirectoryPickerResponse, DocumentPickerResponse, pick, PickDirectoryResponse, types } from "@react-native-documents/picker";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ImageProcessingStackParamList, ImageProps } from "../ImageProcessingStack";
+import { getPurchase } from "../../db/purchase";
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
@@ -153,7 +153,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
         />
         <TouchableOpacity
           style={style.camButton}
-          onPress={async () => { db && await getReceipts(db) }}
+          onPress={async () => { db && await getPurchase(db) }}
         >
           <Text>
             get recipt
