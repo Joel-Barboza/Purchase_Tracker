@@ -124,8 +124,8 @@ I want to review extracted products before saving
 So that errors do not affect my data
 
 Acceptance Criteria:
-- [ ] Products are editable
-- [ ] Original extracted text remains available
+- [X] Products are editable
+- [X] Original extracted text remains available
 
 ---
 

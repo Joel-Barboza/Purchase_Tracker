@@ -1,5 +1,26 @@
 import { TextElement } from "@react-native-ml-kit/text-recognition";
 
+
+export type ImageProcessingStackParamList = {
+  CameraScreen: undefined;
+  ImageReviewScreen: {
+    imageProps: ImageProps
+  };
+  ProductReviewScreen: {
+    productList: Product[],
+    image_uri: string,
+    serialized_ocr: string,
+    store: Store
+  }
+};
+
+export type ImageProps = {
+  imageUri: string,
+  height: number,
+  width: number
+  source: 'camera' | 'gallery'
+}
+
 export const STORES = ['walmart', 'maxipali', 'pali'] as const;
 
 export type StoreName = typeof STORES[number];
@@ -42,4 +63,11 @@ export type Product = {
   unitPrice: number | undefined,
   totalPrice: number | undefined,
   soldByKg: 0 | 1 | undefined, // false
+}
+
+export type ReceiptProcessResult = {
+  products: Product[],
+  image_uri: string | null,
+  serialized_ocr: string | null,
+  store: Store
 }

@@ -18,8 +18,8 @@ import { useDb } from "../../context/DbContext";
 import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
 import { DirectoryPickerResponse, DocumentPickerResponse, pick, PickDirectoryResponse, types } from "@react-native-documents/picker";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ImageProcessingStackParamList, ImageProps } from "../ImageProcessingStack";
 import { getPurchase } from "../../db/purchase";
+import { ImageProcessingStackParamList, ImageProps } from "../../utils/types";
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
@@ -43,28 +43,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
   const [isActive, setIsActive] = useState<boolean>(true);
   const [flash, setFlash] = useState<"on" | "off">("off");
 
-  const savePhoto = async (imageUri: string | null): Promise<void> => {
-    if (!imageUri) {
-      Alert.alert(
-        "Failed to save photo",
-        "No captured photo to save"
-      );
-      return
-    }
 
-    const photoIdentifier: PhotoIdentifier = await CameraRoll.saveAsset(imageUri, {
-      type: "photo",
-      album: "PurchaseApp"
-    });
-    const SAVE_URI: string = photoIdentifier.node.image.uri;
-
-    const imageProps: ImageProps = {
-      imageUri: SAVE_URI,
-      height: photoIdentifier.node.image.height,
-      width: photoIdentifier.node.image.width
-    }
-    reviewImage(imageProps);
-  }
 
   const capturePhoto = async (): Promise<void> => {
     const cameraRef: Camera | null = camera.current;
@@ -83,7 +62,14 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
 
       const CAPTURE_URI: string = `file://${photo.path}`;
       setImageSource(CAPTURE_URI);
-      await savePhoto(CAPTURE_URI);
+      // await savePhoto(CAPTURE_URI);
+      const imageProps: ImageProps = {
+        imageUri: CAPTURE_URI,
+        height: photo.height,
+        width: photo.width,
+        source: 'gallery'
+      }
+      reviewImage(imageProps);
 
 
     } catch (error) {
@@ -113,7 +99,8 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
       const imageProps: ImageProps = {
         imageUri: file.uri,
         height: data.height,
-        width: data.width
+        width: data.width,
+        source: 'gallery'
       }
 
       reviewImage(imageProps);

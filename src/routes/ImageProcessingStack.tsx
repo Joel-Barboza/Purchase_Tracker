@@ -2,22 +2,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ImageReviewScreen from "./screens/ImageReviewScreen";
 import { JSX } from "react";
 import CameraScreen from "./screens/CameraScreen";
+import ProductReviewScreen from "./screens/ProductReviewScreen";
+import { ImageProcessingStackParamList, Product } from "../utils/types";
 // import ResultScreen from "./screens/ResultScreen";
 // import HomeBottomTabs from "./HomeBottomTabs";
 
-
-export type ImageProcessingStackParamList = {
-  CameraScreen: undefined;
-  ImageReviewScreen: {
-    imageProps: ImageProps
-  };
-};
-
-export type ImageProps = {
-  imageUri: string,
-  height: number,
-  width: number
-}
 
 
 const Stack = createNativeStackNavigator<ImageProcessingStackParamList>();
@@ -33,6 +22,11 @@ const ImageProcessingStack = (): JSX.Element => {
       <Stack.Screen
         name="ImageReviewScreen"
         component={ImageReviewScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProductReviewScreen"
+        component={ProductReviewScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

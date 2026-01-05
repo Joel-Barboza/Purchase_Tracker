@@ -1,10 +1,10 @@
 import TextRecognition, { TextElement, TextRecognitionResult } from "@react-native-ml-kit/text-recognition";
 import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
 import { parseWalmartReceipt } from "./parseWalmartReceipt";
-import { Line, NormalizedOcr, OcrInfo, Product, Store, StoreName, STORES } from "./types";
+import { Line, NormalizedOcr, OcrInfo, ReceiptProcessResult, Product, Store, StoreName, STORES } from "./types";
 import { persistPurchaseData } from "./utils";
 
-export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<Product[] | undefined> => {
+export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<ReceiptProcessResult | undefined> => {
 
   const rawOcrResult: TextRecognitionResult | undefined = await extractText(imageUri);
 
@@ -23,14 +23,30 @@ export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: s
     console.error(`Invalid DB instance value: ${db}`);
     return;
   }
-  if (!productList)  {
+
+  if (!productList) {
     console.error('No product list obtained');
     return;
   }
-  await persistPurchaseData(db, productList, ocrInfo.image_uri, ocrInfo.serialized_ocr, ocrInfo.store)
+  if (!ocrInfo.image_uri) {
+    console.error('No image uri');
+    return;
+  }
+  if (!ocrInfo.serialized_ocr) {
+    console.error('No serialized ocr');
+    return;
+  }
+
+  const processedResult: ReceiptProcessResult = {
+    products: productList,
+    image_uri: ocrInfo.image_uri,
+    serialized_ocr: ocrInfo.serialized_ocr,
+    store: ocrInfo.store
+  }
+  // await persistPurchaseData(db, processedResult)
   console.log(productList)
 
-  return productList;
+  return processedResult;
 }
 
 const extractText = async (imageUri: string): Promise<TextRecognitionResult | undefined> => {

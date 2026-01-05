@@ -1,5 +1,5 @@
 import { TextElement } from "@react-native-ml-kit/text-recognition";
-import { Line, Product, Store } from "./types";
+import { Line, ReceiptProcessResult, Product, Store } from "./types";
 import { NitroSQLiteConnection, QueryResultRowItem, SQLiteValue } from "react-native-nitro-sqlite";
 import { addPurchase } from "../db/purchase";
 import { addProduct, findProductByCode, updateProductPrice } from "../db/product";
@@ -71,16 +71,17 @@ export const findLeftAndWidthFromSection = (
 
 
 export const persistPurchaseData = async (
-  db: NitroSQLiteConnection, products: Product[], image_uri: string | null, serialized_ocr: string | null, store: Store
+  db: NitroSQLiteConnection, processedResult: ReceiptProcessResult
 ): Promise<void> => {
+  const { products, image_uri, serialized_ocr, store }: ReceiptProcessResult = processedResult;
   const purchaseId: number | undefined = await addPurchase(db, image_uri, serialized_ocr, store);
   if (!purchaseId) return;
-  
+
   products.forEach(async (product: Product) => {
 
     if (!product.prodCode || !product.unitPrice || !product.quantity || !product.totalPrice) return;
     const productRow = await findProductByCode(db, product.prodCode);
-    
+
     let productId: number;
     if (productRow != null) {
       productId = Number(productRow.id);
