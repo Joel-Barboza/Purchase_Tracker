@@ -148,8 +148,8 @@ I want to change a product’s category
 So that misclassifications don’t persist
 
 Acceptance Criteria:
-- [ ] Category changes are saved
-- [ ] Corrections influence future behavior
+- [X] Category changes are saved
+- [X] Corrections influence future behavior
 
 ---
 

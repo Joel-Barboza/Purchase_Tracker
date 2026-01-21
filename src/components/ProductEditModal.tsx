@@ -1,14 +1,8 @@
-import { JSX, useState } from 'react';
-import {
-  Modal,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { CATEGORIES, Product } from '../utils/types';
-import { Picker } from '@react-native-picker/picker';
+import {JSX, useEffect, useState} from 'react';
+import {Modal, StyleSheet, Text, TextInput, TouchableOpacity, View,} from 'react-native';
+import {CATEGORIES, CategoryName, Product} from '../utils/types';
+import {Picker} from '@react-native-picker/picker';
+import {categorize} from "../utils/categorization.ts";
 
 const ProductEditModal = ({
   isOpen,
@@ -28,6 +22,7 @@ const ProductEditModal = ({
   onClose: () => void;
   product: Product;
 }): JSX.Element | null => {
+
   // Used to store the values when the edit modal is showing
   const [prodNameChange, setProdNameChange] = useState<string>(
     product.name ?? '',
@@ -47,6 +42,11 @@ const ProductEditModal = ({
   const [prodCategoryChange, setProdCategoryChange] = useState<string>(
     product.category ?? '',
   );
+
+  useEffect(() => {
+    setProdCategoryChange(categorize(prodNameChange))
+  }, [prodNameChange])
+
 
   if (!isOpen) return null;
   return (
@@ -135,7 +135,7 @@ const ProductEditModal = ({
                   prodQuantityChange,
                   prodUnitPriceChange,
                   prodTotalPriceChange,
-                  prodCategoryChange
+                  prodCategoryChange,
                 );
               }}
             >
