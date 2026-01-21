@@ -137,8 +137,8 @@ I want products categorized automatically
 So that spending analysis is meaningful
 
 Acceptance Criteria:
-- [ ] Rule-based categorization runs offline
-- [ ] Unknown products fall back to a safe category
+- [X] Rule-based categorization runs offline
+- [X] Unknown products fall back to a safe category
 
 ---
 

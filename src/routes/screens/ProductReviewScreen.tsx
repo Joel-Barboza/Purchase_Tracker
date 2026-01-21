@@ -1,18 +1,19 @@
-import React, { ButtonHTMLAttributes, JSX, useEffect, useState } from "react";
+import React, { JSX, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Modal,
-  TextInput,
 } from "react-native";
 import { useDb } from "../../context/DbContext";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ImageProcessingStackParamList, ImageProps, ReceiptProcessResult, Product, Store } from "../../utils/types";
+import {
+  ImageProcessingStackParamList,
+  Product,
+  Store,
+} from '../../utils/types';
 import { persistPurchaseData } from "../../utils/utils";
-import { processReceiptImage } from "../../utils/processReceiptImage";
 import ProductEditModal from "../../components/ProductEditModal";
 
 type Props = NativeStackScreenProps<
@@ -47,7 +48,7 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
 
 
   const editExtractedProductList = (
-    newProdName: string, newProdCode: string, newQty: string, newUnitPrice: string, newTotalPrice: string
+    newProdName: string, newProdCode: string, newQty: string, newUnitPrice: string, newTotalPrice: string, newCategory: string
   ) => {
     if (prodListIndex == -1) return;
 
@@ -60,6 +61,7 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
         editedElem.quantity = parseFloat(newQty);
         editedElem.unitPrice = parseInt(newUnitPrice);
         editedElem.totalPrice = parseInt(newTotalPrice);
+        editedElem.category = newCategory;
         return editedElem;
       } else {
         return elem;
@@ -71,64 +73,72 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
     setShowEditProductModal(false);
   }
 
-
-
-
-
-
-
-
   const handleSaveData = () => {
     db && persistPurchaseData(db, { products: productList, image_uri, serialized_ocr, store });
     navigation.popToTop()
   }
-
 
   const handleModalClose = () => {
     setShowEditProductModal(false)
 
   }
 
-
-
   return (
     <ScrollView style={styles.mainContainer}>
-      {
-        showEditProductModal && <ProductEditModal
+      {showEditProductModal && (
+        <ProductEditModal
           isOpen={showEditProductModal}
           onClose={() => handleModalClose()}
           product={productList[prodListIndex]}
-          onSave={
-            (newProdName: string, newProdCode: string, newQty: string, newUnitPrice: string, newTotalPrice: string) => {
-              editExtractedProductList(newProdName, newProdCode, newQty, newUnitPrice, newTotalPrice)
-            }} />
-      }
+          onSave={(
+            newProdName: string,
+            newProdCode: string,
+            newQty: string,
+            newUnitPrice: string,
+            newTotalPrice: string,
+            newCategory: string
+          ) => {
+            editExtractedProductList(
+              newProdName,
+              newProdCode,
+              newQty,
+              newUnitPrice,
+              newTotalPrice,
+              newCategory
+            );
+          }}
+        />
+      )}
 
-      {
-        productList.map((product, index) => (
+      {productList.map((product, index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.productCard}
+          delayLongPress={300}
+          onLongPress={() => {
+            openEditModal(index);
+            console.log(
+              JSON.stringify(product) + ' ' + ' ' + JSON.stringify(index),
+            );
+          }}
+        >
+          <View style={styles.leftSideCard}>
+            <Text style={styles.mainText}>{product.name}</Text>
+            <Text style={styles.secondaryText}>{product.prodCode}</Text>
+            <Text style={styles.secondaryText}>{product.category?.toUpperCase()}</Text>
+          </View>
+          <View style={styles.rightSideCard}>
+            {product.quantity != 1 && (
+              <Text style={styles.secondaryText}>
+                {product.quantity} x ₡{product.unitPrice}
+              </Text>
+            )}
+            <Text style={styles.mainText}>₡{product.totalPrice}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
 
-          <TouchableOpacity
-            key={index}
-            style={styles.productCard}
-            delayLongPress={300}
-            onLongPress={() => { openEditModal(index); console.log(JSON.stringify(product) + " " + " " + JSON.stringify(index)) }}
-          >
-            <View style={styles.leftSideCard}>
-              <Text style={styles.mainText}>{product.name}</Text>
-              <Text style={styles.secondaryText}>{product.prodCode}</Text>
-            </View>
-            <View style={styles.rightSideCard}>
-              {(product.quantity != 1) && <Text style={styles.secondaryText}>{product.quantity} x ₡{product.unitPrice}</Text>}
-              <Text style={styles.mainText}>₡{product.totalPrice}</Text>
-            </View>
-          </TouchableOpacity>
-
-        ))
-      }
-
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleSaveData}>
+      <TouchableOpacity style={styles.button} onPress={handleSaveData}>
         <Text style={styles.textStyle}>Save</Text>
       </TouchableOpacity>
     </ScrollView>

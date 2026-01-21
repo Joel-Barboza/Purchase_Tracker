@@ -1,31 +1,55 @@
-import { JSX, useState } from "react";
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Product } from "../utils/types";
+import { JSX, useState } from 'react';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { CATEGORIES, Product } from '../utils/types';
+import { Picker } from '@react-native-picker/picker';
 
-const ProductEditModal = (
-  { isOpen, onSave, onClose, product }: {
-    isOpen: boolean,
-    onSave: (
-      prodNameChange: string,
-      prodCodeChange: string,
-      prodQuantityChange: string,
-      prodUnitPriceChange: string,
-      prodTotalPriceChange: string) => void,
-    onClose: () => void,
-    product: Product
-  }
-): JSX.Element | null => {
-  if (!isOpen) return null;
-
+const ProductEditModal = ({
+  isOpen,
+  onSave,
+  onClose,
+  product,
+}: {
+  isOpen: boolean;
+  onSave: (
+    prodNameChange: string,
+    prodCodeChange: string,
+    prodQuantityChange: string,
+    prodUnitPriceChange: string,
+    prodTotalPriceChange: string,
+    prodCategoryChange: string,
+  ) => void;
+  onClose: () => void;
+  product: Product;
+}): JSX.Element | null => {
   // Used to store the values when the edit modal is showing
-  const [prodNameChange, setProdNameChange] = useState<string>(product.name ?? "");
-  const [prodCodeChange, setProdCodeChange] = useState<string>(product.prodCode ?? "");
-  const [prodQuantityChange, setProdQuantityChange] = useState<string>(product.quantity?.toString() ?? "");
-  const [prodUnitPriceChange, setProdUnitPriceChange] = useState<string>(product.unitPrice?.toString() ?? "");
-  const [prodTotalPriceChange, setProdTotalPriceChange] = useState<string>(product.totalPrice?.toString() ?? "");
+  const [prodNameChange, setProdNameChange] = useState<string>(
+    product.name ?? '',
+  );
+  const [prodCodeChange, setProdCodeChange] = useState<string>(
+    product.prodCode ?? '',
+  );
+  const [prodQuantityChange, setProdQuantityChange] = useState<string>(
+    product.quantity?.toString() ?? '',
+  );
+  const [prodUnitPriceChange, setProdUnitPriceChange] = useState<string>(
+    product.unitPrice?.toString() ?? '',
+  );
+  const [prodTotalPriceChange, setProdTotalPriceChange] = useState<string>(
+    product.totalPrice?.toString() ?? '',
+  );
+  const [prodCategoryChange, setProdCategoryChange] = useState<string>(
+    product.category ?? '',
+  );
 
+  if (!isOpen) return null;
   return (
-
     <Modal
       animationType="fade"
       transparent={true}
@@ -49,14 +73,16 @@ const ProductEditModal = (
           <Text>Quantity</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setProdQuantityChange(text);
-              setProdUnitPriceChange((parseInt(prodTotalPriceChange) / parseInt(text)).toString())
+              setProdUnitPriceChange(
+                (parseInt(prodTotalPriceChange) / parseInt(text)).toString(),
+              );
             }}
             value={prodQuantityChange}
           />
-          {prodQuantityChange != '1' &&
-            (<>
+          {prodQuantityChange != '1' && (
+            <>
               <Text>Unit Price</Text>
               <TextInput
                 style={styles.input}
@@ -64,121 +90,79 @@ const ProductEditModal = (
                 value={prodUnitPriceChange.toString()}
               />
             </>
-            )}
+          )}
           <Text>Total Price</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setProdTotalPriceChange(text);
               prodQuantityChange == '1' && setProdUnitPriceChange(text);
             }}
             value={prodTotalPriceChange.toString()}
           />
+          <Text>Category</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              style={styles.picker}
+              selectedValue={prodCategoryChange}
+              onValueChange={itemValue => setProdCategoryChange(itemValue)}
+            >
+              {CATEGORIES.map((category, index) => (
+                <Picker.Item
+                  style={styles.pickerItem}
+                  key={index}
+                  label={category}
+                  value={category}
+                />
+              ))}
+            </Picker>
+          </View>
           <View style={styles.btnContainer}>
             <TouchableOpacity
               style={[styles.button, styles.btnCancel]}
               onPress={() => {
                 onClose();
-              }}>
+              }}
+            >
               <Text style={styles.textStyle}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.btnSave]}
               onPress={() => {
-                onSave(prodNameChange, prodCodeChange, prodQuantityChange, prodUnitPriceChange, prodTotalPriceChange)
-              }}>
+                onSave(
+                  prodNameChange,
+                  prodCodeChange,
+                  prodQuantityChange,
+                  prodUnitPriceChange,
+                  prodTotalPriceChange,
+                  prodCategoryChange
+                );
+              }}
+            >
               <Text style={styles.textStyle}>Save</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
     </Modal>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  // text: {
-  //   color: "black",
-  // },
-  // title: {
-  //   fontSize: 30,
-  //   color: 'black'
-  // },
-  // mainContainer: {
-  //   backgroundColor: "#070709",
-  //   paddingTop: 20,
-  //   marginBottom: 48
-  // },
-  // tableContainer: { flex: 1, padding: 10, justifyContent: 'center', backgroundColor: '#fff' },
-  // head: { height: 44, backgroundColor: 'darkblue' },
-  // headText: { fontSize: 16, fontWeight: 'bold', textAlign: 'center', color: 'white' },
-  // tableText: { margin: 6, fontSize: 12, fontWeight: 'bold', textAlign: 'center', color: 'black' },
-  // dateBtn: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   // backgroundColor: 'red',
-  //   width: 25,
-  //   height: 40
-  // },
-  // dateText: {
-  //   color: 'white',
-  //   fontSize: 20
-  // },
-  // productCard: {
-  //   flex: 1,
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'flex-start',
-  //   padding: 10,
-  //   margin: 10,
-  //   marginLeft: 15,
-  //   marginRight: 15,
-  //   height: 100,
-  //   borderRadius: 12,
-  //   width: "auto",//Dimensions.get('window').width - 30
-  //   backgroundColor: "#252429"
-  // },
-  // leftSideCard: {
-  //   flex: 1,
-  //   justifyContent: "center",
-
-  //   //backgroundColor: "#ccaaaa"
-
-  // },
-  // rightSideCard: {
-  //   flex: 1,
-  //   //flexDirection:"row",
-  //   alignItems: "flex-end",
-  //   justifyContent: "center",
-  //   //flexWrap:"wrap",
-  //   //backgroundColor: "#aaccaa",
-
-  // },
-  // mainText: {
-  //   fontSize: 20,
-  //   fontWeight: "bold",
-  //   color: "#dddddd",
-  // },
-  // secondaryText: {
-  //   fontSize: 15,
-  //   color: "#ddddddaa",
-  // },
-  // btnText: {
-  //   color: 'black',
-  //   fontSize: 20,
-  // },
-  // saveDataBtn: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   // backgroundColor: 'red',
-  //   width: '100%',
-  //   height: 40
-  // },
-
-
-
+  pickerContainer: {
+    width: '100%',
+    height: 62,
+    borderWidth: 1,
+    margin: 12,
+  },
+  picker: {
+    position: 'absolute',
+    height: 60,
+    width: '100%',
+  },
+  pickerItem: {
+    color: '#e8e8e8',
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -189,8 +173,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
     borderRadius: 20,
     padding: 20,
-    width: "75%",
-    height: "auto",
+    width: '75%',
+    height: 'auto',
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -202,9 +186,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   input: {
+    color: '#e8e8e8',
     height: 40,
     margin: 12,
-    width: "100%",
+    width: '100%',
     borderWidth: 1,
     padding: 10,
   },
@@ -232,11 +217,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 17,
   },
-  // modalText: {
-  //   marginBottom: 15,
-  //   textAlign: 'center',
-  // },
 });
-
 
 export default ProductEditModal;

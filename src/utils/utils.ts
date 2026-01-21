@@ -1,14 +1,21 @@
-import { TextElement } from "@react-native-ml-kit/text-recognition";
-import { Line, ReceiptProcessResult, Product, Store } from "./types";
-import { NitroSQLiteConnection, QueryResultRowItem, SQLiteValue } from "react-native-nitro-sqlite";
-import { addPurchase } from "../db/purchase";
-import { addProduct, findProductByCode, updateProductPrice } from "../db/product";
-import { addPurchaseItem } from "../db/purchaseItems";
-import { addProductPrice } from "../db/productPrice";
+import { TextElement } from '@react-native-ml-kit/text-recognition';
+import { Line, ReceiptProcessResult, Product, Store } from './types';
+import {
+  NitroSQLiteConnection,
+  QueryResultRowItem,
+  SQLiteValue,
+} from 'react-native-nitro-sqlite';
+import { addPurchase } from '../db/purchase';
+import {
+  addProduct,
+  findProductByCode,
+  updateProductCategory,
+  updateProductPrice,
+} from '../db/product';
+import { addPurchaseItem } from '../db/purchaseItems';
+import { addProductPrice } from '../db/productPrice';
 
-export const getMinTopFromLine = (
-  line: TextElement[]
-): number | undefined => {
+export const getMinTopFromLine = (line: TextElement[]): number | undefined => {
   if (line.length <= 0) return;
   const tops: number[] = [];
 
@@ -20,10 +27,10 @@ export const getMinTopFromLine = (
 
   const minY = Math.min(...tops);
   return minY;
-}
+};
 
 export const getMaxBottomFromLine = (
-  line: TextElement[]
+  line: TextElement[],
 ): number | undefined => {
   if (line.length <= 0) return;
   const bottoms: number[] = [];
@@ -36,12 +43,11 @@ export const getMaxBottomFromLine = (
 
   const maxY = Math.max(...bottoms);
   return maxY;
-}
+};
 
 export const findLeftAndWidthFromSection = (
-  section: Line[]
+  section: Line[],
 ): { left: number; width: number } | undefined => {
-
   let left = Infinity;
   let right = -Infinity;
 
@@ -69,36 +75,54 @@ export const findLeftAndWidthFromSection = (
   };
 };
 
-
 export const persistPurchaseData = async (
-  db: NitroSQLiteConnection, processedResult: ReceiptProcessResult
+  db: NitroSQLiteConnection,
+  processedResult: ReceiptProcessResult,
 ): Promise<void> => {
-  const { products, image_uri, serialized_ocr, store }: ReceiptProcessResult = processedResult;
-  const purchaseId: number | undefined = await addPurchase(db, image_uri, serialized_ocr, store);
+  const { products, image_uri, serialized_ocr, store }: ReceiptProcessResult =
+    processedResult;
+  const purchaseId: number | undefined = await addPurchase(
+    db,
+    image_uri,
+    serialized_ocr,
+    store,
+  );
   if (!purchaseId) return;
 
-  products.forEach(async (product: Product) => {
-
-    if (!product.prodCode || !product.unitPrice || !product.quantity || !product.totalPrice) return;
+  for (const product of products) {
+    if (
+      !product.prodCode ||
+      !product.unitPrice ||
+      !product.quantity ||
+      !product.totalPrice ||
+      !product.category
+    )
+      continue;
     const productRow = await findProductByCode(db, product.prodCode);
 
     let productId: number;
     if (productRow != null) {
       productId = Number(productRow.id);
       await updateProductPrice(db, product.prodCode, product.unitPrice);
-
+      await updateProductCategory(db, product.prodCode, product.category);
     } else {
       const insertId = await addProduct(db, product);
-      if (!insertId) return;
+      if (!insertId) continue;
       productId = insertId;
     }
     await addProductPrice(db, productId, product.unitPrice);
-    await addPurchaseItem(db, purchaseId, productId, product.unitPrice, product.quantity, product.totalPrice);
-
-  });
-  const tableList = ["product", "product_price", "purchase", "purchase_items"];
+    await addPurchaseItem(
+      db,
+      purchaseId,
+      productId,
+      product.unitPrice,
+      product.quantity,
+      product.totalPrice,
+    );
+  }
+  const tableList = ['product', 'product_price', 'purchase', 'purchase_items'];
   setTimeout(async () => {
-    console.log("reading tables")
+    console.log('reading tables');
     for (const tableName of tableList) {
       try {
         const result = await db.executeAsync(`SELECT * FROM ${tableName};`);
@@ -113,6 +137,4 @@ export const persistPurchaseData = async (
       }
     }
   }, 3000);
-
-}
-
+};
