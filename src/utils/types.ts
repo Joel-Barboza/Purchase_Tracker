@@ -1,6 +1,7 @@
 import { TextElement } from '@react-native-ml-kit/text-recognition';
 
 export type ImageProcessingStackParamList = {
+  HomeTabs: undefined;
   CameraScreen: undefined;
   ImageReviewScreen: {
     imageProps: ImageProps;
@@ -11,6 +12,13 @@ export type ImageProcessingStackParamList = {
     serialized_ocr: string;
     store: Store;
   };
+};
+
+export type HomeBottomTabsParamList = {
+  Home: undefined;
+  Stats: undefined;
+  Wallet: undefined;
+  ShoppingCart: undefined;
 };
 
 export type ImageProps = {
@@ -82,4 +90,3 @@ export type ReceiptProcessResult = {
   serialized_ocr: string | null;
   store: Store;
 };
-
