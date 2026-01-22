@@ -27,7 +27,7 @@ import {
   types,
 } from '@react-native-documents/picker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { getPurchase } from '../../db/purchase';
+import { getAllPurchases } from '../../db/purchase';
 import { ImageProcessingStackParamList, ImageProps } from '../../utils/types';
 
 type Props = NativeStackScreenProps<
@@ -137,7 +137,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
         <TouchableOpacity
           style={style.camButton}
           onPress={async () => {
-            db && (await getPurchase(db));
+            db && (await getAllPurchases(db));
           }}
         >
           <Text>get recipt</Text>

@@ -1,7 +1,9 @@
-import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
+import { NitroSQLiteConnection, QueryResult } from 'react-native-nitro-sqlite';
+import { PurchaseItemRow } from '../utils/types.ts';
 
-export const createPurchaseItemsTable = async (db: NitroSQLiteConnection): Promise<void> => {
-  
+export const createPurchaseItemsTable = async (
+  db: NitroSQLiteConnection,
+): Promise<void> => {
   const purchaseItemsQuery: string = `
      CREATE TABLE IF NOT EXISTS purchase_items (
         id INTEGER PRIMARY KEY,
@@ -14,23 +16,62 @@ export const createPurchaseItemsTable = async (db: NitroSQLiteConnection): Promi
         FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE
     )`;
   try {
-    await db.executeAsync(purchaseItemsQuery)
-    console.log("Purchase items table created");
+    await db.executeAsync(purchaseItemsQuery);
+    console.log('Purchase items table created');
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return;
   }
-}
+};
 
 export const addPurchaseItem = async (
-  db: NitroSQLiteConnection, purchaseId: number, productId: number, unitPrice: number, quantity: number, total_price: number
+  db: NitroSQLiteConnection,
+  purchaseId: number,
+  productId: number,
+  unitPrice: number,
+  quantity: number,
+  total_price: number,
 ): Promise<void> => {
-
-  const query = "INSERT INTO purchase_items (purchase_id, product_id, unit_price, quantity, total_price) VALUES (?, ?, ?, ?, ?);";
+  const query =
+    'INSERT INTO purchase_items (purchase_id, product_id, unit_price, quantity, total_price) VALUES (?, ?, ?, ?, ?);';
   try {
-    await db.executeAsync(query, [purchaseId, productId, unitPrice, quantity, total_price]);
-    console.log(`Insert purchase Item of ${[purchaseId, productId, unitPrice, quantity, total_price]}`);
+    await db.executeAsync(query, [
+      purchaseId,
+      productId,
+      unitPrice,
+      quantity,
+      total_price,
+    ]);
+    console.log(
+      `Insert purchase Item of ${[
+        purchaseId,
+        productId,
+        unitPrice,
+        quantity,
+        total_price,
+      ]}`,
+    );
   } catch (error) {
-    console.error("Error Inserting purchase item:", error);
+    console.error('Error Inserting purchase item:', error);
   }
-}
+};
+
+export const getPurchaseItemsByPurchaseId = async (
+  db: NitroSQLiteConnection,
+  purchaseId: number,
+):Promise<PurchaseItemRow[] | undefined> => {
+  const purchaseItemsQuery = `
+  SELECT * FROM purchase_items WHERE purchase_id = ?;`;
+  try {
+    const result: QueryResult<PurchaseItemRow> = await db.executeAsync<PurchaseItemRow>(purchaseItemsQuery, [purchaseId]);
+    if (!result.rows) return;
+    if (result.rows.length > 0) {
+      console.log(result);
+      return result.rows._array;
+    } else {
+      return;
+    }
+  } catch (error) {
+    console.error('Error getPurchaseItemsByPurchaseId:', error);
+  }
+};

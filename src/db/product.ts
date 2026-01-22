@@ -4,7 +4,7 @@ import {
   QueryResult,
   QueryResultRow,
 } from 'react-native-nitro-sqlite';
-import { CategoryName, Product } from '../utils/types';
+import { CategoryName, Product, ProductRow } from '../utils/types';
 
 export const createProductTable = async (
   db: NitroSQLiteConnection,
@@ -16,7 +16,7 @@ export const createProductTable = async (
             product_code TEXT UNIQUE,
             last_price REAL NOT NULL,
             sold_by_kg INTEGER NOT NULL,
-            category TEXT NOT NULL
+            category TEXT NOT NULL  
       )
     `;
   try {
@@ -134,4 +134,13 @@ export const getAllProducts = async (db: NitroSQLiteConnection) => {
   } catch (error) {
     console.error(`Error reading products`, error);
   }
+};
+
+export const getProductCategoryById = async (
+  db: NitroSQLiteConnection,
+  productId: number,
+): Promise<CategoryName | undefined> => {
+  const query = `SELECT category FROM product WHERE id = ? LIMIT 1;`;
+  const result = await db.executeAsync<ProductRow>(query, [productId]);
+  return result.rows?.item(0)?.category;
 };

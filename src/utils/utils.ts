@@ -1,18 +1,30 @@
 import { TextElement } from '@react-native-ml-kit/text-recognition';
-import { Line, ReceiptProcessResult, Product, Store } from './types';
+import {
+  Line,
+  ReceiptProcessResult,
+  Product,
+  Store,
+  PurchaseItemRow,
+  CATEGORIES,
+  CategoryName,
+} from './types';
 import {
   NitroSQLiteConnection,
   QueryResultRowItem,
   SQLiteValue,
 } from 'react-native-nitro-sqlite';
-import { addPurchase } from '../db/purchase';
+import { addPurchase, getAllPurchases } from '../db/purchase';
 import {
   addProduct,
   findProductByCode,
+  getProductCategoryById,
   updateProductCategory,
   updateProductPrice,
 } from '../db/product';
-import { addPurchaseItem } from '../db/purchaseItems';
+import {
+  addPurchaseItem,
+  getPurchaseItemsByPurchaseId,
+} from '../db/purchaseItems';
 import { addProductPrice } from '../db/productPrice';
 
 export const getMinTopFromLine = (line: TextElement[]): number | undefined => {
@@ -138,3 +150,32 @@ export const persistPurchaseData = async (
     }
   }, 3000);
 };
+
+export const getCategoryInsights = async (
+  db: NitroSQLiteConnection,
+): Promise<Record<CategoryName, number>> => {
+  // Initialize totals
+  const totals: Record<CategoryName, number> = Object.fromEntries(
+    CATEGORIES.map(cat => [cat, 0]),
+  ) as Record<CategoryName, number>;
+
+  const purchaseList = await getAllPurchases(db);
+  if (!purchaseList) return totals;
+
+  for (const purchase of purchaseList) {
+    if (typeof purchase.id !== 'number') continue;
+
+    const purchaseItems = await getPurchaseItemsByPurchaseId(db, purchase.id);
+    if (!purchaseItems) continue;
+
+    for (const item of purchaseItems) {
+      const category = await getProductCategoryById(db, item.product_id);
+      if (!category) continue;
+
+      totals[category] += item.total_price;
+    }
+  }
+
+  return totals;
+};
+

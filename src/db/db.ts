@@ -24,10 +24,10 @@ export const createTables = async (db: NitroSQLiteConnection): Promise<void>=> {
 
 
       // await db.executeAsync("DROP TABLE IF EXISTS receipt;");
-      await db.executeAsync("DROP TABLE IF EXISTS product;");
-      await db.executeAsync("DROP TABLE IF EXISTS product_price;");
-      await db.executeAsync("DROP TABLE IF EXISTS purchase;");
-      await db.executeAsync("DROP TABLE IF EXISTS purchase_items;");
+      // await db.executeAsync("DROP TABLE IF EXISTS product;");
+      // await db.executeAsync("DROP TABLE IF EXISTS product_price;");
+      // await db.executeAsync("DROP TABLE IF EXISTS purchase;");
+      // await db.executeAsync("DROP TABLE IF EXISTS purchase_items;");
       await db.executeAsync("PRAGMA foreign_keys = ON;");
 
 

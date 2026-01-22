@@ -5,7 +5,7 @@ derived from real receipt-processing constraints.
 
 ---
 
-## Phase 0 — Receipt Ingestion & OCR
+## Phase 0 - Receipt Ingestion & OCR
 
 ### US-001 Capture receipt image
 As a user  
@@ -43,7 +43,7 @@ Acceptance Criteria:
 
 ---
 
-## Phase 1 — Text Structuring & Parsing
+## Phase 1 - Text Structuring & Parsing
 
 ### US-004 Structure OCR text spatially
 As a system  
@@ -92,7 +92,7 @@ Acceptance Criteria:
 
 ---
 
-## Phase 2 — Purchase Construction & Persistence
+## Phase 2 - Purchase Construction & Persistence
 
 ### US-008 Create a purchase record
 As a user  
@@ -116,7 +116,7 @@ Acceptance Criteria:
 
 ---
 
-## Phase 3 — Manual Review & Correction
+## Phase 3 - Manual Review & Correction
 
 ### US-010 Review extracted products
 As a user  
@@ -129,7 +129,7 @@ Acceptance Criteria:
 
 ---
 
-## Phase 4 — Categorization
+## Phase 4 - Categorization
 
 ### US-011 Automatic product categorization
 As a user  
@@ -153,7 +153,7 @@ Acceptance Criteria:
 
 ---
 
-## Phase 5 — Spending Insights
+## Phase 5 - Spending Insights
 
 ### US-013 View spending per category
 As a user  
@@ -161,5 +161,46 @@ I want to see spending grouped by category
 So that I understand my habits
 
 Acceptance Criteria:
-- [ ] Aggregations reflect corrected data
-- [ ] Totals match stored purchases
+- [X] Aggregations reflect corrected data
+- [X] Totals match stored purchases
+
+---
+
+## Phase 6 - Dedicated product review & correction
+
+### US-014 Open product edit screen
+As a user  
+I want to open a dedicated screen to edit a product  
+So that I can focus on correcting its details without distractions
+
+Acceptance Criteria:
+- [ ] Tapping a product opens a full-screen edit view
+- [ ] The edit screen replaces the modal
+- [ ] Navigation back returns me to the product list
+- [ ] Unsaved changes are discarded unless I save
+
+---
+
+[//]: # (### US-015 View product context on receipt image)
+
+[//]: # (As a user  )
+
+[//]: # (I want to see the product highlighted on the receipt image while editing  )
+
+[//]: # (So that I understand where the extracted values came from)
+
+[//]: # ()
+[//]: # (Acceptance Criteria:)
+
+[//]: # (- [ ] The receipt image is visible on the edit screen)
+
+[//]: # (- [ ] The edited product’s bounding box is clearly highlighted)
+
+[//]: # (- [ ] Only the selected product’s region is emphasized)
+
+[//]: # (- [ ] Highlight updates when switching products)
+
+[//]: # ()
+[//]: # (---)
+
+

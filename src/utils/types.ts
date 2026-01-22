@@ -90,3 +90,30 @@ export type ReceiptProcessResult = {
   serialized_ocr: string | null;
   store: Store;
 };
+
+export type PurchaseRow = {
+  id: number;
+  date: number;
+  image_uri: string;
+  serialized_ocr: string;
+  store: string;
+};
+
+export type PurchaseItemRow = {
+  id: number;
+  purchase_id: number;
+  product_id: number;
+  unit_price: number;
+  quantity: number;
+  total_price: number;
+}
+
+export type ProductRow = {
+  id: number;
+  category: CategoryName;
+};
+
+export type CategoryInsight = {
+  label: CategoryName;
+  value: number;
+};

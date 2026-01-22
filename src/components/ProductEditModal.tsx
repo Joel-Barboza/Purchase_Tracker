@@ -1,6 +1,6 @@
 import {JSX, useEffect, useState} from 'react';
 import {Modal, StyleSheet, Text, TextInput, TouchableOpacity, View,} from 'react-native';
-import {CATEGORIES, CategoryName, Product} from '../utils/types';
+import {CATEGORIES, Product} from '../utils/types';
 import {Picker} from '@react-native-picker/picker';
 import {categorize} from "../utils/categorization.ts";
 

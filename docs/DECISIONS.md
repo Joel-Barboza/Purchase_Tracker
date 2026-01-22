@@ -127,6 +127,35 @@ Use local-only persistent storage.
 
 ---
 
+## Decision 6: Edit screen instead of modal
+
+**Context:**  
+For product editing, a modal is used, but if we want to add images
+to the edition a modal is kinda restricting
+
+**Options considered:**
+- Re-structure modal
+- Dedicated screen
+
+**Decision:**  
+Create a dedicated screen
+
+**Rationale:**
+- A modal may look cramped if we try to make things fit
+- Having a keyboard (while editing) and a modal makes UX somewhat uncomfortable 
+- A dedicated screen gives more freedom and opportunity for better UI/UX
+
+**Consequences:**
+- There will be another screen to navigate to
+
+---
+
+---
+
+---
+
+---
+
 ## Decision X: Template
 
 **Context:**
