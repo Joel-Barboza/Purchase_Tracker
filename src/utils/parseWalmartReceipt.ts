@@ -57,7 +57,7 @@ const findWalmartProductSection = (
 
   const productSection: ProductSection = {
     lines,
-    frame: { top, left, heigth, width },
+    frame: { top, left, height: heigth, width },
   };
   console.log(productSection);
   return productSection;

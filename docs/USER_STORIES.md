@@ -174,33 +174,25 @@ I want to open a dedicated screen to edit a product
 So that I can focus on correcting its details without distractions
 
 Acceptance Criteria:
-- [ ] Tapping a product opens a full-screen edit view
-- [ ] The edit screen replaces the modal
-- [ ] Navigation back returns me to the product list
-- [ ] Unsaved changes are discarded unless I save
+- [X] Tapping a product opens a full-screen edit view
+- [X] The edit screen replaces the modal
+- [X] Navigation back returns me to the product list
+- [X] Unsaved changes are discarded unless I save
 
 ---
 
-[//]: # (### US-015 View product context on receipt image)
+### US-015 View product context on receipt image
 
-[//]: # (As a user  )
+As a user  
+I want to see the selected product’s frame on the receipt image while editing  
+So that I understand where the extracted values came from
 
-[//]: # (I want to see the product highlighted on the receipt image while editing  )
+Acceptance Criteria:
 
-[//]: # (So that I understand where the extracted values came from)
+- [ ] The product section in the image is visible on the edit screen
+- [ ] Only the selected product’s region is shown
+- [ ] Highlight updates when switching products
 
-[//]: # ()
-[//]: # (Acceptance Criteria:)
-
-[//]: # (- [ ] The receipt image is visible on the edit screen)
-
-[//]: # (- [ ] The edited product’s bounding box is clearly highlighted)
-
-[//]: # (- [ ] Only the selected product’s region is emphasized)
-
-[//]: # (- [ ] Highlight updates when switching products)
-
-[//]: # ()
-[//]: # (---)
+---
 
 

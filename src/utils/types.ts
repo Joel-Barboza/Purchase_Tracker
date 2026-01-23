@@ -12,6 +12,11 @@ export type ImageProcessingStackParamList = {
     serialized_ocr: string;
     store: Store;
   };
+  ProductEditScreen: {
+    product: Product;
+    productIndex: number;
+    onSave: (updatedProduct: Product, productIndex: number) => void;
+  };
 };
 
 export type HomeBottomTabsParamList = {
@@ -69,7 +74,7 @@ export type ProductSection = {
   frame: {
     top: number;
     left: number;
-    heigth: number;
+    height: number;
     width: number;
   };
 };
@@ -106,7 +111,7 @@ export type PurchaseItemRow = {
   unit_price: number;
   quantity: number;
   total_price: number;
-}
+};
 
 export type ProductRow = {
   id: number;

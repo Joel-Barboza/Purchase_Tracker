@@ -1,24 +1,23 @@
-import React, { JSX, useState } from "react";
+import React, { JSX, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
-import { useDb } from "../../context/DbContext";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+} from 'react-native';
+import { useDb } from '../../context/DbContext';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   ImageProcessingStackParamList,
   Product,
   Store,
 } from '../../utils/types';
-import { persistPurchaseData } from "../../utils/utils";
-import ProductEditModal from "../../components/ProductEditModal";
+import { persistPurchaseData } from '../../utils/utils';
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
-  "ProductReviewScreen"
+  'ProductReviewScreen'
 >;
 
 const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
@@ -28,95 +27,40 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
   const serialized_ocr: string = route.params.serialized_ocr;
   const store: Store = route.params.store;
 
-  const [showEditProductModal, setShowEditProductModal] = useState<boolean>(false);
   const [productList, setProductList] = useState<Product[]>(products);
 
-
-  const [prodListIndex, setProdListIndex] = useState<number>(-1);
-
-
-  const openEditModal = (productIndex: number): void => {
-    const prod: Product = productList[productIndex];
-    setProdListIndex(productIndex);
-    // if (prod.name) setProdNameChange(prod.name);
-    // if (prod.prodCode) setProdCodeChange(prod.prodCode);
-    // if (prod.quantity) setProdQuantityChange(prod.quantity.toString());
-    // if (prod.unitPrice) setProdUnitPriceChange(prod.unitPrice.toString());
-    // if (prod.totalPrice) setProdTotalPriceChange(prod.totalPrice.toString());
-    setShowEditProductModal(true);
-  }
-
-
-  const editExtractedProductList = (
-    newProdName: string, newProdCode: string, newQty: string, newUnitPrice: string, newTotalPrice: string, newCategory: string
-  ) => {
-    if (prodListIndex == -1) return;
-
-    // to avoid mutating the array source: https://react.dev/learn/updating-arrays-in-state#replacing-items-in-an-array
-    const newProductList = productList.map((elem, i) => {
-      if (i === prodListIndex) {
-        let editedElem = elem;
-        editedElem.name = newProdName;
-        editedElem.prodCode = newProdCode;
-        editedElem.quantity = parseFloat(newQty);
-        editedElem.unitPrice = parseInt(newUnitPrice);
-        editedElem.totalPrice = parseInt(newTotalPrice);
-        editedElem.category = newCategory;
-        return editedElem;
-      } else {
-        return elem;
-      }
-    });
-    setProductList(newProductList);
-
-    // resetProductEditVariables();
-    setShowEditProductModal(false);
-  }
-
   const handleSaveData = () => {
-    db && persistPurchaseData(db, { products: productList, image_uri, serialized_ocr, store });
-    navigation.popToTop()
-  }
+    db &&
+      persistPurchaseData(db, {
+        products: productList,
+        image_uri,
+        serialized_ocr,
+        store,
+      });
+    navigation.popToTop();
+  };
 
-  const handleModalClose = () => {
-    setShowEditProductModal(false)
-
-  }
+  const goToProductEditScreen = (index: number) => {
+    navigation.navigate('ProductEditScreen', {
+      product: productList[index],
+      productIndex: index,
+      onSave: (updatedProduct: Product, productIndex: number) => {
+        setProductList(prev =>
+          prev.map((p, i) => (i === productIndex ? updatedProduct : p)),
+        );
+      },
+    });
+  };
 
   return (
     <ScrollView style={styles.mainContainer}>
-      {showEditProductModal && (
-        <ProductEditModal
-          isOpen={showEditProductModal}
-          onClose={() => handleModalClose()}
-          product={productList[prodListIndex]}
-          onSave={(
-            newProdName: string,
-            newProdCode: string,
-            newQty: string,
-            newUnitPrice: string,
-            newTotalPrice: string,
-            newCategory: string
-          ) => {
-            editExtractedProductList(
-              newProdName,
-              newProdCode,
-              newQty,
-              newUnitPrice,
-              newTotalPrice,
-              newCategory
-            );
-          }}
-        />
-      )}
-
       {productList.map((product, index) => (
         <TouchableOpacity
           key={index}
           style={styles.productCard}
           delayLongPress={300}
           onLongPress={() => {
-            openEditModal(index);
+            goToProductEditScreen(index);
             console.log(
               JSON.stringify(product) + ' ' + ' ' + JSON.stringify(index),
             );
@@ -125,7 +69,9 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
           <View style={styles.leftSideCard}>
             <Text style={styles.mainText}>{product.name}</Text>
             <Text style={styles.secondaryText}>{product.prodCode}</Text>
-            <Text style={styles.secondaryText}>{product.category?.toUpperCase()}</Text>
+            <Text style={styles.secondaryText}>
+              {product.category?.toUpperCase()}
+            </Text>
           </View>
           <View style={styles.rightSideCard}>
             {product.quantity != 1 && (
@@ -146,11 +92,10 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-
   mainContainer: {
-    backgroundColor: "#070709",
+    backgroundColor: '#070709',
     paddingTop: 20,
-    marginBottom: 48
+    marginBottom: 48,
   },
   productCard: {
     flex: 1,
@@ -163,27 +108,26 @@ const styles = StyleSheet.create({
     marginRight: 15,
     height: 100,
     borderRadius: 12,
-    width: "auto",//Dimensions.get('window').width - 30
-    backgroundColor: "#252429"
+    width: 'auto', //Dimensions.get('window').width - 30
+    backgroundColor: '#252429',
   },
   leftSideCard: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   rightSideCard: {
     flex: 1,
-    alignItems: "flex-end",
-    justifyContent: "center",
-
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
   mainText: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#dddddd",
+    fontWeight: 'bold',
+    color: '#dddddd',
   },
   secondaryText: {
     fontSize: 15,
-    color: "#ddddddaa",
+    color: '#ddddddaa',
   },
   button: {
     borderRadius: 10,

@@ -132,7 +132,7 @@ export const persistPurchaseData = async (
       product.totalPrice,
     );
   }
-  const tableList = ['product', 'product_price', 'purchase', 'purchase_items'];
+  const tableList = ['productToEdit', 'product_price', 'purchase', 'purchase_items'];
   setTimeout(async () => {
     console.log('reading tables');
     for (const tableName of tableList) {
