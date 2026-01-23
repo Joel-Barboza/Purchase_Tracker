@@ -87,7 +87,7 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
       }
 
       navigation.navigate('ProductReviewScreen', {
-        productList: result.products,
+        productDetails: result.productDetails,
         image_uri: image_uri,
         serialized_ocr: result.serialized_ocr,
         store: result.store,

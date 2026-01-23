@@ -1,30 +1,47 @@
-import TextRecognition, { TextElement, TextRecognitionResult } from "@react-native-ml-kit/text-recognition";
-import { NitroSQLiteConnection } from "react-native-nitro-sqlite";
-import { parseWalmartReceipt } from "./parseWalmartReceipt";
-import { Line, NormalizedOcr, OcrInfo, ReceiptProcessResult, Product, Store, StoreName, STORES } from "./types";
-import { persistPurchaseData } from "./utils";
+import TextRecognition, { TextElement, TextRecognitionResult, } from '@react-native-ml-kit/text-recognition';
+import { NitroSQLiteConnection } from 'react-native-nitro-sqlite';
+import { parseWalmartReceipt } from './parseWalmartReceipt';
+import {
+  Frame,
+  Line,
+  NormalizedOcr,
+  OcrInfo,
+  ProductDetails,
+  ReceiptProcessResult,
+  Store,
+  StoreName,
+  STORES,
+} from './types';
 
-export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: string): Promise<ReceiptProcessResult | undefined> => {
-
-  const rawOcrResult: TextRecognitionResult | undefined = await extractText(imageUri);
+export const processReceiptImage = async (
+  db: NitroSQLiteConnection,
+  imageUri: string,
+): Promise<ReceiptProcessResult | undefined> => {
+  const rawOcrResult: TextRecognitionResult | undefined = await extractText(
+    imageUri,
+  );
 
   if (!rawOcrResult) {
-    console.error('Unable to extract text from the image')
+    console.error('Unable to extract text from the image');
     return;
   }
   const serializedOcr: string = JSON.stringify(rawOcrResult);
   const normalizedOcr: NormalizedOcr = normalizeOcrResult(rawOcrResult);
-  const ocrInfo: OcrInfo = { ...normalizedOcr, image_uri: imageUri, serialized_ocr: serializedOcr }
+  const ocrInfo: OcrInfo = {
+    ...normalizedOcr,
+    image_uri: imageUri,
+    serialized_ocr: serializedOcr,
+  };
 
-
-  const productList: Product[] | undefined = parseReceipt(ocrInfo);
+  // const productList: Product[] | undefined = parseReceipt(ocrInfo);
+  const productDetails = parseReceipt(ocrInfo);
 
   if (!db) {
     console.error(`Invalid DB instance value: ${db}`);
     return;
   }
 
-  if (!productList) {
+  if (!productDetails) {
     console.error('No product list obtained');
     return;
   }
@@ -38,37 +55,37 @@ export const processReceiptImage = async (db: NitroSQLiteConnection, imageUri: s
   }
 
   const processedResult: ReceiptProcessResult = {
-    products: productList,
+    productDetails: productDetails,
     image_uri: ocrInfo.image_uri,
     serialized_ocr: ocrInfo.serialized_ocr,
-    store: ocrInfo.store
-  }
+    store: ocrInfo.store,
+  };
   // await persistPurchaseData(db, processedResult)
-  console.log(productList)
+  console.log(productDetails);
 
   return processedResult;
-}
+};
 
-const extractText = async (imageUri: string): Promise<TextRecognitionResult | undefined> => {
+const extractText = async (
+  imageUri: string,
+): Promise<TextRecognitionResult | undefined> => {
   if (!imageUri) {
-    console.error("No image URI");
+    console.error('No image URI');
     return;
   }
 
   try {
     const result = await TextRecognition.recognize(imageUri);
-    console.log(result)
+    console.log(result);
     return result;
   } catch (e) {
-    throw new Error("Could not extract the text from the image");
+    throw new Error('Could not extract the text from the image');
   }
-
 };
 
 const normalizeOcrResult = (
-  rawOcrResult: TextRecognitionResult
-): { lines: Line[], store: Store } => {
-
+  rawOcrResult: TextRecognitionResult,
+): { lines: Line[]; store: Store } => {
   const wordList: TextElement[] = getWordList(rawOcrResult);
 
   sortVertically(wordList); // mutates wordList
@@ -79,10 +96,10 @@ const normalizeOcrResult = (
 
   sortLineElementsHorizontally(lines); // mutates lines
 
-  const formatedLines: Line[] = formatLines(lines)
+  const formatedLines: Line[] = formatLines(lines);
 
   return { lines: formatedLines, store: store };
-}
+};
 
 const getWordList = (rawOcrResult: TextRecognitionResult): TextElement[] => {
   let resultObject: TextElement[] = [];
@@ -98,8 +115,8 @@ const getWordList = (rawOcrResult: TextRecognitionResult): TextElement[] => {
       }
     }
   }
-  return resultObject
-}
+  return resultObject;
+};
 
 const getReceiptStore = (wordList: TextElement[]): Store => {
   for (const word of wordList) {
@@ -112,16 +129,14 @@ const getReceiptStore = (wordList: TextElement[]): Store => {
   return { name: undefined };
 };
 
-
 const sortVertically = (wordList: TextElement[]): void => {
   wordList.sort((a: TextElement, b: TextElement) => {
-    if (!a.frame || !b.frame) return 0
-    return a.frame.top - b.frame.top
-  })
-}
+    if (!a.frame || !b.frame) return 0;
+    return a.frame.top - b.frame.top;
+  });
+};
 
 const createLines = (wordList: TextElement[]): TextElement[][] => {
-
   let lines: TextElement[][] = []; // Join words in lines
 
   for (let i = 0; i < wordList.length; i++) {
@@ -134,78 +149,107 @@ const createLines = (wordList: TextElement[]): TextElement[][] => {
       continue;
     }
 
-    const lastLineIndex = lines.length - 1
+    const lastLineIndex = lines.length - 1;
     const midFrameY = word.frame.top + word.frame.height * 0.5;
-    const lineTopAndBottom = avgLineTopAndBottom(lines[lastLineIndex])
+    const lineTopAndBottom = avgLineTopAndBottom(lines[lastLineIndex]);
     if (!lineTopAndBottom) continue;
-    if (midFrameY >= lineTopAndBottom.top &&
+    if (
+      midFrameY >= lineTopAndBottom.top &&
       midFrameY < lineTopAndBottom.bottom
     ) {
-      lines[lastLineIndex].push(word)
+      lines[lastLineIndex].push(word);
     } else {
-      lines.push([word])
+      lines.push([word]);
     }
   }
   return lines;
-}
+};
 
-const avgLineTopAndBottom = (line: TextElement[]): { top: number, bottom: number } => {
+const avgLineTopAndBottom = (
+  line: TextElement[],
+): { top: number; bottom: number } => {
   let sumOfTops: number = 0;
   let sumOfBottoms: number = 0;
-
 
   for (const word of line) {
     if (!word.frame) continue;
     sumOfTops += word.frame.top;
     sumOfBottoms += word.frame.top + word.frame.height;
   }
-  const avgTop: number = sumOfTops / line.length
-  const avgBottom: number = sumOfBottoms / line.length
+  const avgTop: number = sumOfTops / line.length;
+  const avgBottom: number = sumOfBottoms / line.length;
 
-  const result = { top: avgTop, bottom: avgBottom }
-  return result
-}
+  const result = { top: avgTop, bottom: avgBottom };
+  return result;
+};
 
 const sortLineElementsHorizontally = (lines: TextElement[][]) => {
-  lines.forEach(line => line.sort((a: TextElement, b: TextElement) => {
-    if (!a.frame || !b.frame) return 0;
-    return a.frame.left - b.frame.left;
-  }))
-}
+  lines.forEach(line =>
+    line.sort((a: TextElement, b: TextElement) => {
+      if (!a.frame || !b.frame) return 0;
+      return a.frame.left - b.frame.left;
+    }),
+  );
+};
 
 const formatLines = (lines: TextElement[][]): Line[] => {
-  let formatedLines: Line[] = []
+  let formatedLines: Line[] = [];
   for (const line of lines) {
     let formatedLine: Line = {
+      frame: { top: 0, left: 0, height: 0, width: 0 },
+      text: '',
       words: [],
-      text: ''
-    }
+    };
     for (const word of line) {
+      if (!word.frame) continue;
+      formatedLine.frame = getNewLineFrameWithWordFrame(word.frame);
       formatedLine.words.push(word);
       formatedLine.text += word.text + ' ';
     }
     formatedLine.text = formatedLine.text.trimEnd(); // remove trailing spaces
-    formatedLines.push(formatedLine)
+    formatedLines.push(formatedLine);
   }
   return formatedLines;
-}
+};
 
-const parseReceipt = (ocrInfo: OcrInfo): Product[] | undefined => {
+const getNewLineFrameWithWordFrame = (wordFrame: Frame): Frame => {
+  let frame: Frame = { top: 0, left: 0, height: 0, width: 0 };
 
+  // top
+  if (wordFrame.top < frame.top) {
+    frame.top = wordFrame.top;
+  }
+
+  // left
+  if (wordFrame.left < frame.left) {
+    frame.left = wordFrame.left;
+  }
+
+  // height
+  if (wordFrame.top + wordFrame.height > frame.top + frame.height) {
+    frame.height = wordFrame.top + wordFrame.height - frame.top;
+  }
+
+  // width
+  if (wordFrame.left + wordFrame.width > frame.left + frame.width) {
+    frame.width = wordFrame.left + wordFrame.width - frame.left;
+  }
+  return frame;
+};
+
+const parseReceipt = (ocrInfo: OcrInfo): ProductDetails[] | undefined => {
   // https://stackoverflow.com/questions/6476994/using-or-operator-in-javascript-switch-statement
   switch (ocrInfo.store.name) {
     case STORES[0]: // 'walmart'
     case STORES[1]: // 'maxipali'
     case STORES[2]: // 'pali'
-      const productList: Product[] | undefined = parseWalmartReceipt(ocrInfo);
-      return productList;
+      return parseWalmartReceipt(ocrInfo);
 
     default:
-      console.error('Store not supported, using default: Walmart')
-      const productListErrorCase: Product[] | undefined = parseWalmartReceipt(ocrInfo);
-      return productListErrorCase;
+      console.error('Store not recognized or not supported, using default: Walmart');
+      return parseWalmartReceipt(ocrInfo);
   }
-}
+};
 
 
 

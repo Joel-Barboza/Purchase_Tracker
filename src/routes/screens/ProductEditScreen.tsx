@@ -20,9 +20,9 @@ type Props = NativeStackScreenProps<
   'ProductEditScreen'
 >;
 const ProductEditScreen = ({ route, navigation }: Props) => {
-  const { product, productIndex, onSave } = route.params;
+  const { productDetails, productIndex, onSave } = route.params;
 
-  const [draft, setDraft] = useState<Product>(() => ({ ...product }));
+  const [draft, setDraft] = useState<Product>(productDetails.product);
 
   const updateDraft = <K extends keyof Product>(key: K, value: Product[K]) => {
     setDraft(prev => ({ ...prev, [key]: value }));
@@ -30,6 +30,8 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
 
   return (
     <View style={styles.container}>
+      <Text>frame: {JSON.stringify(productDetails.productImageFrame)}</Text>
+      <Text>Product Name</Text>
       <TextInput
         style={styles.input}
         value={draft.name ?? ''}
@@ -109,6 +111,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
           style={[styles.button, styles.btnSave]}
           onPress={() => {
             onSave(draft, productIndex);
+            console.log(draft);
             navigation.goBack();
           }}
         >

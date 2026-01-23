@@ -7,13 +7,13 @@ export type ImageProcessingStackParamList = {
     imageProps: ImageProps;
   };
   ProductReviewScreen: {
-    productList: Product[];
+    productDetails: ProductDetails[];
     image_uri: string;
     serialized_ocr: string;
     store: Store;
   };
   ProductEditScreen: {
-    product: Product;
+    productDetails: ProductDetails;
     productIndex: number;
     onSave: (updatedProduct: Product, productIndex: number) => void;
   };
@@ -33,6 +33,13 @@ export type ImageProps = {
   source: 'camera' | 'gallery';
 };
 
+export type Frame = {
+  top: number;
+  left: number;
+  height: number;
+  width: number;
+};
+
 export const STORES = ['walmart', 'maxipali', 'pali'] as const;
 
 export type StoreName = (typeof STORES)[number];
@@ -42,8 +49,9 @@ export type Store = {
 };
 
 export type Line = {
-  words: TextElement[];
+  frame: Frame;
   text: string;
+  words: TextElement[];
 };
 
 export type NormalizedOcr = {
@@ -71,12 +79,7 @@ export type CategoryName = (typeof CATEGORIES)[number];
 
 export type ProductSection = {
   lines: Line[];
-  frame: {
-    top: number;
-    left: number;
-    height: number;
-    width: number;
-  };
+  frame: Frame;
 };
 
 export type Product = {
@@ -89,8 +92,15 @@ export type Product = {
   category: CategoryName | undefined;
 };
 
+
+
+export type ProductDetails = {
+  product: Product;
+  productImageFrame: Frame;
+};
+
 export type ReceiptProcessResult = {
-  products: Product[];
+  productDetails: ProductDetails[];
   image_uri: string | null;
   serialized_ocr: string | null;
   store: Store;

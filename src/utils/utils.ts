@@ -2,16 +2,11 @@ import { TextElement } from '@react-native-ml-kit/text-recognition';
 import {
   Line,
   ReceiptProcessResult,
-  Product,
-  Store,
-  PurchaseItemRow,
   CATEGORIES,
   CategoryName,
 } from './types';
 import {
   NitroSQLiteConnection,
-  QueryResultRowItem,
-  SQLiteValue,
 } from 'react-native-nitro-sqlite';
 import { addPurchase, getAllPurchases } from '../db/purchase';
 import {
@@ -91,7 +86,7 @@ export const persistPurchaseData = async (
   db: NitroSQLiteConnection,
   processedResult: ReceiptProcessResult,
 ): Promise<void> => {
-  const { products, image_uri, serialized_ocr, store }: ReceiptProcessResult =
+  const { productDetails, image_uri, serialized_ocr, store }: ReceiptProcessResult =
     processedResult;
   const purchaseId: number | undefined = await addPurchase(
     db,
@@ -101,35 +96,43 @@ export const persistPurchaseData = async (
   );
   if (!purchaseId) return;
 
-  for (const product of products) {
+  for (const details of productDetails) {
     if (
-      !product.prodCode ||
-      !product.unitPrice ||
-      !product.quantity ||
-      !product.totalPrice ||
-      !product.category
+      !details.product.prodCode ||
+      !details.product.unitPrice ||
+      !details.product.quantity ||
+      !details.product.totalPrice ||
+      !details.product.category
     )
       continue;
-    const productRow = await findProductByCode(db, product.prodCode);
+    const productRow = await findProductByCode(db, details.product.prodCode);
 
     let productId: number;
     if (productRow != null) {
       productId = Number(productRow.id);
-      await updateProductPrice(db, product.prodCode, product.unitPrice);
-      await updateProductCategory(db, product.prodCode, product.category);
+      await updateProductPrice(
+        db,
+        details.product.prodCode,
+        details.product.unitPrice,
+      );
+      await updateProductCategory(
+        db,
+        details.product.prodCode,
+        details.product.category,
+      );
     } else {
-      const insertId = await addProduct(db, product);
+      const insertId = await addProduct(db, details.product);
       if (!insertId) continue;
       productId = insertId;
     }
-    await addProductPrice(db, productId, product.unitPrice);
+    await addProductPrice(db, productId, details.product.unitPrice);
     await addPurchaseItem(
       db,
       purchaseId,
       productId,
-      product.unitPrice,
-      product.quantity,
-      product.totalPrice,
+      details.product.unitPrice,
+      details.product.quantity,
+      details.product.totalPrice,
     );
   }
   const tableList = ['productToEdit', 'product_price', 'purchase', 'purchase_items'];

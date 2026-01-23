@@ -1,5 +1,12 @@
 import { TextElement } from '@react-native-ml-kit/text-recognition';
-import { Line, OcrInfo, Product, ProductSection } from './types';
+import {
+  Frame,
+  Line,
+  OcrInfo,
+  Product,
+  ProductDetails,
+  ProductSection,
+} from './types';
 import {
   findLeftAndWidthFromSection,
   getMaxBottomFromLine,
@@ -14,15 +21,14 @@ type ProductLine = {
 
 export const parseWalmartReceipt = (
   ocrInfo: OcrInfo,
-): Product[] | undefined => {
+): ProductDetails[] | undefined => {
   const receiptLines: Line[] = ocrInfo.lines;
   const productSection: ProductSection | undefined =
     findWalmartProductSection(receiptLines);
 
   if (!productSection || !productSection.lines) return;
 
-  const productList = getProductList(productSection.lines);
-  return productList;
+  return getProductDetails(productSection.lines);
 };
 
 const findWalmartProductSection = (
@@ -115,10 +121,16 @@ const findLastProduct = (
   }
 };
 
-const getProductList = (productSectionLines: Line[]): Product[] => {
-  let productLineGroups: Line[][] = [];
-  let groupedLines: Line[] = [];
-  let productList: Product[] = [];
+const getProductDetails = (productSectionLines: Line[]): ProductDetails[] => {
+  // let productLineGroups: Line[][] = [];
+  // let groupedLines: Line[] = [];
+  let productDetailList: ProductDetails[] = [];
+  // let productFrame = {
+  //   top: 0,
+  //   left: 0,
+  //   height: 0,
+  //   width: 0,
+  // };
   for (let i = 0; i < productSectionLines.length; i++) {
     const line = productSectionLines[i];
     const nextLine = productSectionLines[i + 1]
@@ -131,41 +143,51 @@ const getProductList = (productSectionLines: Line[]): Product[] => {
     );
 
     if (prodCodeMatch && priceMatch) {
-      groupedLines.push(line);
-      productLineGroups.push(groupedLines);
-      const product = getProductFromLines(groupedLines);
-      if (product) productList.push(product);
-      groupedLines = [];
+      // groupedLines.push(line);
+      // productLineGroups.push([line]);
+      const productDetails: ProductDetails | undefined =
+        getProductDetailsFromLines([line]);
+      if (!productDetails) continue;
+      productDetailList.push(productDetails);
+      // groupedLines = [];
     } else if (prodCodeMatch) {
-      groupedLines.push(line);
-      if (nextLine) groupedLines.push(nextLine);
+      // if (nextLine) groupedLines.push(nextLine);
+      if (!nextLine) {
+        // productLineGroups.push([line]);
+        i++;
+        continue;
+      }
 
-      productLineGroups.push(groupedLines);
-      const product = getProductFromLines(groupedLines);
+      const groupedLines: Line[] = [line, nextLine];
+      // productLineGroups.push(groupedLines);
+      const productDetails: ProductDetails | undefined =
+        getProductDetailsFromLines(groupedLines);
+      if (productDetails) productDetailList.push(productDetails);
+      // productLineGroups.push(groupedLines);
 
-      if (product) productList.push(product);
-
-      groupedLines = [];
-      i++;
+      // groupedLines = [];
+      // i++;
     }
   }
-  return productList;
+  return productDetailList;
 };
 
-const getProductFromLines = (productLines: Line[]): Product | undefined => {
+const getProductDetailsFromLines = (
+  productLines: Line[],
+): ProductDetails | undefined => {
   if (productLines.length === 1) {
-    const product: Product = parseOneLineProduct(productLines);
-    console.log(product);
-    return product;
+    const productDetails: ProductDetails = parseOneLineProduct(productLines);
+    console.log(productDetails);
+    return productDetails;
   } else if (productLines.length === 2) {
-    const product: Product = parseTwoLinesProduct(productLines);
-    console.log(product);
-    return product;
+    const productDetails: ProductDetails = parseTwoLinesProduct(productLines);
+    console.log(productDetails);
+    return productDetails;
   }
   return;
 };
 
-const parseOneLineProduct = (productLines: Line[]): Product => {
+const parseOneLineProduct = (productLines: Line[]): ProductDetails => {
   const line: Line = productLines[0];
   // https://regexr.com/
   const nameMatch = line.text.match(/^(.*)(?= \d{4,16}K?)/i);
@@ -187,13 +209,31 @@ const parseOneLineProduct = (productLines: Line[]): Product => {
     soldByKg: 0, // false
     category: nameMatch ? categorize(nameMatch[0]) : undefined,
   };
-  return product;
+  return { product, productImageFrame: line.frame };
 };
 
-const parseTwoLinesProduct = (productLines: Line[]): Product => {
+const parseTwoLinesProduct = (productLines: Line[]): ProductDetails => {
   const nameMatch = productLines[0].text.match(/^(.*)(?= \d{4,20}K?)/i);
   const prodCodeMatch = productLines[0].text.match(/(?<= )\d{4,20}K?/);
   const prodCodeWithKMatch = productLines[0].text.match(/(?<= )\d{4,20}K/);
+
+  const firstProductFrame: Frame = productLines[0].frame;
+  const secondProductFrame: Frame = productLines[1].frame;
+
+  const minLeft: number = Math.min(
+    ...productLines.map(line => line.frame.left),
+  );
+
+  const maxRight: number = Math.max(
+    ...productLines.map(line => line.frame.left + line.frame.width),
+  );
+
+  const frame: Frame = {
+    top: firstProductFrame.top,
+    left: minLeft,
+    height: firstProductFrame.height + secondProductFrame.height,
+    width: maxRight - minLeft,
+  };
 
   if (prodCodeWithKMatch) {
     const product: Product = handleProductSoldByKg(
@@ -201,14 +241,14 @@ const parseTwoLinesProduct = (productLines: Line[]): Product => {
       nameMatch,
       prodCodeWithKMatch,
     );
-    return product;
+    return {product, productImageFrame: frame};
   } else if (prodCodeMatch) {
     const product: Product = handleProductSoldByUnits(
       productLines[1],
       nameMatch,
       prodCodeMatch,
     );
-    return product;
+    return { product, productImageFrame: frame };
   } else {
     const product: Product = {
       name: nameMatch ? nameMatch[0] : undefined,
@@ -219,7 +259,7 @@ const parseTwoLinesProduct = (productLines: Line[]): Product => {
       soldByKg: undefined, // false
       category: nameMatch ? categorize(nameMatch[0]) : undefined,
     };
-    return product;
+    return { product, productImageFrame: frame };
   }
 };
 

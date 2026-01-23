@@ -11,6 +11,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   ImageProcessingStackParamList,
   Product,
+  ProductDetails,
   Store,
 } from '../../utils/types';
 import { persistPurchaseData } from '../../utils/utils';
@@ -22,17 +23,20 @@ type Props = NativeStackScreenProps<
 
 const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
   const db = useDb();
-  const products: Product[] = route.params.productList;
+  const extractedProductDetails: ProductDetails[] = route.params.productDetails;
   const image_uri: string = route.params.image_uri;
   const serialized_ocr: string = route.params.serialized_ocr;
   const store: Store = route.params.store;
 
-  const [productList, setProductList] = useState<Product[]>(products);
+  const [productDetails, setProductDetails] =
+    useState<ProductDetails[]>(extractedProductDetails);
+
+  console.log(extractedProductDetails);
 
   const handleSaveData = () => {
     db &&
       persistPurchaseData(db, {
-        products: productList,
+        productDetails: productDetails,
         image_uri,
         serialized_ocr,
         store,
@@ -42,11 +46,13 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
 
   const goToProductEditScreen = (index: number) => {
     navigation.navigate('ProductEditScreen', {
-      product: productList[index],
+      productDetails: productDetails[index],
       productIndex: index,
       onSave: (updatedProduct: Product, productIndex: number) => {
-        setProductList(prev =>
-          prev.map((p, i) => (i === productIndex ? updatedProduct : p)),
+        setProductDetails(prevState =>
+          prevState.map((detail, i) => {
+            return i === productIndex ? { product: updatedProduct, productImageFrame: detail.productImageFrame } : detail;
+          }),
         );
       },
     });
@@ -54,7 +60,7 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
 
   return (
     <ScrollView style={styles.mainContainer}>
-      {productList.map((product, index) => (
+      {productDetails.map((details, index) => (
         <TouchableOpacity
           key={index}
           style={styles.productCard}
@@ -62,24 +68,27 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
           onLongPress={() => {
             goToProductEditScreen(index);
             console.log(
-              JSON.stringify(product) + ' ' + ' ' + JSON.stringify(index),
+              JSON.stringify(details.product) +
+                ' ' +
+                ' ' +
+                JSON.stringify(index),
             );
           }}
         >
           <View style={styles.leftSideCard}>
-            <Text style={styles.mainText}>{product.name}</Text>
-            <Text style={styles.secondaryText}>{product.prodCode}</Text>
+            <Text style={styles.mainText}>{details.product.name}</Text>
+            <Text style={styles.secondaryText}>{details.product.prodCode}</Text>
             <Text style={styles.secondaryText}>
-              {product.category?.toUpperCase()}
+              {details.product.category?.toUpperCase()}
             </Text>
           </View>
           <View style={styles.rightSideCard}>
-            {product.quantity != 1 && (
+            {details.product.quantity != 1 && (
               <Text style={styles.secondaryText}>
-                {product.quantity} x ₡{product.unitPrice}
+                {details.product.quantity} x ₡{details.product.unitPrice}
               </Text>
             )}
-            <Text style={styles.mainText}>₡{product.totalPrice}</Text>
+            <Text style={styles.mainText}>₡{details.product.totalPrice}</Text>
           </View>
         </TouchableOpacity>
       ))}
