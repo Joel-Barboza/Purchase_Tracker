@@ -213,7 +213,7 @@ const formatLines = (lines: TextElement[][]): Line[] => {
 };
 
 const getNewLineFrameWithWordFrame = (wordFrame: Frame): Frame => {
-  let frame: Frame = { top: 0, left: 0, height: 0, width: 0 };
+  let frame: Frame = { top: Number.MAX_VALUE, left: Number.MAX_VALUE, height: 0, width: 0 };
 
   // top
   if (wordFrame.top < frame.top) {
