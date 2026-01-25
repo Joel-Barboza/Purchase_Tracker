@@ -14,13 +14,15 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Picker } from '@react-native-picker/picker';
 import { categorize } from '../../utils/categorization.ts';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import ProductFrameOnReceiptImage from '../../components/ProductFrameOnReceiptImage.tsx';
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
   'ProductEditScreen'
 >;
 const ProductEditScreen = ({ route, navigation }: Props) => {
-  const { productDetails, productIndex, onSave } = route.params;
+  const { productDetails, productIndex, imageProps, onSave } = route.params;
 
   const [draft, setDraft] = useState<Product>(productDetails.product);
 
@@ -29,8 +31,14 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>frame: {JSON.stringify(productDetails.productImageFrame)}</Text>
+    <SafeAreaView style={styles.container}>
+      {/*<Text>frame: {JSON.stringify(productDetails.productImageFrame)}</Text>*/}
+      <Text>Product on receipt</Text>
+      <ProductFrameOnReceiptImage
+        productDetails={productDetails}
+        imageProps={imageProps}
+      />
+      {/*<Text>{imageProps.imageUri}</Text>*/}
       <Text>Product Name</Text>
       <TextInput
         style={styles.input}
@@ -52,6 +60,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
       <TextInput
         style={styles.input}
         value={String(draft.quantity ?? '')}
+        keyboardType={'numeric'}
         onChangeText={text => {
           const qty = parseInt(text, 10) || 0;
           updateDraft('quantity', qty);
@@ -67,6 +76,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
           <TextInput
             style={styles.input}
             value={String(draft.unitPrice ?? '')}
+            keyboardType={'numeric'}
             onChangeText={text =>
               updateDraft('unitPrice', parseInt(text, 10) || 0)
             }
@@ -78,6 +88,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
       <TextInput
         style={styles.input}
         value={String(draft.totalPrice ?? '')}
+        keyboardType={'numeric'}
         onChangeText={text => {
           const total = parseInt(text, 10) || 0;
           updateDraft('totalPrice', total);
@@ -118,16 +129,17 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
           <Text style={styles.textStyle}>Save</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#8f8e8e',
+    paddingTop: 10,
   },
   button: {
     borderRadius: 10,
@@ -137,7 +149,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    width: '100%',
+    width: '90%',
     marginTop: 10,
   },
   btnCancel: {
@@ -157,12 +169,12 @@ const styles = StyleSheet.create({
     color: '#e8e8e8',
     height: 40,
     margin: 12,
-    width: '100%',
+    width: '90%',
     borderWidth: 1,
     padding: 10,
   },
   pickerContainer: {
-    width: '100%',
+    width: '90%',
     height: 62,
     borderWidth: 1,
     margin: 12,

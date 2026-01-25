@@ -29,6 +29,7 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { getAllPurchases } from '../../db/purchase';
 import { ImageProcessingStackParamList, ImageProps } from '../../utils/types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
@@ -122,7 +123,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
   if (!hasPermission) return <PermissionsPage />;
   if (device == null) return <NoCameraDeviceError />;
   return (
-    <View style={[style.container, { justifyContent: 'flex-start' }]}>
+    <SafeAreaView edges={['bottom']} style={[style.container, { justifyContent: 'flex-start' }]}>
       <Camera
         ref={camera}
         style={style.camera}
@@ -143,7 +144,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
           <Text>get recipt</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -198,6 +199,9 @@ const style = StyleSheet.create({
   btnContainer: {
     flex: 1,
     flexDirection: 'row',
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   galleryButton: {
     height: 80,

@@ -8,13 +8,14 @@ export type ImageProcessingStackParamList = {
   };
   ProductReviewScreen: {
     productDetails: ProductDetails[];
-    image_uri: string;
+    imageProps: ImageProps;
     serialized_ocr: string;
     store: Store;
   };
   ProductEditScreen: {
     productDetails: ProductDetails;
     productIndex: number;
+    imageProps: ImageProps;
     onSave: (updatedProduct: Product, productIndex: number) => void;
   };
 };

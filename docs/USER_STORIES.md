@@ -189,9 +189,9 @@ So that I understand where the extracted values came from
 
 Acceptance Criteria:
 
-- [ ] The product section in the image is visible on the edit screen
-- [ ] Only the selected product’s region is shown
-- [ ] Highlight updates when switching products
+- [X] The product section in the image is visible on the edit screen
+- [X] Only the selected product’s region is shown
+- [X] Selection updates when switching products
 
 ---
 

@@ -10,6 +10,7 @@ import { useDb } from '../../context/DbContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   ImageProcessingStackParamList,
+  ImageProps,
   Product,
   ProductDetails,
   Store,
@@ -24,12 +25,13 @@ type Props = NativeStackScreenProps<
 const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
   const db = useDb();
   const extractedProductDetails: ProductDetails[] = route.params.productDetails;
-  const image_uri: string = route.params.image_uri;
+  const imageProps: ImageProps = route.params.imageProps;
   const serialized_ocr: string = route.params.serialized_ocr;
   const store: Store = route.params.store;
 
-  const [productDetails, setProductDetails] =
-    useState<ProductDetails[]>(extractedProductDetails);
+  const [productDetails, setProductDetails] = useState<ProductDetails[]>(
+    extractedProductDetails,
+  );
 
   console.log(extractedProductDetails);
 
@@ -37,7 +39,7 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
     db &&
       persistPurchaseData(db, {
         productDetails: productDetails,
-        image_uri,
+        image_uri: imageProps.imageUri,
         serialized_ocr,
         store,
       });
@@ -48,10 +50,16 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
     navigation.navigate('ProductEditScreen', {
       productDetails: productDetails[index],
       productIndex: index,
+      imageProps: imageProps,
       onSave: (updatedProduct: Product, productIndex: number) => {
         setProductDetails(prevState =>
           prevState.map((detail, i) => {
-            return i === productIndex ? { product: updatedProduct, productImageFrame: detail.productImageFrame } : detail;
+            return i === productIndex
+              ? {
+                  product: updatedProduct,
+                  productImageFrame: detail.productImageFrame,
+                }
+              : detail;
           }),
         );
       },
@@ -64,15 +72,9 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
         <TouchableOpacity
           key={index}
           style={styles.productCard}
-          delayLongPress={300}
-          onLongPress={() => {
+          // delayLongPress={90}
+          onPress={() => {
             goToProductEditScreen(index);
-            console.log(
-              JSON.stringify(details.product) +
-                ' ' +
-                ' ' +
-                JSON.stringify(index),
-            );
           }}
         >
           <View style={styles.leftSideCard}>
@@ -83,7 +85,7 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
             </Text>
           </View>
           <View style={styles.rightSideCard}>
-            {details.product.quantity != 1 && (
+            {details.product.quantity !== 1 && (
               <Text style={styles.secondaryText}>
                 {details.product.quantity} x ₡{details.product.unitPrice}
               </Text>

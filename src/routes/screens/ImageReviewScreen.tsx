@@ -20,6 +20,7 @@ import {
   CameraRoll,
   PhotoIdentifier,
 } from '@react-native-camera-roll/camera-roll';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
@@ -63,16 +64,18 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
 
     try {
       const imageProps: ImageProps | undefined = await savePhoto(imageUri);
+      // if (!imageProps) return;
+      console.log('asdfa');
       let image_uri: string;
       if (imageProps) {
         image_uri = imageProps.imageUri; // just saved path
       } else {
         image_uri = imageUri; // gallery path passed by route.params
       }
-      if (!imageProps?.imageUri && source === 'camera') {
-        Alert.alert('Error saving, No image URI');
-        return;
-      }
+        // if (!imageProps.imageUri && source === 'camera') {
+        //   Alert.alert('Error saving, No image URI');
+        //   return;
+        // }
       const result: ReceiptProcessResult | undefined =
         await processReceiptImage(db, image_uri);
 
@@ -88,7 +91,7 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
 
       navigation.navigate('ProductReviewScreen', {
         productDetails: result.productDetails,
-        image_uri: image_uri,
+        imageProps: imageProps ? imageProps: route.params.imageProps,
         serialized_ocr: result.serialized_ocr,
         store: result.store,
       });
@@ -99,13 +102,13 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
   };
 
   return (
-    <View style={[style.container, { justifyContent: 'flex-start' }]}>
+    <SafeAreaView edges={['bottom']} style={[style.container, { justifyContent: 'flex-start' }]}>
       <Image
         source={{ uri: imageUri }}
         style={[style.image, { aspectRatio: width / height }]}
         resizeMode="contain"
       />
-      <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+      <View style={style.btnContainer}>
         <TouchableOpacity style={style.simpleBtn} onPress={navigation.goBack}>
           <Text>Re-take</Text>
         </TouchableOpacity>
@@ -117,7 +120,7 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
           <Text>Continue</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -130,6 +133,13 @@ const style = StyleSheet.create({
   image: {
     backgroundColor: 'gray',
     width: '101%',
+  },
+  btnContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '90%',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   },
   simpleBtn: {
     backgroundColor: '#ee3a28',

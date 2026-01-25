@@ -1,4 +1,7 @@
-import TextRecognition, { TextElement, TextRecognitionResult, } from '@react-native-ml-kit/text-recognition';
+import TextRecognition, {
+  TextElement,
+  TextRecognitionResult,
+} from '@react-native-ml-kit/text-recognition';
 import { NitroSQLiteConnection } from 'react-native-nitro-sqlite';
 import { parseWalmartReceipt } from './parseWalmartReceipt';
 import {
@@ -196,13 +199,18 @@ const formatLines = (lines: TextElement[][]): Line[] => {
   let formatedLines: Line[] = [];
   for (const line of lines) {
     let formatedLine: Line = {
-      frame: { top: 0, left: 0, height: 0, width: 0 },
+      frame: {
+        top: Number.MAX_VALUE,
+        left: Number.MAX_VALUE,
+        height: 0,
+        width: 0,
+      },
       text: '',
       words: [],
     };
     for (const word of line) {
       if (!word.frame) continue;
-      formatedLine.frame = getNewLineFrameWithWordFrame(word.frame);
+      formatedLine.frame = getNewLineFrameWithWordFrame(word.frame, formatedLine.frame);
       formatedLine.words.push(word);
       formatedLine.text += word.text + ' ';
     }
@@ -212,24 +220,28 @@ const formatLines = (lines: TextElement[][]): Line[] => {
   return formatedLines;
 };
 
-const getNewLineFrameWithWordFrame = (wordFrame: Frame): Frame => {
-  let frame: Frame = { top: Number.MAX_VALUE, left: Number.MAX_VALUE, height: 0, width: 0 };
+const getNewLineFrameWithWordFrame = (wordFrame: Frame, frame: Frame): Frame => {
+  // let frame: Frame = {
+  //   top: Number.MAX_VALUE,
+  //   left: Number.MAX_VALUE,
+  //   height: 0,
+  //   width: 0,
+  // };
 
   // top
   if (wordFrame.top < frame.top) {
     frame.top = wordFrame.top;
   }
-
+  console.log(wordFrame.left);
+  console.log(frame.left);
   // left
   if (wordFrame.left < frame.left) {
     frame.left = wordFrame.left;
   }
-
   // height
   if (wordFrame.top + wordFrame.height > frame.top + frame.height) {
     frame.height = wordFrame.top + wordFrame.height - frame.top;
   }
-
   // width
   if (wordFrame.left + wordFrame.width > frame.left + frame.width) {
     frame.width = wordFrame.left + wordFrame.width - frame.left;
@@ -246,7 +258,9 @@ const parseReceipt = (ocrInfo: OcrInfo): ProductDetails[] | undefined => {
       return parseWalmartReceipt(ocrInfo);
 
     default:
-      console.error('Store not recognized or not supported, using default: Walmart');
+      console.error(
+        'Store not recognized or not supported, using default: Walmart',
+      );
       return parseWalmartReceipt(ocrInfo);
   }
 };
