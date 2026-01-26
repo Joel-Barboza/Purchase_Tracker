@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import {
   CATEGORIES,
@@ -23,63 +24,97 @@ type Props = NativeStackScreenProps<
 >;
 const ProductEditScreen = ({ route, navigation }: Props) => {
   const { productDetails, productIndex, imageProps, onSave } = route.params;
+  const product = productDetails?.product;
 
-  const [draft, setDraft] = useState<Product>(productDetails.product);
+  // const [draft, setDraft] = useState<Product>(productDetails.product);
+  //
+  // const updateDraft = <K extends keyof Product>(key: K, value: Product[K] | string) => {
+  //   setDraft(prev => ({ ...prev, [key]: value }));
+  // };
 
-  const updateDraft = <K extends keyof Product>(key: K, value: Product[K]) => {
-    setDraft(prev => ({ ...prev, [key]: value }));
+  const [name, setName] = useState<string>(product?.name || '');
+  const [productCode, setProductCode] = useState<string>(
+    product?.prodCode || '',
+  );
+  const [quantity, setQuantity] = useState<string>(
+    String(product?.quantity || ''),
+  );
+  const [unitPrice, setUnitPrice] = useState<string>(
+    String(product?.unitPrice || ''),
+  );
+  const [totalPrice, setTotalPrice] = useState<string>(
+    String(product?.totalPrice || ''),
+  );
+  const [category, setCategory] = useState<string>(product?.category || '');
+  const [soldByKg, setSoldByKg] = useState<0 | 1>(
+    productDetails.product.soldByKg || 0,
+  );
+
+  const [isValidQuantity, setIsValidQuantity] = useState<boolean>(false);
+
+  const checkQuantityFormat = (text: string): boolean => {
+    const regex = /^-?\d*[,.]?\d+$/;
+
+    return regex.test(text);
   };
+
+  // const handleInferredUnitPrice = () => {
+  //
+  // };
+  //
+  useEffect(() => {
+    if (totalPrice && parseFloat(quantity.replace(',', '.')) > 0) {
+      setUnitPrice(
+        String(
+          Math.round(
+            parseInt(totalPrice, 10) / parseFloat(quantity.replace(',', '.')),
+          ),
+        ),
+      );
+    }
+  }, [totalPrice, quantity]);
 
   return (
     <SafeAreaView style={styles.container}>
-      {/*<Text>frame: {JSON.stringify(productDetails.productImageFrame)}</Text>*/}
       <Text>Product on receipt</Text>
       <ProductFrameOnReceiptImage
         productDetails={productDetails}
         imageProps={imageProps}
       />
-      {/*<Text>{imageProps.imageUri}</Text>*/}
       <Text>Product Name</Text>
-      <TextInput
-        style={styles.input}
-        value={draft.name ?? ''}
-        onChangeText={text => {
-          updateDraft('name', text);
-          updateDraft('category', categorize(text));
-        }}
-      />
+      <TextInput style={styles.input} value={name} onChangeText={setName} />
 
-      <Text>Product ID</Text>
+      <Text>Product Code</Text>
       <TextInput
         style={styles.input}
-        value={draft.prodCode ?? ''}
-        onChangeText={text => updateDraft('prodCode', text)}
+        value={productCode}
+        onChangeText={value => {
+          setProductCode(value);
+          /\.*k$/i.test(value) ? setSoldByKg(1) : setSoldByKg(0);
+        }}
       />
 
       <Text>Quantity</Text>
       <TextInput
-        style={styles.input}
-        value={String(draft.quantity ?? '')}
+        style={
+          isValidQuantity ? styles.input : [styles.input, styles.invalidInput]
+        }
+        value={quantity}
         keyboardType={'numeric'}
         onChangeText={text => {
-          const qty = parseInt(text, 10) || 0;
-          updateDraft('quantity', qty);
-          if (draft.totalPrice && qty > 0) {
-            updateDraft('unitPrice', draft.totalPrice / qty);
-          }
+          const hasQuantityFormat: boolean = checkQuantityFormat(text);
+          setIsValidQuantity(hasQuantityFormat);
+          setQuantity(text);
         }}
       />
-
-      {draft.quantity !== 1 && (
+      {quantity !== '1' && isValidQuantity && (
         <>
           <Text>Unit Price</Text>
           <TextInput
             style={styles.input}
-            value={String(draft.unitPrice ?? '')}
+            value={unitPrice}
             keyboardType={'numeric'}
-            onChangeText={text =>
-              updateDraft('unitPrice', parseInt(text, 10) || 0)
-            }
+            onChangeText={setUnitPrice}
           />
         </>
       )}
@@ -87,13 +122,12 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
       <Text>Total Price</Text>
       <TextInput
         style={styles.input}
-        value={String(draft.totalPrice ?? '')}
+        value={totalPrice}
         keyboardType={'numeric'}
         onChangeText={text => {
-          const total = parseInt(text, 10) || 0;
-          updateDraft('totalPrice', total);
-          if (draft.quantity === 1) {
-            updateDraft('unitPrice', total);
+          setTotalPrice(text);
+          if (quantity === '1') {
+            setUnitPrice(text);
           }
         }}
       />
@@ -101,11 +135,15 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
       <View style={styles.pickerContainer}>
         <Picker
           style={styles.picker}
-          selectedValue={draft.category}
-          onValueChange={value => updateDraft('category', value)}
+          selectedValue={category}
+          onValueChange={setCategory}
         >
-          {CATEGORIES.map((category, index) => (
-            <Picker.Item key={index} label={category} value={category} />
+          {CATEGORIES.map((categoryName, index) => (
+            <Picker.Item
+              key={index}
+              label={categoryName}
+              value={categoryName}
+            />
           ))}
         </Picker>
       </View>
@@ -121,8 +159,22 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
         <TouchableOpacity
           style={[styles.button, styles.btnSave]}
           onPress={() => {
-            onSave(draft, productIndex);
-            console.log(draft);
+            if (!isValidQuantity) {
+              Alert.alert('Invalid Quantity');
+              return;
+            }
+            onSave(
+              {
+                name,
+                prodCode: productCode,
+                quantity: parseFloat(quantity.replace(',', '.')),
+                unitPrice: parseInt(unitPrice, 10),
+                totalPrice: parseInt(totalPrice, 10),
+                soldByKg,
+                category,
+              },
+              productIndex,
+            );
             navigation.goBack();
           }}
         >
@@ -172,6 +224,9 @@ const styles = StyleSheet.create({
     width: '90%',
     borderWidth: 1,
     padding: 10,
+  },
+  invalidInput: {
+    borderColor: 'red',
   },
   pickerContainer: {
     width: '90%',

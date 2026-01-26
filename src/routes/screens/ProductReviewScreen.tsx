@@ -16,6 +16,7 @@ import {
   Store,
 } from '../../utils/types';
 import { persistPurchaseData } from '../../utils/utils';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<
   ImageProcessingStackParamList,
@@ -67,46 +68,53 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
   };
 
   return (
-    <ScrollView style={styles.mainContainer}>
-      {productDetails.map((details, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.productCard}
-          // delayLongPress={90}
-          onPress={() => {
-            goToProductEditScreen(index);
-          }}
-        >
-          <View style={styles.leftSideCard}>
-            <Text style={styles.mainText}>{details.product.name}</Text>
-            <Text style={styles.secondaryText}>{details.product.prodCode}</Text>
-            <Text style={styles.secondaryText}>
-              {details.product.category?.toUpperCase()}
-            </Text>
-          </View>
-          <View style={styles.rightSideCard}>
-            {details.product.quantity !== 1 && (
+    <SafeAreaView style={styles.safeAreaView}>
+      <ScrollView style={styles.mainContainer}>
+        {productDetails.map((details, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.productCard}
+            // delayLongPress={90}
+            onPress={() => {
+              goToProductEditScreen(index);
+            }}
+          >
+            <View style={styles.leftSideCard}>
+              <Text style={styles.mainText}>{details.product.name}</Text>
               <Text style={styles.secondaryText}>
-                {details.product.quantity} x ₡{details.product.unitPrice}
+                {details.product.prodCode}
               </Text>
-            )}
-            <Text style={styles.mainText}>₡{details.product.totalPrice}</Text>
-          </View>
-        </TouchableOpacity>
-      ))}
+              <Text style={styles.secondaryText}>
+                {details.product.category?.toUpperCase()}
+              </Text>
+            </View>
+            <View style={styles.rightSideCard}>
+              {details.product.quantity !== 1 && (
+                <Text style={styles.secondaryText}>
+                  {details.product.quantity} x ₡{details.product.unitPrice}
+                </Text>
+              )}
+              <Text style={styles.mainText}>₡{details.product.totalPrice}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
 
-      <TouchableOpacity style={styles.button} onPress={handleSaveData}>
-        <Text style={styles.textStyle}>Save</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <TouchableOpacity style={styles.button} onPress={handleSaveData}>
+          <Text style={styles.textStyle}>Save</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  safeAreaView: {
+    height: '100%',
     backgroundColor: '#070709',
-    paddingTop: 20,
-    marginBottom: 48,
+  },
+  mainContainer: {
+    // paddingTop: 20,
+    // marginBottom: 48,
   },
   productCard: {
     flex: 1,
