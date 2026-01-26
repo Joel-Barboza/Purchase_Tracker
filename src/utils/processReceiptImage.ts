@@ -221,19 +221,11 @@ const formatLines = (lines: TextElement[][]): Line[] => {
 };
 
 const getNewLineFrameWithWordFrame = (wordFrame: Frame, frame: Frame): Frame => {
-  // let frame: Frame = {
-  //   top: Number.MAX_VALUE,
-  //   left: Number.MAX_VALUE,
-  //   height: 0,
-  //   width: 0,
-  // };
 
   // top
   if (wordFrame.top < frame.top) {
     frame.top = wordFrame.top;
   }
-  console.log(wordFrame.left);
-  console.log(frame.left);
   // left
   if (wordFrame.left < frame.left) {
     frame.left = wordFrame.left;

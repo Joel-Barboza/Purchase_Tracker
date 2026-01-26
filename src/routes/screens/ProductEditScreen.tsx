@@ -50,7 +50,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
     productDetails.product.soldByKg || 0,
   );
 
-  const [isValidQuantity, setIsValidQuantity] = useState<boolean>(false);
+  const [isValidQuantity, setIsValidQuantity] = useState<boolean>(!!quantity);
 
   const checkQuantityFormat = (text: string): boolean => {
     const regex = /^-?\d*[,.]?\d+$/;
@@ -58,10 +58,6 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
     return regex.test(text);
   };
 
-  // const handleInferredUnitPrice = () => {
-  //
-  // };
-  //
   useEffect(() => {
     if (totalPrice && parseFloat(quantity.replace(',', '.')) > 0) {
       setUnitPrice(
