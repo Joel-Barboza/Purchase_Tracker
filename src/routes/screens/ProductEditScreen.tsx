@@ -10,11 +10,9 @@ import {
 import {
   CATEGORIES,
   ImageProcessingStackParamList,
-  Product,
 } from '../../utils/types.ts';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Picker } from '@react-native-picker/picker';
-import { categorize } from '../../utils/categorization.ts';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ProductFrameOnReceiptImage from '../../components/ProductFrameOnReceiptImage.tsx';
 
@@ -23,8 +21,8 @@ type Props = NativeStackScreenProps<
   'ProductEditScreen'
 >;
 const ProductEditScreen = ({ route, navigation }: Props) => {
-  const { productDetails, productIndex, imageProps, onSave } = route.params;
-  const product = productDetails?.product;
+  const { productDetails, productIndex, imageProps, serialized_ocr, store} = route.params;
+  const product = productDetails[productIndex]?.product;
 
   // const [draft, setDraft] = useState<Product>(productDetails.product);
   //
@@ -47,7 +45,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
   );
   const [category, setCategory] = useState<string>(product?.category || '');
   const [soldByKg, setSoldByKg] = useState<0 | 1>(
-    productDetails.product.soldByKg || 0,
+    product.soldByKg || 0,
   );
 
   const [isValidQuantity, setIsValidQuantity] = useState<boolean>(!!quantity);
@@ -74,7 +72,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
     <SafeAreaView style={styles.container}>
       <Text>Product on receipt</Text>
       <ProductFrameOnReceiptImage
-        productDetails={productDetails}
+        productDetails={productDetails[productIndex]}
         imageProps={imageProps}
       />
       <Text>Product Name</Text>
@@ -159,8 +157,8 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
               Alert.alert('Invalid Quantity');
               return;
             }
-            onSave(
-              {
+
+              productDetails[productIndex].product = {
                 name,
                 prodCode: productCode,
                 quantity: parseFloat(quantity.replace(',', '.')),
@@ -168,10 +166,8 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
                 totalPrice: parseInt(totalPrice, 10),
                 soldByKg,
                 category,
-              },
-              productIndex,
-            );
-            navigation.goBack();
+              }
+            navigation.popTo('ProductReviewScreen', {productDetails, imageProps, serialized_ocr, store})
           }}
         >
           <Text style={styles.textStyle}>Save</Text>

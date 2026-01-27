@@ -13,10 +13,11 @@ export type ImageProcessingStackParamList = {
     store: Store;
   };
   ProductEditScreen: {
-    productDetails: ProductDetails;
-    productIndex: number;
+    productDetails: ProductDetails[];
     imageProps: ImageProps;
-    onSave: (updatedProduct: Product, productIndex: number) => void;
+    serialized_ocr: string;
+    store: Store;
+    productIndex: number;
   };
 };
 

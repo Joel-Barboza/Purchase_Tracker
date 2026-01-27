@@ -1,4 +1,4 @@
-import React, { JSX, useState } from 'react';
+import React, { JSX, useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -33,6 +33,16 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
   const [productDetails, setProductDetails] = useState<ProductDetails[]>(
     extractedProductDetails,
   );
+  const [productIndex, setProductIndex] = useState<number | null>(null);
+
+  // https://reactnavigation.org/docs/troubleshooting/#i-get-the-warning-non-serializable-values-were-found-in-the-navigation-state
+  // https://reactnavigation.org/docs/params/#passing-params-to-a-previous-screen
+  useEffect(() => {
+    if (route.params?.productDetails && productIndex) {
+      setProductDetails(extractedProductDetails);
+      setProductIndex(null);
+    }
+  }, [extractedProductDetails, productIndex, route.params?.productDetails]);
 
   console.log(extractedProductDetails);
 
@@ -49,21 +59,17 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
 
   const goToProductEditScreen = (index: number) => {
     navigation.navigate('ProductEditScreen', {
-      productDetails: productDetails[index],
+      productDetails: extractedProductDetails,
+      imageProps,
+      serialized_ocr,
+      store,
       productIndex: index,
-      imageProps: imageProps,
-      onSave: (updatedProduct: Product, productIndex: number) => {
-        setProductDetails(prevState =>
-          prevState.map((detail, i) => {
-            return i === productIndex
-              ? {
-                  product: updatedProduct,
-                  productImageFrame: detail.productImageFrame,
-                }
-              : detail;
-          }),
-        );
-      },
+      // productDetails: productDetails[index],
+      // productIndex: index,
+      // imageProps: imageProps,
+
+      // onSave: (updatedProduct: Product, productIndex: number) => {
+      // },
     });
   };
 
