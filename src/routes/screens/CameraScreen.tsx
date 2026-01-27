@@ -19,15 +19,12 @@ import {
   useCameraFormat,
   useCameraPermission,
 } from 'react-native-vision-camera';
-import { useDb } from '../../context/DbContext';
-import { NitroSQLiteConnection } from 'react-native-nitro-sqlite';
 import {
   DocumentPickerResponse,
   pick,
   types,
 } from '@react-native-documents/picker';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { getAllPurchases } from '../../db/purchase';
 import { ImageProcessingStackParamList, ImageProps } from '../../utils/types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -46,9 +43,7 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
     { photoResolution: 'max' },
   ]);
   const { hasPermission } = useCameraPermission();
-  const db: NitroSQLiteConnection | null = useDb();
   const camera = useRef<Camera | null>(null);
-  const [imageSource, setImageSource] = useState<string | null>(null);
   const [isActive, setIsActive] = useState<boolean>(true);
   const [flash, setFlash] = useState<'on' | 'off'>('off');
 
@@ -68,13 +63,11 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
       setIsActive(false);
 
       const CAPTURE_URI: string = `file://${photo.path}`;
-      setImageSource(CAPTURE_URI);
-      // await savePhoto(CAPTURE_URI);
       const imageProps: ImageProps = {
         imageUri: CAPTURE_URI,
         height: photo.height,
         width: photo.width,
-        source: 'gallery',
+        source: 'camera',
       };
       reviewImage(imageProps);
     } catch (error) {
@@ -97,7 +90,6 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
         });
       const file = result[0];
       console.log(file.uri);
-      setImageSource(file.uri);
 
       // return value from gallery doesn't have the dimensions
       const data: ImageSize = await Image.getSize(file.uri);
@@ -120,6 +112,14 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
     });
   };
 
+  const toggleFlashState = () => {
+    if (flash == "off") {
+      setFlash("on");
+    } else if (flash == "on") {
+      setFlash("off");
+    }
+  }
+
   if (!hasPermission) return <PermissionsPage />;
   if (device == null) return <NoCameraDeviceError />;
   return (
@@ -136,12 +136,11 @@ const CameraScreen = ({ navigation }: Props): JSX.Element => {
         <TouchableOpacity style={style.galleryButton} onPress={openGallery} />
         <TouchableOpacity style={style.camButton} onPress={capturePhoto} />
         <TouchableOpacity
-          style={style.camButton}
-          onPress={async () => {
-            db && (await getAllPurchases(db));
-          }}
+          style={style.simpleBtn}
+          onPress={toggleFlashState}
+
         >
-          <Text>get recipt</Text>
+          <Text>Flash {flash}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -179,7 +178,8 @@ const NoCameraDeviceError = (): JSX.Element => {
 const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#120f10',
+    // backgroundColor: '#FFFFFF',
     color: 'black',
     alignItems: 'center',
     justifyContent: 'center',
@@ -210,6 +210,12 @@ const style = StyleSheet.create({
     backgroundColor: '#B2BEB5',
     borderWidth: 4,
     borderColor: 'white',
+  },
+  simpleBtn: {
+    backgroundColor: '#ee3a28',
+    borderRadius: 8,
+    padding: 15,
+    // color:"#841584"
   },
 });
 

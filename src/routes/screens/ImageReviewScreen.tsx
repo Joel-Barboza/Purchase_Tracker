@@ -1,25 +1,11 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { JSX } from 'react';
-import {
-  Alert,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, useWindowDimensions, View, } from 'react-native';
 import { processReceiptImage } from '../../utils/processReceiptImage';
 import { NitroSQLiteConnection } from 'react-native-nitro-sqlite';
 import { useDb } from '../../context/DbContext';
-import {
-  ImageProcessingStackParamList,
-  ImageProps,
-  ReceiptProcessResult,
-} from '../../utils/types';
-import {
-  CameraRoll,
-  PhotoIdentifier,
-} from '@react-native-camera-roll/camera-roll';
+import { ImageProcessingStackParamList, ImageProps, ReceiptProcessResult, } from '../../utils/types';
+import { CameraRoll, PhotoIdentifier, } from '@react-native-camera-roll/camera-roll';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<
@@ -30,9 +16,10 @@ type Props = NativeStackScreenProps<
 const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
   const db: NitroSQLiteConnection | null = useDb();
   const { imageUri, height, width, source } = route.params.imageProps;
+  const windowWidth = useWindowDimensions().width;
 
   const savePhoto = async (
-    imageUri: string | null,
+    // imageUri: string | null,
   ): Promise<ImageProps | undefined> => {
     if (source === 'gallery') return;
     if (!imageUri) {
@@ -49,33 +36,28 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
     );
     const SAVE_URI: string = photoIdentifier.node.image.uri;
 
-    const imageProps: ImageProps = {
+    return {
       imageUri: SAVE_URI,
       height: photoIdentifier.node.image.height,
       width: photoIdentifier.node.image.width,
-      source: 'gallery',
+      source: 'camera',
     };
-    return imageProps;
-    // reviewImage(imageProps);
   };
 
   const handleUsefulPhoto = async (): Promise<void> => {
     if (!imageUri || !db) return;
 
     try {
-      const imageProps: ImageProps | undefined = await savePhoto(imageUri);
+      const imageProps: ImageProps | undefined = await savePhoto();
       // if (!imageProps) return;
-      console.log('asdfa');
+      console.log(source);
       let image_uri: string;
       if (imageProps) {
         image_uri = imageProps.imageUri; // just saved path
       } else {
         image_uri = imageUri; // gallery path passed by route.params
       }
-        // if (!imageProps.imageUri && source === 'camera') {
-        //   Alert.alert('Error saving, No image URI');
-        //   return;
-        // }
+
       const result: ReceiptProcessResult | undefined =
         await processReceiptImage(db, image_uri);
 
@@ -91,7 +73,7 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
 
       navigation.navigate('ProductReviewScreen', {
         productDetails: result.productDetails,
-        imageProps: imageProps ? imageProps: route.params.imageProps,
+        imageProps: imageProps ? imageProps : route.params.imageProps,
         serialized_ocr: result.serialized_ocr,
         store: result.store,
       });
@@ -101,12 +83,22 @@ const ImageReviewScreen = ({ navigation, route }: Props): JSX.Element => {
     }
   };
 
+
   return (
-    <SafeAreaView edges={['bottom']} style={[style.container, { justifyContent: 'flex-start' }]}>
+    <SafeAreaView
+      edges={['bottom']}
+      style={style.container}
+    >
       <Image
         source={{ uri: imageUri }}
-        style={[style.image, { aspectRatio: width / height }]}
-        resizeMode="contain"
+        style={[
+          style.image,
+          {
+            width: windowWidth + 1,
+            aspectRatio: source === 'camera' ? height / width : width / height
+          },
+        ]}
+        // resizeMode="contain"
       />
       <View style={style.btnContainer}>
         <TouchableOpacity style={style.simpleBtn} onPress={navigation.goBack}>
@@ -129,10 +121,12 @@ const style = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    backgroundColor: '#120f10',
+    width: '100%',
   },
   image: {
     backgroundColor: 'gray',
-    width: '101%',
+    // width: '101%',
   },
   btnContainer: {
     flex: 1,
