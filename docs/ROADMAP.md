@@ -111,6 +111,13 @@ The app fulfills its core purpose: awareness of spending habits.
 
 ---
 
+## Phases 5.5 and 5.9 - Improvements
+
+Goal:
+Phases to make a complete first MVP.
+
+
+
 ## Future Phases (Explicitly Out of Scope)
 
 - Cloud synchronization

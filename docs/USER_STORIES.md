@@ -166,7 +166,7 @@ Acceptance Criteria:
 
 ---
 
-## Phase 6 - Dedicated product review & correction
+## Phase 5.5 - Dedicated product review & correction
 
 ### US-014 Open product edit screen
 As a user  
@@ -195,4 +195,41 @@ Acceptance Criteria:
 
 ---
 
+## Phase 5.9 - Extra features for a better first MVP.
 
+### US-016 - Modify list of OCR extracted products
+
+As a user  
+I want to add and delete products from a purchase before storing it  
+So that I save the purchase data with the complete and proper products
+
+Acceptance Criteria: 
+
+- [ ] Lines mistakenly categorized as product can be deleted from screen.
+- [ ] Deleted products are not saved to DB.
+- [ ] Add products if it was missed by OCR.
+- [ ] Added products appear on ProductReviewScreen
+- [ ] Added products are saved to DB.
+
+---
+
+### US-017 - Product screen
+
+As a user   
+I want a screen where I can see the products stored   
+So that I can check prices  
+
+- [ ] Each product item shows just the name and price
+- [ ] Latest products are shown first
+- [ ] Products can be clicked to show the rest of the data related to that product
+
+--- 
+### US-018 - Purchase Screen
+
+As a user  
+I want a scree where I can see the purchases store   
+So that I can check how much I paid on certain purchases
+
+- [ ] Each purchase shows just the date, store and total paid
+- [ ] Latest purchases are shown first
+- [ ] Purchases can be clicked show the list of products and other details

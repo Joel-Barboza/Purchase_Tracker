@@ -168,7 +168,7 @@ It acts as the aggregation unit for products extracted from a receipt.
 
 **Responsibilities:**
 - Store purchase date and time
-- Store store or supermarket identifier
+- Persist store or supermarket identifier
 - Store total amount and optional tax information
 - Maintain a list of associated products
 

@@ -11,7 +11,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   ImageProcessingStackParamList,
   ImageProps,
-  Product,
   ProductDetails,
   Store,
 } from '../../utils/types';
@@ -64,12 +63,6 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
       serialized_ocr,
       store,
       productIndex: index,
-      // productDetails: productDetails[index],
-      // productIndex: index,
-      // imageProps: imageProps,
-
-      // onSave: (updatedProduct: Product, productIndex: number) => {
-      // },
     });
   };
 
