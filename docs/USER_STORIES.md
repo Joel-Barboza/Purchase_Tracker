@@ -205,9 +205,9 @@ So that I save the purchase data with the complete and proper products
 
 Acceptance Criteria: 
 
-- [ ] Lines mistakenly categorized as product can be deleted from screen.
-- [ ] Deleted products are not saved to DB.
-- [ ] Add products if it was missed by OCR.
+- [X] Lines mistakenly categorized as product can be deleted from screen.
+- [X] Deleted products are not saved to DB.
+- [ ] Add products if they were missed by OCR.
 - [ ] Added products appear on ProductReviewScreen
 - [ ] Added products are saved to DB.
 

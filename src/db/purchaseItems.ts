@@ -66,7 +66,6 @@ export const getPurchaseItemsByPurchaseId = async (
     const result: QueryResult<PurchaseItemRow> = await db.executeAsync<PurchaseItemRow>(purchaseItemsQuery, [purchaseId]);
     if (!result.rows) return;
     if (result.rows.length > 0) {
-      console.log(result);
       return result.rows._array;
     } else {
       return;

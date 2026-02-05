@@ -60,7 +60,6 @@ export const getAllPurchases = async (
     );
     if (!result.rows) return;
     if (result.rows.length > 0) {
-      console.log(result);
       return result.rows._array;
     } else {
       return;

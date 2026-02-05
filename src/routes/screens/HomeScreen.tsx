@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { CATEGORIES, HomeBottomTabsParamList } from '../../utils/types.ts';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { useFocusEffect } from '@react-navigation/native';
@@ -7,7 +7,6 @@ import { PieChart, pieDataItem } from 'react-native-gifted-charts';
 import { useDb } from '../../context/DbContext.tsx';
 import { NitroSQLiteConnection } from 'react-native-nitro-sqlite';
 import { getCategoryInsights } from '../../utils/utils.ts';
-import Interceptors from 'undici-types/interceptors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = BottomTabScreenProps<HomeBottomTabsParamList, 'Home'>;
@@ -16,7 +15,6 @@ const HomeScreen = ({ navigation }: Props) => {
   const db: NitroSQLiteConnection | null = useDb();
 
   const [data, setData] = useState<pieDataItem[]>([]);
-  const [percentages, setPercentages] = useState<PercentageData[]>([]);
   const [maxPercentage, setMaxPercentage] = useState<
     PercentageData | undefined
   >();
@@ -42,10 +40,11 @@ const HomeScreen = ({ navigation }: Props) => {
           color: `#${Math.floor(Math.random() * 10)}f${Math.floor(
             Math.random() * 10,
           )}f${Math.floor(Math.random() * 10)}f`,
-          tooltipText: Math.round(totalByCategory[category] / total * 100).toString(),
+          tooltipText: Math.round(
+            (totalByCategory[category] / total) * 100,
+          ).toString(),
         })).filter(item => item.value > 0);
 
-        console.log(chartData);
         const percentagesList: PercentageData[] = chartData.map(item => {
           return {
             text: item.text ? item.text : '',
@@ -53,7 +52,6 @@ const HomeScreen = ({ navigation }: Props) => {
           };
         });
 
-        setPercentages(percentagesList);
         const maxItem = percentagesList.reduce<PercentageData | undefined>(
           (max, item) =>
             !max || item.percentage > max.percentage ? item : max,
@@ -71,42 +69,42 @@ const HomeScreen = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       {/*<ScrollView contentContainerStyle={styles.main}>*/}
-        <Text style={styles.text}>Spendings</Text>
-        <PieChart
-          donut
-          focusOnPress
-          radius={90}
-          innerRadius={60}
-          data={data}
-          innerCircleColor={'#232B5D'}
-          centerLabelComponent={() => {
-            return (
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Text
-                  style={{ fontSize: 22, color: 'white', fontWeight: 'bold' }}
-                >
-                  {maxPercentage?.percentage}%
-                </Text>
+      <Text style={styles.text}>Spendings</Text>
+      <PieChart
+        donut
+        focusOnPress
+        radius={90}
+        innerRadius={60}
+        data={data}
+        innerCircleColor={'#232B5D'}
+        centerLabelComponent={() => {
+          return (
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <Text
+                style={{ fontSize: 22, color: 'white', fontWeight: 'bold' }}
+              >
+                {maxPercentage?.percentage}%
+              </Text>
 
-                <Text style={{ fontSize: 14, color: 'white' }}>
-                  {maxPercentage?.text}
-                </Text>
-              </View>
-            );
-          }}
-        />
-        <View style={styles.legendContainer}>
-          {data.map((item, index) => (
-            <View key={index} style={styles.legendItem}>
-              <View
-                style={[styles.legendColor, { backgroundColor: item.color }]}
-              />
-              <Text style={styles.legendText}>
-                {item.tooltipText}% {item.text} — ₡{item.value}
+              <Text style={{ fontSize: 14, color: 'white' }}>
+                {maxPercentage?.text}
               </Text>
             </View>
-          ))}
-        </View>
+          );
+        }}
+      />
+      <View style={styles.legendContainer}>
+        {data.map((item, index) => (
+          <View key={index} style={styles.legendItem}>
+            <View
+              style={[styles.legendColor, { backgroundColor: item.color }]}
+            />
+            <Text style={styles.legendText}>
+              {item.tooltipText}% {item.text} — ₡{item.value}
+            </Text>
+          </View>
+        ))}
+      </View>
       {/*</ScrollView>*/}
     </SafeAreaView>
   );

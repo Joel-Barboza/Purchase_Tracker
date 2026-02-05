@@ -1,5 +1,6 @@
-import React, { JSX, useEffect, useState } from 'react';
+import React, { Fragment, JSX, useEffect, useRef, useState } from 'react';
 import {
+  Animated,
   ScrollView,
   StyleSheet,
   Text,
@@ -33,7 +34,12 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
     extractedProductDetails,
   );
   const [productIndex, setProductIndex] = useState<number | null>(null);
+  const [longPressProductIndex, setLongPressProductIndex] = useState<
+    number | null
+  >(null);
+  const [toggleTranslate, setToggleTranslate] = useState<0 | -100>(0);
 
+  const transformAnim = useRef(new Animated.Value(0)).current;
   // https://reactnavigation.org/docs/troubleshooting/#i-get-the-warning-non-serializable-values-were-found-in-the-navigation-state
   // https://reactnavigation.org/docs/params/#passing-params-to-a-previous-screen
   useEffect(() => {
@@ -43,10 +49,33 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
     }
   }, [extractedProductDetails, productIndex, route.params?.productDetails]);
 
-  console.log(extractedProductDetails);
+
+  const handleDeleteProduct = (indexToDelete: number) => {
+    setProductDetails(prevItems =>
+      prevItems.filter((_, index) => index !== indexToDelete),
+    );
+    setLongPressProductIndex(null);
+  };
+
+  const transformLeft = () => {
+    const toggle: 0 | -100 = toggleTranslate === -100 ? 0 : -100;
+    setToggleTranslate(toggle);
+
+    // Reset the animation value before animating
+    transformAnim.stopAnimation(() => {
+      transformAnim.setValue(toggleTranslate); // Start from current state
+      Animated.timing(transformAnim, {
+        toValue: toggle,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    });
+
+    toggle === 0 && setLongPressProductIndex(null);
+  };
 
   const handleSaveData = () => {
-    db &&
+    db && productDetails.length !== 0 &&
       persistPurchaseData(db, {
         productDetails: productDetails,
         image_uri: imageProps.imageUri,
@@ -68,34 +97,63 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <ScrollView style={styles.mainContainer}>
+      <ScrollView>
         {productDetails.map((details, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.productCard}
-            // delayLongPress={90}
-            onPress={() => {
-              goToProductEditScreen(index);
-            }}
-          >
-            <View style={styles.leftSideCard}>
-              <Text style={styles.mainText}>{details.product.name}</Text>
-              <Text style={styles.secondaryText}>
-                {details.product.prodCode}
-              </Text>
-              <Text style={styles.secondaryText}>
-                {details.product.category?.toUpperCase()}
-              </Text>
-            </View>
-            <View style={styles.rightSideCard}>
-              {details.product.quantity !== 1 && (
-                <Text style={styles.secondaryText}>
-                  {details.product.quantity} x ₡{details.product.unitPrice}
-                </Text>
-              )}
-              <Text style={styles.mainText}>₡{details.product.totalPrice}</Text>
-            </View>
-          </TouchableOpacity>
+          <Fragment key={index}>
+            <TouchableOpacity
+              style={[styles.card, styles.deleteButton, { top: 120 * index }]}
+              onPress={() => handleDeleteProduct(index)}
+            >
+              <Text style={styles.textStyle}>Delete</Text>
+            </TouchableOpacity>
+            <Animated.View
+              style={[
+                styles.card,
+                longPressProductIndex === index && {
+                  transform: [{ translateX: transformAnim }],
+                },
+              ]}
+            >
+              <TouchableOpacity
+                style={styles.productCard}
+                activeOpacity={1}
+                delayLongPress={120}
+                onLongPress={() => {
+                  setLongPressProductIndex(index);
+                  transformLeft();
+                }}
+                onPress={() => {
+                  longPressProductIndex
+                    ? transformLeft()
+                    : goToProductEditScreen(index);
+                  setLongPressProductIndex(null);
+                }}
+              >
+                <>
+                  <View style={styles.leftSideCard}>
+                    <Text style={styles.mainText}>{details.product.name}</Text>
+                    <Text style={styles.secondaryText}>
+                      {details.product.prodCode}
+                    </Text>
+                    <Text style={styles.secondaryText}>
+                      {details.product.category?.toUpperCase()}
+                    </Text>
+                  </View>
+                  <View style={styles.rightSideCard}>
+                    {details.product.quantity !== 1 && (
+                      <Text style={styles.secondaryText}>
+                        {details.product.quantity} x ₡
+                        {details.product.unitPrice}
+                      </Text>
+                    )}
+                    <Text style={styles.mainText}>
+                      ₡{details.product.totalPrice}
+                    </Text>
+                  </View>
+                </>
+              </TouchableOpacity>
+            </Animated.View>
+          </Fragment>
         ))}
 
         <TouchableOpacity style={styles.button} onPress={handleSaveData}>
@@ -111,9 +169,14 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#070709',
   },
-  mainContainer: {
-    // paddingTop: 20,
-    // marginBottom: 48,
+  card: {
+    zIndex: 1000,
+    height: 100,
+    margin: 10,
+    marginLeft: 15,
+    marginRight: 15,
+    overflow: 'hidden',
+    borderRadius: 12,
   },
   productCard: {
     flex: 1,
@@ -121,12 +184,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     padding: 10,
-    margin: 10,
-    marginLeft: 15,
-    marginRight: 15,
-    height: 100,
-    borderRadius: 12,
-    width: 'auto', //Dimensions.get('window').width - 30
     backgroundColor: '#252429',
   },
   leftSideCard: {
@@ -157,6 +214,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 17,
+  },
+  deleteOptions: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    zIndex: 100,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    position: 'absolute',
+    width: 120,
+    padding: 15,
+    right: 0,
   },
 });
 
