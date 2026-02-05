@@ -18,6 +18,7 @@ export type ImageProcessingStackParamList = {
     serialized_ocr: string;
     store: Store;
     productIndex: number;
+    action: 'edit' | 'add';
   };
 };
 
@@ -98,7 +99,7 @@ export type Product = {
 
 export type ProductDetails = {
   product: Product;
-  productImageFrame: Frame;
+  productImageFrame: Frame | undefined;
 };
 
 export type ReceiptProcessResult = {

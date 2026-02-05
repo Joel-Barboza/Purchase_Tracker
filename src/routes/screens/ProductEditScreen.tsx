@@ -21,7 +21,14 @@ type Props = NativeStackScreenProps<
   'ProductEditScreen'
 >;
 const ProductEditScreen = ({ route, navigation }: Props) => {
-  const { productDetails, productIndex, imageProps, serialized_ocr, store} = route.params;
+  const {
+    productDetails,
+    productIndex,
+    imageProps,
+    serialized_ocr,
+    store,
+    action,
+  } = route.params;
   const product = productDetails[productIndex]?.product;
 
   // const [draft, setDraft] = useState<Product>(productDetails.product);
@@ -44,9 +51,7 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
     String(product?.totalPrice || ''),
   );
   const [category, setCategory] = useState<string>(product?.category || '');
-  const [soldByKg, setSoldByKg] = useState<0 | 1>(
-    product.soldByKg || 0,
-  );
+  const [soldByKg, setSoldByKg] = useState<0 | 1>(product?.soldByKg || 0);
 
   const [isValidQuantity, setIsValidQuantity] = useState<boolean>(!!quantity);
 
@@ -70,11 +75,15 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Product on receipt</Text>
-      <ProductFrameOnReceiptImage
-        productDetails={productDetails[productIndex]}
-        imageProps={imageProps}
-      />
+      {action === 'edit' && productDetails[productIndex].productImageFrame && (
+        <>
+          <Text>Product on receipt</Text>
+          <ProductFrameOnReceiptImage
+            productDetails={productDetails[productIndex]}
+            imageProps={imageProps}
+          />
+        </>
+      )}
       <Text>Product Name</Text>
       <TextInput style={styles.input} value={name} onChangeText={setName} />
 
@@ -158,16 +167,30 @@ const ProductEditScreen = ({ route, navigation }: Props) => {
               return;
             }
 
-              productDetails[productIndex].product = {
-                name,
-                prodCode: productCode,
-                quantity: parseFloat(quantity.replace(',', '.')),
-                unitPrice: parseInt(unitPrice, 10),
-                totalPrice: parseInt(totalPrice, 10),
-                soldByKg,
-                category,
-              }
-            navigation.popTo('ProductReviewScreen', {productDetails, imageProps, serialized_ocr, store})
+            const productValues = {
+              name,
+              prodCode: productCode,
+              quantity: parseFloat(quantity.replace(',', '.')),
+              unitPrice: parseInt(unitPrice, 10),
+              totalPrice: parseInt(totalPrice, 10),
+              soldByKg,
+              category,
+            };
+
+            if (action === 'add') {
+              productDetails.push({
+                productImageFrame: undefined,
+                product: productValues,
+              });
+            } else {
+              productDetails[productIndex].product = productValues;
+            }
+            navigation.popTo('ProductReviewScreen', {
+              productDetails,
+              imageProps,
+              serialized_ocr,
+              store,
+            });
           }}
         >
           <Text style={styles.textStyle}>Save</Text>

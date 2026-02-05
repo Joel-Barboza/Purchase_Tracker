@@ -207,9 +207,9 @@ Acceptance Criteria:
 
 - [X] Lines mistakenly categorized as product can be deleted from screen.
 - [X] Deleted products are not saved to DB.
-- [ ] Add products if they were missed by OCR.
-- [ ] Added products appear on ProductReviewScreen
-- [ ] Added products are saved to DB.
+- [X] Add products if they were missed by OCR.
+- [X] Added products appear on ProductReviewScreen
+- [X] Added products are saved to DB.
 
 ---
 

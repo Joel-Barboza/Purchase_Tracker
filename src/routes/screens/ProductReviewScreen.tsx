@@ -49,7 +49,6 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
     }
   }, [extractedProductDetails, productIndex, route.params?.productDetails]);
 
-
   const handleDeleteProduct = (indexToDelete: number) => {
     setProductDetails(prevItems =>
       prevItems.filter((_, index) => index !== indexToDelete),
@@ -75,7 +74,8 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
   };
 
   const handleSaveData = () => {
-    db && productDetails.length !== 0 &&
+    db &&
+      productDetails.length !== 0 &&
       persistPurchaseData(db, {
         productDetails: productDetails,
         image_uri: imageProps.imageUri,
@@ -92,6 +92,7 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
       serialized_ocr,
       store,
       productIndex: index,
+      action: 'edit'
     });
   };
 
@@ -156,9 +157,26 @@ const ProductReviewScreen = ({ route, navigation }: Props): JSX.Element => {
           </Fragment>
         ))}
 
-        <TouchableOpacity style={styles.button} onPress={handleSaveData}>
-          <Text style={styles.textStyle}>Save</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate('ProductEditScreen', {
+                productDetails: extractedProductDetails,
+                imageProps,
+                serialized_ocr,
+                store,
+                productIndex: productDetails.length + 1,
+                action: 'add'
+              })
+            }
+          >
+            <Text style={styles.textStyle}>Add</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={handleSaveData}>
+            <Text style={styles.textStyle}>Save</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -204,10 +222,19 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#ddddddaa',
   },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: '100%',
+  },
   button: {
     borderRadius: 10,
+    backgroundColor: '#ee3a28',
     padding: 12,
     elevation: 5,
+    marginRight: 15,
+    minWidth: 80,
   },
   textStyle: {
     color: 'white',
@@ -221,7 +248,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   deleteButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#ee3a28',
     zIndex: 100,
     flex: 1,
     justifyContent: 'center',

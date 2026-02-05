@@ -8,7 +8,7 @@ const ProductFrameOnReceiptImage = ({
 }: {
   productDetails: ProductDetails;
   imageProps: ImageProps;
-}): JSX.Element => {
+}): JSX.Element | undefined => {
   const { width } = useWindowDimensions();
 
   const scaleCorrection = 0.03;
@@ -16,6 +16,7 @@ const ProductFrameOnReceiptImage = ({
 
   // https://reactnative.dev/docs/pixelratio
   // image sizes are given in 'physical' pixels and rn works with 'logical' px
+  if (!productDetails.productImageFrame) return;
   const scale =
     width / (productDetails.productImageFrame.width / PixelRatio.get()) -
     scaleCorrection;
